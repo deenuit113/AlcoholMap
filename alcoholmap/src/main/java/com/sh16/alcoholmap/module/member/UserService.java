@@ -10,6 +10,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     //패스워드를 BCryptPasswordEncoder 로 암호화 한 후 저장
     public Long save(UserDTO dto){
         return userRepository.save(User.builder()
