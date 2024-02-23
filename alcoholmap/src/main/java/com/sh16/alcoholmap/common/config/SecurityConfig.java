@@ -27,7 +27,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer configure() {
 		return (web -> web.ignoring()
 				.requestMatchers(toH2Console())
-				.requestMatchers("/static/**")
+				.requestMatchers("/**") //일단 전부 허용(test 위함)
 		);
 	}
 

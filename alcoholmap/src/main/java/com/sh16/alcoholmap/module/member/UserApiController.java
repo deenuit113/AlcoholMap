@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @Controller
@@ -17,7 +18,7 @@ public class UserApiController {
 
     //회원 가입
     @PostMapping("/user")
-    public String signup(UserDTO dto) {
+    public String signup(@RequestBody UserDTO dto) { //JSON 형식으로 이메일 아이디 전달 받음
         userService.save(dto);
         return "redirect:/login"; //회원가입 후 /login URL로 이동
     }
