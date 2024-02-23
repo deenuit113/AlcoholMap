@@ -26,7 +26,6 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer configure() {
 		return (web -> web.ignoring()
-				.requestMatchers(toH2Console())
 				.requestMatchers("/**") //일단 전부 허용(test 위함)
 		);
 	}
