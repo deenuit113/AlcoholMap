@@ -39,6 +39,14 @@ public class UserApiController {
         return ResponseEntity.ok(dto);
     }
 
+    /**
+     *  회원 탈퇴 - 현재 이메일 기반으로 유저 탈퇴 - 토큰 방식으로 변경 예정
+     */
+    @DeleteMapping("/users/delete/{email}")
+    public ResponseEntity<Response> deleteUser(@PathVariable String email) {
+        return userService.deleteUserByEmail(email);
+    }
+
 
     /**
      * 미사용중

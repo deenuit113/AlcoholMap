@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.member;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,14 +9,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder; //패스워드를 BCryptPasswordEncoder 로 암호화 한 후 저장
 
-    //패스워드를 BCryptPasswordEncoder 로 암호화 한 후 저장
+
 
     /**
      * 회원가입
@@ -50,4 +53,19 @@ public class UserService {
         dto.setCapaSoju(user.getCapaSoju());
         return dto;
     }
+
+
+    /**
+     * 회원 탈퇴
+     */
+    @Transactional
+    public ResponseEntity<Response> deleteUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(email + " : 사용자를 찾을 수 없습니다."));
+        userRepository.delete(user);
+        return Response.newResult(HttpStatus.OK, "탈퇴가 완료되었습니다.", null);
+
+    }
+
+
 }
