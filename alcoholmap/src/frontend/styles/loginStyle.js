@@ -42,6 +42,15 @@ export const PasswordWrapper = styled.div`
   padding-bottom: 0px;
 `
 
+export const ButtonWrapper = styled.div`
+  width: 300px;
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 0px;
+`
+
 export const ErrorMsgWrapper = styled.div`
   width: 300px;
   display: inline-block;
@@ -70,6 +79,16 @@ export const LoginButton = styled.button`
   font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
+  width: 100px;
+  float: right;
+`
+
+export const SignUpButton = styled.button`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-right: 30px;
   width: 100px;
   float: right;
 `

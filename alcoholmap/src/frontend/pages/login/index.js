@@ -8,21 +8,27 @@ import { Wrapper,
          PasswordWrapper,
          ErrorMsgWrapper,
          Logo,
-         Label} from '../../styles/loginStyle'
+         Label,
+         ButtonWrapper,
+         SignUpButton} from '../../styles/loginStyle'  
+import { useRouter } from 'next/router'
+// presenter 만들기
 
 
 /*  백엔드 서버에 이메일, 비밀번호 보내기
     로그인 성공 시 메인페이지 라우터
-    추후 추가
 */
+
 
 export default function LoginPage(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    //const [disabledbutton, setButton] = useState(true) //버튼 비활성화 추후 추가
 
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
     
+    const router = useRouter()
 
     const onChangeEmail = (event) => {
         setEmail(event.target.value)
@@ -52,6 +58,9 @@ export default function LoginPage(){
         }
     }
 
+    const onClickSignup = () => {
+        router.push("../signup")
+    }
 
     return (
         <Wrapper>
@@ -68,8 +77,11 @@ export default function LoginPage(){
                     <InputPassword type="password" onChange={onChangePassword} />
                 </PasswordWrapper>
                 <ErrorMsgWrapper>{pwError}</ErrorMsgWrapper>
-
-                <LoginButton onClick={onClickSubmit}>로그인</LoginButton>
+                <ButtonWrapper>
+                    <LoginButton onClick={onClickSubmit}>로그인</LoginButton>
+                    <SignUpButton onClick={onClickSignup}>회원가입</SignUpButton>
+                </ButtonWrapper>
+                
         </Wrapper>
         
     )
