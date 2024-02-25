@@ -28,10 +28,15 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "capa_soju")
+    private int capaSoju;
+
     @Builder
-    public User(String email, String password, String auth){
+    public User(String email, String password, int capaSoju, String auth){
         this.email = email;
         this.password = password;
+        this.capaSoju = capaSoju;
+
     }
 
     @Override // 권한 반환
