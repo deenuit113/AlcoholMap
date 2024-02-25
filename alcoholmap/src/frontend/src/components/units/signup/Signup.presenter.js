@@ -28,6 +28,16 @@ export default function SignupUI(props) {
                 <S.ErrorMsgWrapper>{props.pwError}</S.ErrorMsgWrapper>
 
                 <S.SignUpButton onClick={props.onClickSubmit}>회원가입</S.SignUpButton>
+
+                <S.EmailWrapper>
+                    <S.Smalltitle>ID</S.Smalltitle>
+                    <S.SmallInput type = "text" name = "email" value = {props.formData.email} onChange={props.handleInputChange}></S.SmallInput>
+                    <S.Smalltitle>PW</S.Smalltitle>
+                    <S.SmallInput type = "text" name = "password" value = {props.formData.password} onChange={props.handleInputChange}></S.SmallInput>
+                    <S.Smalltitle>CAPA</S.Smalltitle>
+                    <S.SmallInput type = "number" name = "capaSoju" value = {props.formData.capaSoju} onChange={props.handleInputChange}></S.SmallInput>
+                    <S.SignUpButton onClick = {props.handleFormSubmit}>버튼</S.SignUpButton>
+                </S.EmailWrapper>
         </S.Wrapper>
     )
 }
