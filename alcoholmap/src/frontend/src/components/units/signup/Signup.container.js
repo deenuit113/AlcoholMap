@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import SignupUI from './Signup.presenter'
+import axios from 'axios';
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -8,7 +9,9 @@ import SignupUI from './Signup.presenter'
     회원가입 성공 시, 로그인 상태로 메인페이지 라우터
 */
 
-export default function SignUpPage(){
+const baseUrl = "http://localhost:8080";
+
+export default function SignupPage(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [domain, setDomain] = useState("")
@@ -16,6 +19,31 @@ export default function SignUpPage(){
 
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        capaSoju: 0,
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post(baseUrl + '/users/signup/', formData);
+            console.log('Response from server:', response.data);
+        } catch (error){
+            console.error('error submitting data:', error);
+        }
+    };
     
     const onChangeEmail = (event) => {
         setEmail(event.target.value)
@@ -94,6 +122,9 @@ export default function SignUpPage(){
             onChangeEmail = {onChangeEmail}
             onChangePassword = {onChangePassword}
             onClickSubmit = {onClickSubmit}
+            handleInputChange = {handleInputChange}
+            handleFormSubmit = {handleFormSubmit}
+            formData = {formData}
         />
     )
 }

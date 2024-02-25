@@ -38,6 +38,13 @@ export const Smalltitle = styled.div`
   padding-bottom: 15px;
 `;
 
+export const SmallInput = styled.input`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 15px;
+`;
+
 export const Logo = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 50px;
@@ -47,6 +54,7 @@ export const Logo = styled.div`
 
 export const EmailWrapper = styled.div`
   width: 300px;
+  height: 500px;
   display: inline-block;
   flex-direction: column;
   align-items: center;
@@ -90,6 +98,7 @@ export const EditButton = styled.button`
   font-weight: bold;
   margin-top: 10px;
   width: 100px;
+  height: 50px;
   float: right;
   border-radius: 10px 10px 10px 10px;
 `
