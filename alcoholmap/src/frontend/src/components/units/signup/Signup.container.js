@@ -34,11 +34,11 @@ export default function SignupPage(){
         });
     };
 
-    const handleFormSubmit = async (e) => {
+    const handleFormSubmit = async (e, formData) => {
         e.preventDefault();
-
+        const jsonformData = JSON.stringify(formData);
         try {
-            const response = await axios.post(baseUrl + '/users/signup/', formData);
+            const response = await axios.post(baseUrl + '/users/signup', jsonformData);
             console.log('Response from server:', response.data);
         } catch (error){
             console.error('error submitting data:', error);
