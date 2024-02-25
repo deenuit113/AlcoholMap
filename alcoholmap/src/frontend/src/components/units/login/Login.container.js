@@ -54,7 +54,7 @@ export default function LoginPage(){
         <LoginUI
             onChangeEmail = {onChangeEmail} 
             onChangePassword = {onChangePassword}
-            onClickSignup = {onClickMoveToSignup}
+            onClickMoveToSignup = {onClickMoveToSignup}
             onClickSubmit = {onClickSubmit}
             emailError = {emailError}
             pwError = {pwError}
