@@ -105,3 +105,17 @@ export const EmailDropbox = styled.select`
 export const EmailDropboxOption = styled.option`
   
 `
+
+export const Smalltitle = styled.div`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 15px;
+`;
+
+export const SmallInput = styled.input`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 15px;
+`;
