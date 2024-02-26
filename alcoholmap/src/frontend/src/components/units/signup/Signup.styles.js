@@ -44,6 +44,15 @@ export const PasswordWrapper = styled.div`
   padding-bottom: 0px;
 `
 
+export const CapaWrapper = styled.div`
+  width: 300px;
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 0px;
+`
+
 export const ErrorMsgWrapper = styled.div`
   width: 300px;
   display: inline-block;
@@ -55,7 +64,7 @@ export const ErrorMsgWrapper = styled.div`
 
 export const Title = styled.div`
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 34px;
+  font-size: 30px;
   font-weight: bold;
   padding-bottom: 15px;
 `;
@@ -77,7 +86,7 @@ export const SignUpButton = styled.button`
 `
 
 export const InputEmail = styled.input`
-  width: 100px;
+  width: 200px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
   margin-left: 10px; 
@@ -90,32 +99,8 @@ export const InputPassword = styled.input`
   float: right;
 `
 
-export const InputDomain = styled.input`
-  width: 100px;
+export const InputCapa = styled.input`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
-  margin-right: 10px; 
-  float: lefts;
+  float: right;
 `
-
-export const EmailDropbox = styled.select`
-  size: 30;
-`
-
-export const EmailDropboxOption = styled.option`
-  
-`
-
-export const Smalltitle = styled.div`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  padding-bottom: 15px;
-`;
-
-export const SmallInput = styled.input`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  padding-bottom: 15px;
-`;

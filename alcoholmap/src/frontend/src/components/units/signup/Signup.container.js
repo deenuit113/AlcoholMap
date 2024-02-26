@@ -12,26 +12,41 @@ import axios from 'axios';
 const apiUrl = '/user/signup';
 
 export default function SignupPage(){
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [domain, setDomain] = useState("")
-    //const [disabledbutton, setButton] = useState(true) //버튼 비활성화 추후 추가
-
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
-
+    const [capaError, setCapaError] = useState("")
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         capaSoju: 0,
     });
 
-    const handleInputChange = (e) => {
+
+    const onChangeInput = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
             [name]: value,
         });
+    };
+
+    const onClickSubmit = () => {
+        let errorcode = 0;
+        if(!formData.email) {
+            setEmailError("이메일을 입력해주세요.")
+            errorcode = 1
+        }
+
+        if(!formData.password) {
+            setPwError("비밀번호를 입력해주세요.")
+            errorcode = 1
+        }
+
+        if(!formData.capaSoju) {
+            setCapaError("주량을 입력하세요.")
+            errorcode = 1
+        }
+        console.log(formData)
     };
 
     const handleFormSubmit = async (e, formData) => {
@@ -42,45 +57,6 @@ export default function SignupPage(){
             console.log('Response from server:', response.data);
         } catch (error){
             console.error('error submitting data:', error);
-        }
-    };
-    
-    const onChangeEmail = (event) => {
-        setEmail(event.target.value)
-        if(event.target.value !== ""){
-            setEmailError("")
-        }
-    };
-
-    const onChangeDomain = (event) => {
-        setDomain(event.target.value)
-        if(event.target.value !== ""){
-            setEmailError("")
-        }
-    };
-
-    const onChangePassword = (event) => {
-        setPassword(event.target.value)
-        if(event.target.value !== ""){
-            setPwError("")
-        }
-    };
-
-    const onClickSubmit = () => {
-        if(!email) {
-            setEmailError("이메일을 입력해주세요.")
-        }
-
-        if(!domain) {
-            setEmailError("도메인을 선택해주세요.")
-        }
-
-        if(!password) {
-            setPwError("비밀번호를 입력해주세요.")
-        }
-
-        if(email && password && domain) {
-            alert("회원가입 완료")
         }
     };
 
@@ -118,13 +94,11 @@ export default function SignupPage(){
         <SignupUI
             emailError = {emailError}
             pwError = {pwError}
-            onChangeDomain = {onChangeDomain}
-            onChangeEmail = {onChangeEmail}
-            onChangePassword = {onChangePassword}
+            capaError = {capaError}
             onClickSubmit = {onClickSubmit}
-            handleInputChange = {handleInputChange}
-            handleFormSubmit = {handleFormSubmit}
+            onChangeInput = {onChangeInput}
             formData = {formData}
+            handleFormSubmit = {handleFormSubmit}
         />
     )
 }
