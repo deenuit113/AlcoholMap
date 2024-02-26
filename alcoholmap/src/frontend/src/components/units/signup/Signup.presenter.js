@@ -8,13 +8,12 @@ export default function SignupUI(props) {
                 <S.EmailWrapper>
                     <S.Label>이메일: </S.Label>
                     <S.InputEmail type = "text" name = "email" value = {props.formData.email} onChange={props.onChangeInput} />
-                    
                 </S.EmailWrapper>
-                <S.ErrorMsgWrapper>{props.idError}</S.ErrorMsgWrapper>
+                <S.ErrorMsgWrapper>{props.emailError}</S.ErrorMsgWrapper>
             
                 <S.PasswordWrapper>
                     <S.Label>비밀번호: </S.Label>
-                    <S.InputPassword type = "text" name = "password" value = {props.formData.password} onChange={props.onChangeInput} />
+                    <S.InputPassword type = "password" name = "password" value = {props.formData.password} onChange={props.onChangeInput} />
                 </S.PasswordWrapper>
                 <S.ErrorMsgWrapper>{props.pwError}</S.ErrorMsgWrapper>
 

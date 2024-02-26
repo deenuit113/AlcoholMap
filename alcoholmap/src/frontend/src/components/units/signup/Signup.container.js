@@ -22,12 +22,22 @@ export default function SignupPage(){
     });
 
 
-    const onChangeInput = (e) => {
-        const { name, value } = e.target;
+    const onChangeInput = (event) => {
+        const { name, value } = event.target;
         setFormData({
             ...formData,
             [name]: value,
         });
+        if(name === "email" && event.target.value !== ""){
+            setEmailError("")
+        }
+        if(name === "password" && event.target.value !== ""){
+            setPwError("")
+        }
+        if(name === "capaSoju" && event.target.value !== ""){
+            setCapaError("")
+        }
+        
     };
 
     const onClickSubmit = () => {
@@ -46,7 +56,11 @@ export default function SignupPage(){
             setCapaError("주량을 입력하세요.")
             errorcode = 1
         }
-        console.log(formData)
+        
+        if(errorcode === 0){
+            console.log(formData)
+        }
+        
     };
 
     const handleFormSubmit = async (e, formData) => {
