@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MapUI from './Map.presenter';
-
+import Head from 'next/head';
 export default function MapPage() {
     
     const router = useRouter()
@@ -34,10 +34,13 @@ export default function MapPage() {
 
     return (
         <>
-            <script 
-                type="text/javascript" 
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=874eea7b48b7810e4c254737d3892e8f"
-            ></script>
+            <Head>
+                <script 
+                    type="text/javascript" 
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=874eea7b48b7810e4c254737d3892e8f"
+                ></script>
+            </Head>
+           
             <MapUI
                 onClickMoveToMypage = {onClickMoveToMypage}
                 onClickMoveToLogin = {onClickMoveToLogin}
