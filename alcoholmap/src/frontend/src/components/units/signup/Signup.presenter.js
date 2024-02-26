@@ -12,7 +12,7 @@ export default function SignupUI(props) {
                     <S.InputDomain type="text" disabled ={true} onChange={props.onChangeDomain} />
 
                     <S.EmailDropbox onChange={props.onChangeDomain}>
-                        <S.EmailDropboxOption disabled selected>--선택--</S.EmailDropboxOption>
+                        <S.EmailDropboxOption disabled selects>--선택--</S.EmailDropboxOption>
                         <S.EmailDropboxOption>gmail.com</S.EmailDropboxOption>
                         <S.EmailDropboxOption>naver.com</S.EmailDropboxOption>
                         <S.EmailDropboxOption>daum.net</S.EmailDropboxOption>

@@ -9,7 +9,7 @@ import axios from 'axios';
     회원가입 성공 시, 로그인 상태로 메인페이지 라우터
 */
 
-const baseUrl = "http://localhost:8080";
+const apiUrl = '/user/signup';
 
 export default function SignupPage(){
     const [email, setEmail] = useState("")
@@ -38,7 +38,7 @@ export default function SignupPage(){
         e.preventDefault();
         const jsonformData = JSON.stringify(formData);
         try {
-            const response = await axios.post(baseUrl + '/users/signup', jsonformData);
+            const response = await axios.post(apiUrl, jsonformData);
             console.log('Response from server:', response.data);
         } catch (error){
             console.error('error submitting data:', error);
