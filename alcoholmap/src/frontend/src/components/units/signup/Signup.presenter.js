@@ -3,7 +3,7 @@ import * as S from "./Signup.styles";
 export default function SignupUI(props) {
     return(
         <S.Wrapper>
-            <S.Logo>AlcoholMap</S.Logo>
+            <S.Logo onClick={props.onClickMoveToMainpage}>AlcoholMap</S.Logo>
             <S.Title>알콜맵 회원가입</S.Title>
                 <S.EmailWrapper>
                     <S.Label>이메일: </S.Label>

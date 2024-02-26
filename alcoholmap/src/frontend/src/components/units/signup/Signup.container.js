@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import SignupUI from './Signup.presenter'
 import axios from 'axios';
+import { useRouter } from 'next/router'
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -12,6 +13,9 @@ import axios from 'axios';
 const apiUrl = '/user/signup';
 
 export default function SignupPage(){
+
+    const router = useRouter()
+
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
     const [capaError, setCapaError] = useState("")
@@ -74,6 +78,10 @@ export default function SignupPage(){
         }
     };
 
+    const onClickMoveToMainpage = () => {
+        router.push("../map")
+    }
+
     
 
     /*function onChangeDisabledButton(){
@@ -113,6 +121,7 @@ export default function SignupPage(){
             onChangeInput = {onChangeInput}
             formData = {formData}
             handleFormSubmit = {handleFormSubmit}
+            onClickMoveToMainpage = {onClickMoveToMainpage}
         />
     )
 }

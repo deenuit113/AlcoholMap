@@ -74,6 +74,7 @@ export const Logo = styled.div`
   font-size: 50px;
   font-weight: bold;
   padding-bottom: 15px;
+  cursor: pointer;
 `;
 
 export const SignUpButton = styled.button`
