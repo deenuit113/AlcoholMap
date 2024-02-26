@@ -33,11 +33,18 @@ export default function MapPage() {
     }
 
     return (
-        <MapUI
-            onClickMoveToMypage = {onClickMoveToMypage}
-            onClickMoveToLogin = {onClickMoveToLogin}
-            onClickMoveToSignup = {onClickMoveToSignup}
-            onClickReload = {onClickReload}
-        />
+        <>
+            <script 
+                type="text/javascript" 
+                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=874eea7b48b7810e4c254737d3892e8f"
+            ></script>
+            <MapUI
+                onClickMoveToMypage = {onClickMoveToMypage}
+                onClickMoveToLogin = {onClickMoveToLogin}
+                onClickMoveToSignup = {onClickMoveToSignup}
+                onClickReload = {onClickReload}
+            />
+        </>
+        
     )
 }
