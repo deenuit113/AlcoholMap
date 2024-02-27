@@ -19,60 +19,79 @@ export default function MapPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const options = {
-                center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-                level: 3,
-            };
-        
-            setOptions(options);
-        
-            // 기존의 맵이 있으면 그 맵을 사용하고, 없으면 새로운 맵을 생성
-            const newMap = map || new window.kakao.maps.Map(
-                document.getElementById('map'),
-                options
-            );
-            setMap(newMap);
-        
-            const newPs = new window.kakao.maps.services.Places();
-            setPs(newPs);
-        
-            const newInfowindow = new window.kakao.maps.InfoWindow({
-                map: newMap,
-                position: options.center,
-                content: '',
-            });
-            setInfowindow(newInfowindow);
-        
             try {
-                await searchPlaces();
+                // 사용자의 현재 위치를 받아오기
+                const userPosition = await getUserPosition();
+                console.log('User Position:', userPosition);
+
+                // 초기 지도 설정
+                const options = {
+                    center: new window.kakao.maps.LatLng(
+                        userPosition.coords.latitude,
+                        userPosition.coords.longitude
+                    ),
+                    level: 3,
+                };
+
+                setOptions(options);
+
+                // 기존의 맵이 있으면 그 맵을 사용하고, 없으면 새로운 맵을 생성
+                const newMap = map || new window.kakao.maps.Map(
+                    document.getElementById('map'),
+                    options
+                );
+                setMap(newMap);
+
+                const newPs = new window.kakao.maps.services.Places();
+                setPs(newPs);
+
+                const newInfowindow = new window.kakao.maps.InfoWindow({
+                    map: newMap,
+                    position: options.center,
+                    content: '',
+                });
+                setInfowindow(newInfowindow);
+
+                // "술집" 키워드로 장소 검색
+                await searchPlaces(userPosition.coords.latitude, userPosition.coords.longitude);
             } catch (error) {
-                // handle error
+                console.error('Error fetching data:', error);
             }
         };
-      
+
         fetchData();
-      
+
         return () => {
-          // cleanup
+            // cleanup
         };
-      }, [map]); // map이 변경될 때만 useEffect 재실행
+    }, [map]); // 페이지 로딩 시 한 번만 실행 // map이 변경될 때만 useEffect 재실행
 
     // -----------------------------------------------
 
-    
+    const getUserPosition = () => {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                (position) => resolve(position),
+                (error) => reject(error)
+            );
+        });
+    };
 
-// 키워드 검색을 요청하는 함수입니다
-    const searchPlaces = (event) => {
-        const keyword = document.getElementById('keyword').value;
-        event.preventDefault(); 
-        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            alert('키워드를 입력해주세요!');
-            return false;
+    // 키워드 검색을 요청하는 함수입니다
+    const searchPlaces = async (latitude, longitude) => {
+        try {
+        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+            const newPs = new window.kakao.maps.services.Places();
+            const response = await newPs.keywordSearch(keyword, placesSearchCB, {
+            location: new window.kakao.maps.LatLng(latitude, longitude),
+        });
+
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(response);
+        } catch (error) {
+        console.error('Error searching places:', error);
         }
-
-    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-        ps.keywordSearch( keyword, placesSearchCB); 
-    }
+    };
 
     const placesSearchCB = (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
@@ -127,7 +146,7 @@ export default function MapPage() {
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
 
-            (function (marker, title, place) {
+            /*(function (marker, title, place) {
                 kakao.maps.event.addListener(marker, 'click', function () {
                     displayInfowindow(marker, title, place);
                 });
@@ -135,9 +154,9 @@ export default function MapPage() {
                 itemEl.onclick = function () {
                     displayInfowindow(marker, title, place);
                 };
-            })(marker, places[i].place_name, places[i]);
+            })(marker, places[i].place_name, places[i]);*/
 
-            /*(function(marker, title) {
+            (function(marker, title) {
                 kakao.maps.event.addListener(marker, 'mouseover', function() {
                     displayInfowindow(marker, title);
                 });
@@ -155,7 +174,7 @@ export default function MapPage() {
                         infowindow.close();
                     }
                 };
-            })(marker, places[i].place_name);*/
+            })(marker, places[i].place_name);
     
             fragment.appendChild(itemEl);
         }
