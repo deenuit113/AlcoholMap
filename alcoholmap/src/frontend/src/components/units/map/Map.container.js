@@ -16,14 +16,17 @@ export default function MapPage() {
     const [ps, setPs] = useState(null);
     const [infowindow, setInfowindow] = useState(null);
     const [markers, setMarkers] = useState([])
+    const [userPosition,setUserPosition] = useState(null);
+    const [radius, setRadius] = useState(1000);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 // 사용자의 현재 위치를 받아오기
                 const userPosition = await getUserPosition();
+                setUserPosition(userPosition)
                 console.log('User Position:', userPosition);
-
+    
                 // 초기 지도 설정
                 const options = {
                     center: new window.kakao.maps.LatLng(
@@ -32,39 +35,37 @@ export default function MapPage() {
                     ),
                     level: 3,
                 };
-
+    
                 setOptions(options);
-
+    
                 // 기존의 맵이 있으면 그 맵을 사용하고, 없으면 새로운 맵을 생성
                 const newMap = map || new window.kakao.maps.Map(
                     document.getElementById('map'),
                     options
                 );
                 setMap(newMap);
-
+    
                 const newPs = new window.kakao.maps.services.Places();
                 setPs(newPs);
-
+    
                 const newInfowindow = new window.kakao.maps.InfoWindow({
                     map: newMap,
                     position: options.center,
                     content: '',
                 });
                 setInfowindow(newInfowindow);
-
-                // "술집" 키워드로 장소 검색
-                await searchPlaces(userPosition.coords.latitude, userPosition.coords.longitude);
+                
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
+    
         fetchData();
-
+    
         return () => {
             // cleanup
         };
-    }, [map]); // 페이지 로딩 시 한 번만 실행 // map이 변경될 때만 useEffect 재실행
+    }, [map]); // map이 변경될 때만 useEffect 재실행
 
     // -----------------------------------------------
 
@@ -77,21 +78,52 @@ export default function MapPage() {
         });
     };
 
-    // 키워드 검색을 요청하는 함수입니다
-    const searchPlaces = async (latitude, longitude) => {
-        try {
-        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-            const newPs = new window.kakao.maps.services.Places();
-            const response = await newPs.keywordSearch(keyword, placesSearchCB, {
-            location: new window.kakao.maps.LatLng(latitude, longitude),
-        });
-
-        // 검색 목록과 마커를 표출합니다
-        displayPlaces(response);
-        } catch (error) {
-        console.error('Error searching places:', error);
+    function calculateDistance(latlng1, latlng2) { //위도 경도 값으로 거리 계산
+        // 각도를 라디안으로 변환
+        function toRad(value) {
+            return (value * Math.PI) / 180;
         }
-    };
+    
+        const R = 6371; // 지구의 반지름 (단위: 킬로미터)
+    
+        const lat1 = latlng1.getLat();
+        const lon1 = latlng1.getLng();
+        const lat2 = latlng2.getLat();
+        const lon2 = latlng2.getLng();
+    
+        // 위도 및 경도의 차이 계산
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+    
+        // Haversine 공식
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    
+        // 거리 계산 (단위: 킬로미터)
+        const distance = R * c;
+    
+        return distance;
+    }
+
+// 키워드 검색을 요청하는 함수입니다
+    const searchPlaces = (event) => {
+        const keyword = document.getElementById('keyword').value;
+        event.preventDefault();
+
+        if (!keyword.replace(/^\s+|\s+$/g, '')) {
+            alert('키워드를 입력해주세요!');
+            return false;
+        }
+
+        // 사용자의 위치를 기반으로 검색 수행
+        ps.keywordSearch(keyword, placesSearchCB, 
+            {
+                location: new window.kakao.maps.LatLng(userPosition.latitude, userPosition.longitude),
+            }
+        );
+    }
 
     const placesSearchCB = (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
@@ -316,7 +348,7 @@ export default function MapPage() {
             <Head>
                 <script
                     type="text/javascript" 
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=874eea7b48b7810e4c254737d3892e8f&libraries=services"
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=874eea7b48b7810e4c254737d3892e8f&libraries=services,clusterer,drawing,geometry"
                     strategy ="lazyOnload"
                 ></script>
             </Head>
