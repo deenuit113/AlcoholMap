@@ -324,11 +324,13 @@ export default function MapPage() {
 
     const modalContent = selectedPlace && (
         <>
-          <div>장소명: {selectedPlace.place_name}</div>
-          <div>주소: {selectedPlace.address_name}</div>
-          <div>카테고리: {selectedPlace.category_group_name}</div>
-          <div>전화번호: {selectedPlace.phone}</div>
-          <div>장소 URL: {selectedPlace.place_url}</div>
+            <div>장소명: {selectedPlace.place_name}</div>
+            <div>주소: {selectedPlace.address_name}</div>
+            <div>카테고리: {selectedPlace.category_group_name}</div>
+            <div>전화번호: {selectedPlace.phone}</div>
+            <div>
+            장소 URL: <a href = {selectedPlace.place_url}>{selectedPlace.place_url}</a>
+            </div>
           <button onClick={closeModal}>닫기</button>
         </>
     );
