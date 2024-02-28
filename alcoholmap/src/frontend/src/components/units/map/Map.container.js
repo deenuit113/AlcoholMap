@@ -56,6 +56,11 @@ export default function MapPage() {
                     content: '',
                 });
                 setInfowindow(newInfowindow);
+
+                kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
+
+            // 초기 로딩 시 한 번 검색을 수행합니다.
+                handleMapDragEnd();
                 
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -67,9 +72,41 @@ export default function MapPage() {
         return () => {
             // cleanup
         };
-    }, [map]); // map이 변경될 때만 useEffect 재실행
+    }, [map,ps]); // map이 변경될 때만 useEffect 재실행
 
     // -----------------------------------------------
+
+
+    const handleMapDragEnd = async () => {
+        try {
+            // ps가 초기화되지 않았을 때의 처리
+            if (!ps) {
+                const newPs = new window.kakao.maps.services.Places();
+                console.log(newPs);
+                setPs(newPs);
+            }
+    
+            // 맵의 중심 좌표를 가져와서 검색 수행
+            const center = map.getCenter();
+            const latitude = center.getLat();
+            const longitude = center.getLng();
+
+            removeMarker();
+    
+            // 검색어는 현재 입력된 keyword를 사용
+            const result = await ps.keywordSearch(keyword, placesSearchCB, {
+                location: new window.kakao.maps.LatLng(latitude, longitude),
+            });
+    
+            // 검색 결과를 목록에 표시
+            displayPlaces(result);
+
+            
+        } catch (error) {
+            console.error('Error handling map drag end:', error);
+        }
+    };
+
 
     const getUserPosition = async () => {
         return new Promise((resolve, reject) => {
@@ -80,7 +117,7 @@ export default function MapPage() {
         });
     };
 
-// 키워드 검색을 요청하는 함수입니다
+    // 키워드 검색을 요청하는 함수입니다
     const searchPlaces = async (event) => {
         event.preventDefault();
         try {
