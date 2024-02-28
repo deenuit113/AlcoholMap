@@ -4,6 +4,7 @@ import MapUI from './Map.presenter';
 import Head from 'next/head';
 import Script from 'next/script';
 import Modal from 'react-modal';
+import _debounce from 'lodash/debounce'
 
 export default function MapPage() {
     
@@ -50,16 +51,15 @@ export default function MapPage() {
                 const newPs = new window.kakao.maps.services.Places();
                 setPs(newPs);
     
-                const newInfowindow = new window.kakao.maps.InfoWindow({
-                    map: newMap,
-                    position: options.center,
-                    content: '',
-                });
+                if (!infowindow) {
+                    const newInfowindow = new window.kakao.maps.InfoWindow({
+                        map: newMap,
+                        position: options.center,
+                        content: '',
+                    });
                 setInfowindow(newInfowindow);
-
+                }
                 kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
-
-            // 초기 로딩 시 한 번 검색을 수행합니다.
                 handleMapDragEnd();
                 
             } catch (error) {
@@ -77,7 +77,7 @@ export default function MapPage() {
     // -----------------------------------------------
 
 
-    const handleMapDragEnd = async () => {
+    const handleMapDragEnd = _debounce(async () => {
         try {
             // ps가 초기화되지 않았을 때의 처리
             if (!ps) {
@@ -105,7 +105,7 @@ export default function MapPage() {
         } catch (error) {
             console.error('Error handling map drag end:', error);
         }
-    };
+    }, 500);
 
 
     const getUserPosition = async () => {
@@ -213,7 +213,9 @@ export default function MapPage() {
                 });
     
                 kakao.maps.event.addListener(marker, 'mouseout', function() {
-                    infowindow.close();
+                    if (infowindow) {
+                        infowindow.close();
+                    }
                 });
     
                 itemEl.onmouseover =  function () {
