@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import MapUI from './Map.presenter';
 import Head from 'next/head';
 import Script from 'next/script';
+import Modal from 'react-modal';
 
 export default function MapPage() {
     
@@ -17,7 +18,8 @@ export default function MapPage() {
     const [infowindow, setInfowindow] = useState(null);
     const [markers, setMarkers] = useState([])
     const [userPosition,setUserPosition] = useState(null);
-    const [radius, setRadius] = useState(1000);
+    const [selectedPlace, setSelectedPlace] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -155,15 +157,18 @@ export default function MapPage() {
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
 
-            /*(function (marker, title, place) {
+            (function (marker, title, place) {
                 kakao.maps.event.addListener(marker, 'click', function () {
-                    displayInfowindow(marker, title, place);
+                    //displayInfowindow(marker, title, place);
+                    onMarkerClick(place);
+                    
                 });
     
                 itemEl.onclick = function () {
-                    displayInfowindow(marker, title, place);
+                    //displayInfowindow(marker, title, place);
+                    onMarkerClick(place);
                 };
-            })(marker, places[i].place_name, places[i]);*/
+            })(marker, places[i].place_name, places[i]);
 
             (function(marker, title) {
                 kakao.maps.event.addListener(marker, 'mouseover', function() {
@@ -292,7 +297,42 @@ export default function MapPage() {
             el.removeChild (el.lastChild);
         }
     }
+
+    // -------------------모달 관련 함수-----------------------
+
+    // 마커 클릭 이벤트 핸들러
+    const onMarkerClick = (place) => {
+        setSelectedPlace(place);
+        openModal(); // 모달창 열기
+    };
     
+    // 목록 항목 클릭 이벤트 핸들러
+    const onListItemClick = (place) => {
+        setSelectedPlace(place);
+        openModal(); // 모달창 열기
+    };
+    
+    // 모달창 열기 함수
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+    
+    // 모달창 닫기 함수
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const modalContent = selectedPlace && (
+        <>
+          <div>장소명: {selectedPlace.place_name}</div>
+          <div>주소: {selectedPlace.address_name}</div>
+          <div>카테고리: {selectedPlace.category_group_name}</div>
+          <div>전화번호: {selectedPlace.phone}</div>
+          <div>장소 URL: {selectedPlace.place_url}</div>
+          <button onClick={closeModal}>닫기</button>
+        </>
+    );
+        
     // -------------------------------------------------------
 
     const onClickMoveToMypage = () => {
@@ -329,7 +369,28 @@ export default function MapPage() {
                     strategy ="lazyOnload"
                 ></script>
             </Head>
-           
+            
+            {/* 모달창 컴포넌트 */}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                style={{
+                    overlay: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 배경 투명도 조절
+                    },
+                    content: {
+                    top: '50%',
+                    left: 'auto',
+                    right: '0',
+                    bottom: '30%',
+                    transform: 'translate(-50%, -50%)', // 중앙 정렬
+                    zIndex: 1000, // 모달의 z-index 설정 (큰 값으로 지정)
+                    },
+                }}
+                >
+                {modalContent && [modalContent]} {/* 배열로 감싸주기 */}
+            </Modal>
+
             <MapUI
                 onClickMoveToMypage = {onClickMoveToMypage}
                 onClickMoveToLogin = {onClickMoveToLogin}
