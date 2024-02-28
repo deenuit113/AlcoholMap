@@ -4,7 +4,7 @@ export default function MapUI(props) {
     return(
             <S.Wrapper>
                 <S.AMHeader>
-                    <S.AMTitle onClick={props.onClickMoveToReload}>AlcoholMap</S.AMTitle>
+                    <S.AMTitle onClick={props.onClickReload}>AlcoholMap</S.AMTitle>
                 </S.AMHeader>
                 <S.MapNav>
                     <S.LoginButton onClick={props.onClickMoveToLogin}>로그인</S.LoginButton>

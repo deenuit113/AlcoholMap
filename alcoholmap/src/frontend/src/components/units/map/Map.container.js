@@ -69,7 +69,7 @@ export default function MapPage() {
 
     // -----------------------------------------------
 
-    const getUserPosition = () => {
+    const getUserPosition = async () => {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(
                 (position) => resolve(position),
@@ -78,54 +78,31 @@ export default function MapPage() {
         });
     };
 
-    function calculateDistance(latlng1, latlng2) { //위도 경도 값으로 거리 계산
-        // 각도를 라디안으로 변환
-        function toRad(value) {
-            return (value * Math.PI) / 180;
-        }
-    
-        const R = 6371; // 지구의 반지름 (단위: 킬로미터)
-    
-        const lat1 = latlng1.getLat();
-        const lon1 = latlng1.getLng();
-        const lat2 = latlng2.getLat();
-        const lon2 = latlng2.getLng();
-    
-        // 위도 및 경도의 차이 계산
-        const dLat = toRad(lat2 - lat1);
-        const dLon = toRad(lon2 - lon1);
-    
-        // Haversine 공식
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    
-        // 거리 계산 (단위: 킬로미터)
-        const distance = R * c;
-    
-        return distance;
-    }
-
 // 키워드 검색을 요청하는 함수입니다
-    const searchPlaces = (event) => {
-        const keyword = document.getElementById('keyword').value;
+    const searchPlaces = async (event) => {
         event.preventDefault();
-
-        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            alert('키워드를 입력해주세요!');
-            return false;
-        }
-
-        // 사용자의 위치를 기반으로 검색 수행
-        ps.keywordSearch(keyword, placesSearchCB, 
-            {
-                location: new window.kakao.maps.LatLng(userPosition.latitude, userPosition.longitude),
+        try {
+            // 사용자의 위치를 기반으로 검색 수행
+            const keyword = document.getElementById('keyword').value;
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                alert('키워드를 입력해주세요!');
+                return false;
             }
-        );
-    }
+
+            // 위도와 경도 추출
+            const latitude = userPosition.coords.latitude;
+            const longitude = userPosition.coords.longitude;
+
+            ps.keywordSearch(keyword, placesSearchCB, {
+                location: new window.kakao.maps.LatLng(latitude, longitude),
+            });
+        } catch (error) {
+            console.error('Error searching places:', error);
+        }
+    };
 
     const placesSearchCB = (data, status, pagination) => {
+
         if (status === kakao.maps.services.Status.OK) {
     
             // 정상적으로 검색이 완료됐으면
