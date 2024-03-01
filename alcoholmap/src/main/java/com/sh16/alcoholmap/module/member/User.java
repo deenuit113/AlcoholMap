@@ -34,11 +34,11 @@ public class User implements UserDetails {
     @Column(name = "capa_soju")
     private int capaSoju;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
+    @Column(name = "roles")
+    private String roles;
 
     @Builder
-    public User(String email, String password, int capaSoju, String auth, List<String> roles){
+    public User(String email, String password, int capaSoju, String auth, String roles){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
@@ -47,12 +47,11 @@ public class User implements UserDetails {
     }
 
     //권한 반환
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+    @Override // 권한 반환
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
+
 
     @Override
     public String getUsername(){

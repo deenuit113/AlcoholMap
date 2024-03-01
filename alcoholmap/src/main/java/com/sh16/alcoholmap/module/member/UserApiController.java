@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.member;
 
+import com.sh16.alcoholmap.module.jwt.TokenDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,17 @@ public class UserApiController {
     @DeleteMapping("/users/delete/{email}")
     public ResponseEntity<Response> deleteUser(@PathVariable String email) {
         return userService.deleteUserByEmail(email);
+    }
+
+    /**
+     *  로그인
+     */
+    @PostMapping("/users/login")
+    public TokenDto login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+        String email = userLoginRequestDto.getEmail();
+        String password = userLoginRequestDto.getPassword();
+        TokenDto tokenInfo = userService.login(email, password);
+        return tokenInfo;
     }
 
 
