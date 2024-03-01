@@ -72,7 +72,7 @@ export default function MapPage() {
         return () => {
             // cleanup
         };
-    }, [map,ps]); // map이 변경될 때만 useEffect 재실행
+    }, [map,ps,router]); // map, ps, router이 변경될 때만 useEffect 재실행
 
     // -----------------------------------------------
 
