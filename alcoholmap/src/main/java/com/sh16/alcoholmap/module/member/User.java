@@ -1,6 +1,7 @@
 package com.sh16.alcoholmap.module.member;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name = "users")
 @NoArgsConstructor
@@ -25,24 +28,40 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
 
     @Column(name = "capa_soju")
     private int capaSoju;
 
+    @Column(name = "roles")
+    private String roles;
+
     @Builder
-    public User(String email, String password, int capaSoju, String auth){
+    public User(String email, String password, int capaSoju, String auth, String roles, String nickname){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
+        this.roles = roles;
+        this.nickname = nickname;
 
     }
 
+    //회원 수정용 메서드
+    public void updateInfo(String nickname, int capaSoju) {
+        this.nickname = nickname;
+        this.capaSoju = capaSoju;
+    }
+
+    //권한 반환
     @Override // 권한 반환
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("user"));
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
+
 
     @Override
     public String getUsername(){
