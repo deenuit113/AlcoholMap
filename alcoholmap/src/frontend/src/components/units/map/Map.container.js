@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MapUI from './Map.presenter';
-import Head from 'next/head';
-import Script from 'next/script';
+
 import Modal from 'react-modal';
 import _debounce from 'lodash/debounce'
 
 export default function MapPage() {
-    
+
     const router = useRouter()
 
     const [keyword, setKeyword] = useState("술집");
@@ -22,64 +21,88 @@ export default function MapPage() {
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // 사용자의 현재 위치를 받아오기
-                const userPosition = await getUserPosition();
-                setUserPosition(userPosition)
-                console.log('User Position:', userPosition);
+        const script = document.createElement("script");
+        script.async = true;
+        script.src =
+            "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=874eea7b48b7810e4c254737d3892e8f&libraries=services";
     
-                // 초기 지도 설정
-                const options = {
-                    center: new window.kakao.maps.LatLng(
-                        userPosition.coords.latitude,
-                        userPosition.coords.longitude
-                    ),
-                    level: 2,
-                };
-    
-                setOptions(options);
-    
-                // 기존의 맵이 있으면 그 맵을 사용하고, 없으면 새로운 맵을 생성
-                const newMap = map || new window.kakao.maps.Map(
-                    document.getElementById('map'),
-                    options
-                );
-                setMap(newMap);
-    
-                const newPs = new window.kakao.maps.services.Places();
-                setPs(newPs);
-    
-                if (!infowindow) {
-                    const newInfowindow = new window.kakao.maps.InfoWindow({
-                        map: newMap,
-                        position: options.center,
-                        content: '',
-                    });
-                setInfowindow(newInfowindow);
-                }
-                kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
-                handleMapDragEnd();
-                
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+        script.onload = () => {
+            console.log('Kakao Maps SDK loaded successfully!');
+            window.kakao.maps.load(() => {
+                fetchData();
+            });
         };
+        document.head.appendChild(script);
     
-        fetchData();
-    
-    }, [ps]); // map이 변경될 때만 useEffect 재실행
+        // Cleanup function to remove the script element when the component unmounts
+        return () => {
+            //document.head.removeChild(script);
+        };
+    }, [ps]);
 
     // -----------------------------------------------
+    const updatePs = () => {
+        setPs((prevPs) => {
+            if (!prevPs) {
+                return new window.kakao.maps.services.Places();
+            }
+            return prevPs;
+        });
+    };
 
+    const fetchData = async () => {
+        try {
+            
+            // 사용자의 현재 위치를 받아오기
+            const userPosition = await getUserPosition();
+            setUserPosition(userPosition)
+            console.log('User Position:', userPosition);
+
+            // 초기 지도 설정
+            const options = {
+                center: new window.kakao.maps.LatLng(
+                    userPosition.coords.latitude,
+                    userPosition.coords.longitude
+                ),
+                level: 2,
+            };
+            console.log(options);
+
+            setOptions(options);
+
+            // 기존의 맵이 있으면 그 맵을 사용하고, 없으면 새로운 맵을 생성
+            const newMap = map || new window.kakao.maps.Map(
+                document.getElementById('map'),
+                options
+            );
+            setMap(newMap);
+
+            const newPs = ps || new window.kakao.maps.services.Places();
+            setPs(newPs);
+
+            if (!infowindow) {
+                const newInfowindow = new window.kakao.maps.InfoWindow({
+                    map: newMap,
+                    position: options.center,
+                    content: '',
+                });
+            setInfowindow(newInfowindow);
+            }
+            kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
+            handleMapDragEnd();
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const handleMapDragEnd = _debounce(async () => {
         try {
             // ps가 초기화되지 않았을 때의 처리
             if (!ps) {
                 const newPs = new window.kakao.maps.services.Places();
-                console.log(newPs);
                 setPs(newPs);
             }
             if (ps){
@@ -100,7 +123,7 @@ export default function MapPage() {
                     displayPlaces(result);
                 }
             } else{
-                console.error('Error handling map drag end: ps is null')
+                //console.error('Error handling map drag end: ps is null')
             }
 
             
@@ -181,7 +204,6 @@ export default function MapPage() {
         
         // 마커 배열 초기화
         setMarkers([])
-        console.log("places:", places)
         for (let i=0; i<places.length; i++ ) {
             // 마커를 생성하고 지도에 표시합니다
             let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -410,13 +432,6 @@ export default function MapPage() {
 
     return (
         <>
-            <Head>
-                <script
-                    type="text/javascript" 
-                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=874eea7b48b7810e4c254737d3892e8f&libraries=services,clusterer,drawing,geometry"
-                    strategy ="lazyOnload"
-                ></script>
-            </Head>
             
             {/* 모달창 컴포넌트 */}
             <Modal
