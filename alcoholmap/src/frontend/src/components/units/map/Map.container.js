@@ -36,7 +36,7 @@ export default function MapPage() {
                         userPosition.coords.latitude,
                         userPosition.coords.longitude
                     ),
-                    level: 3,
+                    level: 2,
                 };
     
                 setOptions(options);
@@ -69,10 +69,7 @@ export default function MapPage() {
     
         fetchData();
     
-        return () => {
-            // cleanup
-        };
-    }, [map,ps,router]); // map, ps, router이 변경될 때만 useEffect 재실행
+    }, [ps]); // map이 변경될 때만 useEffect 재실행
 
     // -----------------------------------------------
 
@@ -85,21 +82,26 @@ export default function MapPage() {
                 console.log(newPs);
                 setPs(newPs);
             }
-    
-            // 맵의 중심 좌표를 가져와서 검색 수행
-            const center = map.getCenter();
-            const latitude = center.getLat();
-            const longitude = center.getLng();
+            if (ps){
+                // 맵의 중심 좌표를 가져와서 검색 수행
+                const center = map.getCenter();
+                const latitude = center.getLat();
+                const longitude = center.getLng();
 
-            removeMarker();
-    
-            // 검색어는 현재 입력된 keyword를 사용
-            const result = await ps.keywordSearch(keyword, placesSearchCB, {
-                location: new window.kakao.maps.LatLng(latitude, longitude),
-            });
-    
-            // 검색 결과를 목록에 표시
-            displayPlaces(result);
+                removeMarker();
+        
+                // 검색어는 현재 입력된 keyword를 사용
+                const result = await ps.keywordSearch(keyword, placesSearchCB, {
+                    location: new window.kakao.maps.LatLng(latitude, longitude),
+                });
+        
+                // 검색 결과를 목록에 표시
+                if (result && result.length > 0) {
+                    displayPlaces(result);
+                }
+            } else{
+                console.error('Error handling map drag end: ps is null')
+            }
 
             
         } catch (error) {
@@ -165,7 +167,7 @@ export default function MapPage() {
     }
 
     const displayPlaces = (places) => {
-        let listEl = document.getElementById('placesList'), 
+        let listEl = document.getElementById('placesList'),
             menuEl = document.getElementById('menu_wrap'),
             fragment = document.createDocumentFragment(), 
             bounds = new kakao.maps.LatLngBounds(), 
@@ -179,7 +181,7 @@ export default function MapPage() {
         
         // 마커 배열 초기화
         setMarkers([])
-    
+        console.log("places:", places)
         for (let i=0; i<places.length; i++ ) {
             // 마커를 생성하고 지도에 표시합니다
             let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -331,11 +333,16 @@ export default function MapPage() {
         }
     }
 
-    const removeAllChildNods = (el) => {   
-        while (el.hasChildNodes()) {
-            el.removeChild (el.lastChild);
+    const removeAllChildNods = (el) => {
+        if (!el) {
+          console.error("Element is null");
+          return;
         }
-    }
+      
+        while (el.hasChildNodes()) {
+          el.removeChild(el.lastChild);
+        }
+    };
 
     // -------------------모달 관련 함수-----------------------
 
