@@ -48,14 +48,14 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
-                .claim("member_code", ((UserCustom)authentication.getPrincipal()).getMemberCode())
+                .claim("id", ((UserCustom)authentication.getPrincipal()).getMemberCode())
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .claim("member_code", ((UserCustom)authentication.getPrincipal()).getMemberCode())
+                .claim("id", ((UserCustom)authentication.getPrincipal()).getMemberCode())
                 .setExpiration(new Date(now + 86400000))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -85,12 +85,12 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Integer)claims.get("member_code"));
+        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Integer)claims.get("id"));
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
     public Integer getMemberCodeByRefreshToken(String refreshToken){
         Claims claims = parseClaims(refreshToken);
-        return (Integer)claims.get("member_code");
+        return (Integer)claims.get("id");
     }
 
     /**

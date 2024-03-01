@@ -1,6 +1,7 @@
 package com.sh16.alcoholmap.module.member;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name = "users")
 @NoArgsConstructor
@@ -31,17 +34,24 @@ public class User implements UserDetails {
     @Column(name = "capa_soju")
     private int capaSoju;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     @Builder
-    public User(String email, String password, int capaSoju, String auth){
+    public User(String email, String password, int capaSoju, String auth, List<String> roles){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
+        this.roles = roles;
 
     }
 
-    @Override // 권한 반환
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("user"));
+    //권한 반환
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override

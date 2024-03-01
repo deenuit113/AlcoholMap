@@ -1,9 +1,14 @@
 package com.sh16.alcoholmap.module.member;
 
+import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
+import com.sh16.alcoholmap.module.jwt.TokenDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,11 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder; //패스워드를 BCryptPasswordEncoder 로 암호화 한 후 저장
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
 
@@ -65,6 +74,29 @@ public class UserService {
         userRepository.delete(user);
         return Response.newResult(HttpStatus.OK, "탈퇴가 완료되었습니다.", null);
 
+    }
+
+    /**
+     * 로그인
+     * @param email
+     * @param password
+     * @return
+     */
+    @Transactional
+    public TokenDto login(String email, String password) {
+        // 1. Login email/PW 를 기반으로 Authentication 객체 생성
+        // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+
+        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+        // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        TokenDto tokenDto = jwtTokenProvider.generateToken(authentication);
+
+        return tokenDto;
     }
 
 
