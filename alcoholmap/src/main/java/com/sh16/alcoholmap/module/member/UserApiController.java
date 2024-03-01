@@ -7,12 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @RestController
@@ -31,12 +26,12 @@ public class UserApiController {
     }
 
     /**
-     * 구현중 - 회원 조회 (마이페이지)
+     * 회원 조회 (마이페이지)
      * @return dto
      */
     @GetMapping("/users/profile/{email}")
     public ResponseEntity<UserDTO> getProfile(@PathVariable String email){
-        UserDTO dto = userService.getProfileByEmail(email);
+        UserDTO dto = userService.getUserInfoByEmail(email);
         return ResponseEntity.ok(dto);
     }
 
@@ -48,6 +43,23 @@ public class UserApiController {
         return userService.deleteUserByEmail(email);
     }
 
+
+
+    /**
+     * 회원 정보 수정
+     * 닉네임, capaSoju 변경 가능 ----> 구현 예정
+     */
+//    @PutMapping("/users/profile")
+//    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
+//        ResponseEntity<Response> updateResponse = userService.updateInfo(requestDTO, httpRequest);
+//        if (updateResponse.getStatusCode() != HttpStatus.OK) {
+//            return Response.newResult(updateResponse.getStatusCode(), updateResponse.getBody().getMessage(), null);
+//        }
+//        ResponseEntity<Response> response = userService.getProfile(TokenToId.check(httpRequest), httpRequest);
+//        return Response.newResult(response.getStatusCode(), "정보를 수정했습니다.", response.getBody());
+//    }
+
+
     /**
      *  로그인
      */
@@ -58,6 +70,16 @@ public class UserApiController {
         TokenDto tokenInfo = userService.login(email, password);
         return tokenInfo;
     }
+
+
+
+
+
+
+
+
+
+
 
 
     /**

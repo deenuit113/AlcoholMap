@@ -28,8 +28,11 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
 
     @Column(name = "capa_soju")
     private int capaSoju;
@@ -38,12 +41,19 @@ public class User implements UserDetails {
     private String roles;
 
     @Builder
-    public User(String email, String password, int capaSoju, String auth, String roles){
+    public User(String email, String password, int capaSoju, String auth, String roles, String nickname){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
         this.roles = roles;
+        this.nickname = nickname;
 
+    }
+
+    //회원 수정용 메서드
+    public void updateInfo(String nickname, int capaSoju) {
+        this.nickname = nickname;
+        this.capaSoju = capaSoju;
     }
 
     //권한 반환

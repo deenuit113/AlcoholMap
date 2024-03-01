@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.jwt;
 
+import com.sh16.alcoholmap.common.config.AuthConst;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -59,7 +60,7 @@ public class JwtTokenProvider {
                 .compact();
 
         return TokenDto.builder()
-                .grantType("Bearer")
+                .grantType(AuthConst.TOKEN_TYPE)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();

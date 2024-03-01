@@ -2,6 +2,7 @@ package com.sh16.alcoholmap.module.member;
 
 import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 import com.sh16.alcoholmap.module.jwt.TokenDto;
+import com.sh16.alcoholmap.module.jwt.TokenToId;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
@@ -26,6 +28,7 @@ public class UserService {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
 
 
 
@@ -49,10 +52,9 @@ public class UserService {
     }
 
     /**
-     * (구현중)
-     * 회원조회 (마이페이지 조회)
+     * 회원조회
      */
-    public UserDTO getProfileByEmail(String email) {
+    public UserDTO getUserInfoByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException(email + " : 등록되지 않은 이메일 입니다.")
         );
@@ -60,6 +62,7 @@ public class UserService {
         dto.setEmail(user.getEmail());
         dto.setPassword(user.getPassword()); // 실제 배포시에는 비밀번호 반환x
         dto.setCapaSoju(user.getCapaSoju());
+        dto.setNickname(user.getNickname());
         return dto;
     }
 
@@ -74,6 +77,24 @@ public class UserService {
         userRepository.delete(user);
         return Response.newResult(HttpStatus.OK, "탈퇴가 완료되었습니다.", null);
 
+    }
+    /**
+     * 회원 수정
+     * 닉네임, capaSoju 변경 가능
+     */
+    @Transactional
+    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest request) {
+        String userId = TokenToId.check(request);
+        Optional<User> checkUser = userRepository.findUserByNickname(requestDTO.getNickname());
+        if (checkUser.isPresent() && !checkUser.get().getId().equals(userId)) {
+            return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
+        }
+        if (requestDTO.getNickname().length() > 8) {
+            return Response.newResult(HttpStatus.BAD_REQUEST, "닉네임은 8자리 이하만 가능합니다.", null);
+        }
+        Optional<User> user = userRepository.findUserById(userId);
+        user.get().updateInfo(requestDTO.getNickname(), requestDTO.getCapaSoju());
+        return Response.newResult(HttpStatus.OK, "정보가 업데이트 되었습니다.", null);
     }
 
     /**
