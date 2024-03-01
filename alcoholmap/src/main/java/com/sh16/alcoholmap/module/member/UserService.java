@@ -52,7 +52,7 @@ public class UserService {
     }
 
     /**
-     * 회원조회
+     * 회원 조회 (마이 페이지)
      */
     public UserDTO getUserInfoByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(

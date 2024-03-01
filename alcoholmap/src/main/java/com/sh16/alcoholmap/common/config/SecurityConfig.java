@@ -56,17 +56,16 @@ public class SecurityConfig {
             authorize
                     .requestMatchers("/users/signup").permitAll()
                     .requestMatchers("/users/login").permitAll()
-                    .requestMatchers("/users/**").hasAnyRole("USER","MANAGER","ADMIN")
-                    .requestMatchers("/manager/**").hasAnyRole("MANAGER","ADMIN")
-                    .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+//                    .requestMatchers("/users/**").hasAnyRole("USER","MANAGER","ADMIN")
+//                    .requestMatchers("/manager/**").hasAnyRole("MANAGER","ADMIN")
+//                    .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                     // hasAnyRole() 메소드는 자동으로 앞에 ROLE_을 추가해서 체크해준다 (각 파라미터는 or 연산)
-
 //                            .requestMatchers("/user/**").hasAnyAuthority("USER","MANAGER","ADMIN")
 //                            .requestMatchers("/user/**").authenticated()
 //                            .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
 //                            //.requestMatchers("/manager/**").access("hasAuthority('ROLE_ADMIN')")
 //                            .requestMatchers(("/admin/**")).hasAuthority("ADMIN")
-                    .anyRequest().permitAll();  // 이외의 요청은 모두 허용함
+                    .anyRequest().authenticated();  // 이외의 요청은 모두 허용함
         });
 
         /**

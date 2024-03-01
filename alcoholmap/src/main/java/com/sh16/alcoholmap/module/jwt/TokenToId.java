@@ -13,7 +13,7 @@ public class TokenToId {
         }
         String token = TokenUtils.getTokenFromHeader(header);
         Claims claims = TokenUtils.getClaimsFromToken(token);
-        String userId = (String) claims.get("id");
+        String userId =  (String) claims.get("id");
         return userId;
     }
 }
