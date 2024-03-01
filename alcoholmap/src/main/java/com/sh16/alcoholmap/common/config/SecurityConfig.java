@@ -27,12 +27,12 @@ public class SecurityConfig {
 
 
     // 스프링 시큐리티 기능 비활성화
-	@Bean
-	public WebSecurityCustomizer configure() {
-		return (web -> web.ignoring()
-				.requestMatchers("/**") //일단 전부 허용(test 위함)
-		);
-	}
+//	@Bean
+//	public WebSecurityCustomizer configure() {
+//		return (web -> web.ignoring()
+//				.requestMatchers("/**") //일단 전부 허용(test 위함)
+//		);
+//	}
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -54,7 +54,9 @@ public class SecurityConfig {
          */
         http.authorizeRequests(authorize-> {
             authorize
-                    .requestMatchers("/user/**").hasAnyRole("USER","MANAGER","ADMIN")
+                    .requestMatchers("/users/signup").permitAll()
+                    .requestMatchers("/users/login").permitAll()
+                    .requestMatchers("/users/**").hasAnyRole("USER","MANAGER","ADMIN")
                     .requestMatchers("/manager/**").hasAnyRole("MANAGER","ADMIN")
                     .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                     // hasAnyRole() 메소드는 자동으로 앞에 ROLE_을 추가해서 체크해준다 (각 파라미터는 or 연산)
