@@ -85,6 +85,8 @@ export default function MapPage() {
                     content: '',
                 });
             setInfowindow(newInfowindow);
+
+            newInfowindow.close();
             }
             kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
             //kakao.maps.event.addListener(newMap, 'zoom_changed', handleMapDragEnd);
