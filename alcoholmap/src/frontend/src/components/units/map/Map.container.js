@@ -5,6 +5,8 @@ import MapUI from './Map.presenter';
 import Modal from 'react-modal';
 import _debounce from 'lodash/debounce'
 
+Modal.setAppElement('#__next');
+
 export default function MapPage() {
 
     const router = useRouter()
@@ -456,10 +458,13 @@ export default function MapPage() {
                 style={{
                     overlay: {
                     backgroundColor: 'rgba(0, 0, 0, 0.5)', // 배경 투명도 조절
+                    zIndex: 990,
                     },
                     content: {
+                    width: 500,
+                    height: 300,
                     top: '50%',
-                    left: 'auto',
+                    left: '50%',
                     right: '0',
                     bottom: '30%',
                     transform: 'translate(-50%, -50%)', // 중앙 정렬
