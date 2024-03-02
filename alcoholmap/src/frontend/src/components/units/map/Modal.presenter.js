@@ -1,24 +1,28 @@
 import React from 'react';
+import * as S from './Modal.styles'
 
 const ModalPresenter = ({ selectedPlace, closeModal, review, onReviewChange, onClickSubmitReview, onClickWish }) => {
     return (
-        <div>
+        <S.modalContainer>  {/* 모달 스타일을 적용합니다 */}
             {selectedPlace && (
                 <>
-                    <div>
-                        <div>장소명: {selectedPlace.place_name}</div>
-                        <div>주소: {selectedPlace.address_name}</div>
-                        <div>카테고리: {selectedPlace.category_group_name}</div>
-                        <div>전화번호: {selectedPlace.phone}</div>
-                        <div>장소 URL: <a href={selectedPlace.place_url}>{selectedPlace.place_url}</a></div>
-                        리뷰: <input type="text" value={review} onChange={onReviewChange} />
-                        <button onClick={onClickSubmitReview}>리뷰 제출</button>
-                        <button onClick={onClickWish}>찜하기</button>
-                    </div>
-                    <button onClick={closeModal}>닫기</button>
+                    <S.closeButton onClick={closeModal}>X</S.closeButton>
+                    <S.modalContent>
+                        {/* 모달 상단에 닫기 버튼(X) 추가 */}
+                        
+                        
+                        <S.divInfo>장소명: {selectedPlace.place_name}</S.divInfo>
+                        <S.divInfo>주소: {selectedPlace.address_name}</S.divInfo>
+                        <S.divInfo>카테고리: {selectedPlace.category_group_name}</S.divInfo>
+                        <S.divInfo>전화번호: {selectedPlace.phone}</S.divInfo>
+                        <S.divInfo>장소 URL: <S.placeLink href={selectedPlace.place_url}>정보 확인</S.placeLink></S.divInfo>
+                        리뷰: <S.reviewInput type="text" placeholder="리뷰를 입력하세요" value={review} onChange={onReviewChange} />
+                        <S.reviewSubmitButton onClick={onClickSubmitReview}>리뷰 제출</S.reviewSubmitButton>
+                        <S.wishListButton onClick={onClickWish}>찜하기</S.wishListButton>
+                    </S.modalContent>
                 </>
             )}
-        </div>
+        </S.modalContainer>
     );
 };
 
