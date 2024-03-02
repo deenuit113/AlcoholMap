@@ -42,15 +42,7 @@ export default function MapPage() {
         };
     }, [ps]);
 
-    // -----------------------------------------------
-    const updatePs = () => {
-        setPs((prevPs) => {
-            if (!prevPs) {
-                return new window.kakao.maps.services.Places();
-            }
-            return prevPs;
-        });
-    };
+    // ----------------------------------------------
 
     const fetchData = async () => {
         try {
@@ -311,9 +303,11 @@ export default function MapPage() {
 
     const removeMarker = () => {
         // 이전에 생성된 마커들 제거
-        markers.forEach(marker => marker.setMap(null));
-        setMarkers([]); // 배열 초기화
-    };
+        setMarkers(prevMarkers => {
+            prevMarkers.forEach(marker => marker.setMap(null));
+            return []; // Clear the markers array
+        });
+    }
 
     const displayPagination = (pagination) => {
         let paginationEl = document.getElementById('pagination'),
