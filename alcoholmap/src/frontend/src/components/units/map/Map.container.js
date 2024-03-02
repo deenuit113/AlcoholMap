@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MapUI from './Map.presenter';
+import _debounce from 'lodash/debounce'
 
 import Modal from 'react-modal';
-import _debounce from 'lodash/debounce'
+import ModalContainer from './Modal.container';
+import modalStyles from './Modal.styles'; 
 
 Modal.setAppElement('#__next');
 
@@ -398,22 +400,17 @@ export default function MapPage() {
         setReview(event.target.value)
     }
 
+    const onClickWish = (event) => {
+        setReview(event.target.value)
+    }
+
     const modalContent = selectedPlace && (
-        <>
-            <div>
-                <div>장소명: {selectedPlace.place_name}</div>
-                <div>주소: {selectedPlace.address_name}</div>
-                <div>카테고리: {selectedPlace.category_group_name}</div>
-                <div>전화번호: {selectedPlace.phone}</div>
-                <div>
-                장소 URL: <a href = {selectedPlace.place_url}>{selectedPlace.place_url}</a>
-                </div>
-                리뷰: <input type = "text"></input>
-                <button onClick={onClickSubmitReview}>리뷰 제출</button>
-            </div>
-            
-          <button onClick={closeModal}>닫기</button>
-        </>
+        <ModalContainer
+            selectedPlace={selectedPlace}
+            closeModal={closeModal}
+            onClickSubmitReview={onClickSubmitReview}
+            onClickWish={onClickWish}
+        />
     );
         
     // -------------------------------------------------------
@@ -452,29 +449,12 @@ export default function MapPage() {
 
     return (
         <>
-            
-            {/* 모달창 컴포넌트 */}
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
-                style={{
-                    overlay: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)', // 배경 투명도 조절
-                    zIndex: 990,
-                    },
-                    content: {
-                    width: 500,
-                    height: 300,
-                    top: '50%',
-                    left: '50%',
-                    right: '0',
-                    bottom: '30%',
-                    transform: 'translate(-50%, -50%)', // 중앙 정렬
-                    zIndex: 1000, // 모달의 z-index 설정 (큰 값으로 지정)
-                    },
-                }}
-                >
-                {modalContent && [modalContent]} {/* 배열로 감싸주기 */}
+                style={modalStyles}
+            >
+                {modalContent && [modalContent]}
             </Modal>
 
             <MapUI
