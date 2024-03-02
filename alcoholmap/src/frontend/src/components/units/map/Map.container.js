@@ -21,6 +21,7 @@ export default function MapPage() {
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [radius, setRadius] = useState(0);
+    const [review, setReview] = useState("")
 
 
     useEffect(() => {
@@ -389,15 +390,24 @@ export default function MapPage() {
         setIsModalOpen(false);
     };
 
+    const onClickSubmitReview = (event) => {
+        setReview(event.target.value)
+    }
+
     const modalContent = selectedPlace && (
         <>
-            <div>장소명: {selectedPlace.place_name}</div>
-            <div>주소: {selectedPlace.address_name}</div>
-            <div>카테고리: {selectedPlace.category_group_name}</div>
-            <div>전화번호: {selectedPlace.phone}</div>
             <div>
-            장소 URL: <a href = {selectedPlace.place_url}>{selectedPlace.place_url}</a>
+                <div>장소명: {selectedPlace.place_name}</div>
+                <div>주소: {selectedPlace.address_name}</div>
+                <div>카테고리: {selectedPlace.category_group_name}</div>
+                <div>전화번호: {selectedPlace.phone}</div>
+                <div>
+                장소 URL: <a href = {selectedPlace.place_url}>{selectedPlace.place_url}</a>
+                </div>
+                리뷰: <input type = "text"></input>
+                <button onClick={onClickSubmitReview}>리뷰 제출</button>
             </div>
+            
           <button onClick={closeModal}>닫기</button>
         </>
     );
@@ -433,7 +443,8 @@ export default function MapPage() {
         }
     }
 
-    
+    // 별점 평점 -------
+
 
     return (
         <>
