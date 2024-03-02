@@ -18,6 +18,7 @@ export default function MapUI(props) {
                         <S.Form onSubmit={props.searchPlaces}>
                             키워드 : 
                             <S.InputKeyword type="text" value={props.keyword} id="keyword" size="15" onChange={props.onChangeKeyword}/>
+                            <S.InputRadius type="number" value={props.radius} onChange={props.onChangeRadius}></S.InputRadius>
                             <S.SearchButton type="submit">검색하기</S.SearchButton>
                         </S.Form>
                         </S.SearchWrapper>

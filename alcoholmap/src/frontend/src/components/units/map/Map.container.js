@@ -11,7 +11,7 @@ export default function MapPage() {
 
     const [keyword, setKeyword] = useState("술집");
     const [kwError, setKwError] = useState("");
-    const [container, setContainer] = useState(null);
+    //const [container, setContainer] = useState(null);
     const [options, setOptions] = useState(null);
     const [map, setMap] = useState(null);
     const [ps, setPs] = useState(null);
@@ -20,6 +20,7 @@ export default function MapPage() {
     const [userPosition,setUserPosition] = useState(null);
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [radius, setRadius] = useState(0);
 
 
     useEffect(() => {
@@ -83,6 +84,8 @@ export default function MapPage() {
             setInfowindow(newInfowindow);
             }
             kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
+            //kakao.maps.event.addListener(newMap, 'zoom_changed', handleMapDragEnd);
+            //고려사항 zoom in/out 할때도 검색 진행?
             handleMapDragEnd();
             
         } catch (error) {
@@ -102,12 +105,13 @@ export default function MapPage() {
                 const center = map.getCenter();
                 const latitude = center.getLat();
                 const longitude = center.getLng();
-
+                const level = map.getLevel();
                 removeMarker();
         
                 // 검색어는 현재 입력된 keyword를 사용
                 const result = await ps.keywordSearch(keyword, placesSearchCB, {
                     location: new window.kakao.maps.LatLng(latitude, longitude),
+                    //level = level,
                 });
         
                 // 검색 결과를 목록에 표시
@@ -151,6 +155,7 @@ export default function MapPage() {
 
             ps.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
+                radius: radius,
             });
         } catch (error) {
             console.error('Error searching places:', error);
@@ -421,6 +426,12 @@ export default function MapPage() {
             setKwError("")
         }
     }
+    const onChangeRadius = (event) => {
+        setRadius(event.target.value)
+        if(event.target.value !== ""){
+            setKwError("")
+        }
+    }
 
     
 
@@ -454,7 +465,9 @@ export default function MapPage() {
                 onClickMoveToSignup = {onClickMoveToSignup}
                 onClickReload = {onClickReload}
                 onChangeKeyword = {onChangeKeyword}
+                onChangeRadius = {onChangeRadius}
                 keyword = {keyword}
+                radius = {radius}
                 searchPlaces = {searchPlaces}
             />
         </>

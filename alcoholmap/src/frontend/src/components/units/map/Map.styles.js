@@ -82,10 +82,19 @@ export const SearchButton = styled.button`
 `
 
 export const InputKeyword = styled.input`
-    width: 200px;
+    width: 150px;
     height: 20px;
     font-size: 15px;
     margin-top: 15px;
+`
+
+export const InputRadius = styled.input`
+    width: 50px;
+    height: 20px;
+    font-size: 15px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    margin-left: 10px;
 `
 
 export const MapWrapper = styled.div`
