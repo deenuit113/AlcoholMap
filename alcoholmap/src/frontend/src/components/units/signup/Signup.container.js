@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import SignupUI from './Signup.presenter'
 import axios from 'axios';
+import { useRouter } from 'next/router'
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -9,80 +10,77 @@ import axios from 'axios';
     회원가입 성공 시, 로그인 상태로 메인페이지 라우터
 */
 
-const baseUrl = "http://localhost:8080";
+const apiUrl = '/user/signup';
 
 export default function SignupPage(){
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [domain, setDomain] = useState("")
-    //const [disabledbutton, setButton] = useState(true) //버튼 비활성화 추후 추가
+
+    const router = useRouter()
 
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
-
+    const [capaError, setCapaError] = useState("")
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         capaSoju: 0,
     });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+
+    const onChangeInput = (event) => {
+        const { name, value } = event.target;
         setFormData({
             ...formData,
             [name]: value,
         });
+        if(name === "email" && event.target.value !== ""){
+            setEmailError("")
+        }
+        if(name === "password" && event.target.value !== ""){
+            setPwError("")
+        }
+        if(name === "capaSoju" && event.target.value !== ""){
+            setCapaError("")
+        }
+        
+    };
+
+    const onClickSubmit = () => {
+        let errorcode = 0;
+        if(!formData.email) {
+            setEmailError("이메일을 입력해주세요.")
+            errorcode = 1
+        }
+
+        if(!formData.password) {
+            setPwError("비밀번호를 입력해주세요.")
+            errorcode = 1
+        }
+
+        if(!formData.capaSoju) {
+            setCapaError("주량을 입력하세요.")
+            errorcode = 1
+        }
+        
+        if(errorcode === 0){
+            console.log(formData)
+        }
+        
     };
 
     const handleFormSubmit = async (e, formData) => {
         e.preventDefault();
         const jsonformData = JSON.stringify(formData);
         try {
-            const response = await axios.post(baseUrl + '/users/signup', jsonformData);
+            const response = await axios.post(apiUrl, jsonformData);
             console.log('Response from server:', response.data);
         } catch (error){
             console.error('error submitting data:', error);
         }
     };
-    
-    const onChangeEmail = (event) => {
-        setEmail(event.target.value)
-        if(event.target.value !== ""){
-            setEmailError("")
-        }
-    };
 
-    const onChangeDomain = (event) => {
-        setDomain(event.target.value)
-        if(event.target.value !== ""){
-            setEmailError("")
-        }
-    };
-
-    const onChangePassword = (event) => {
-        setPassword(event.target.value)
-        if(event.target.value !== ""){
-            setPwError("")
-        }
-    };
-
-    const onClickSubmit = () => {
-        if(!email) {
-            setEmailError("이메일을 입력해주세요.")
-        }
-
-        if(!domain) {
-            setEmailError("도메인을 선택해주세요.")
-        }
-
-        if(!password) {
-            setPwError("비밀번호를 입력해주세요.")
-        }
-
-        if(email && password && domain) {
-            alert("회원가입 완료")
-        }
-    };
+    const onClickMoveToMainpage = () => {
+        router.push("../map")
+    }
 
     
 
@@ -118,13 +116,12 @@ export default function SignupPage(){
         <SignupUI
             emailError = {emailError}
             pwError = {pwError}
-            onChangeDomain = {onChangeDomain}
-            onChangeEmail = {onChangeEmail}
-            onChangePassword = {onChangePassword}
+            capaError = {capaError}
             onClickSubmit = {onClickSubmit}
-            handleInputChange = {handleInputChange}
-            handleFormSubmit = {handleFormSubmit}
+            onChangeInput = {onChangeInput}
             formData = {formData}
+            handleFormSubmit = {handleFormSubmit}
+            onClickMoveToMainpage = {onClickMoveToMainpage}
         />
     )
 }
