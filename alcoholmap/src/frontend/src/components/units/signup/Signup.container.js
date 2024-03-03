@@ -18,10 +18,12 @@ export default function SignupPage(){
 
     const [emailError, setEmailError] = useState("")
     const [pwError, setPwError] = useState("")
+    const [nnError, setNnError] = useState("")
     const [capaError, setCapaError] = useState("")
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        nickname: '',
         capaSoju: 0,
     });
 
@@ -41,6 +43,9 @@ export default function SignupPage(){
         if(name === "capaSoju" && event.target.value !== ""){
             setCapaError("")
         }
+        if(name === "nickname" && event.target.value !== ""){
+            setNnError("")
+        }
         
     };
 
@@ -53,6 +58,11 @@ export default function SignupPage(){
 
         if(!formData.password) {
             setPwError("비밀번호를 입력해주세요.")
+            errorcode = 1
+        }
+
+        if(!formData.nickname) {
+            setNnError("닉네임을 입력해주세요.")
             errorcode = 1
         }
 
@@ -120,6 +130,7 @@ export default function SignupPage(){
         <SignupUI
             emailError = {emailError}
             pwError = {pwError}
+            nnError = {nnError}
             capaError = {capaError}
             onClickSubmit = {onClickSubmit}
             onChangeInput = {onChangeInput}
