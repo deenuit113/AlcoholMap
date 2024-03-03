@@ -11,6 +11,11 @@ export default {
                 source: '/users/signup',
                 destination: baseUrl + '/users/signup',
             },
+
+            {
+                source: '/users/profile/:email',
+                destination: baseUrl + '/users/profile/:email',
+            },
         ];
     },
 };
