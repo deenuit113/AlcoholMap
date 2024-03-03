@@ -26,7 +26,12 @@ export default function MapPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [radius, setRadius] = useState(0);
     const [review, setReview] = useState("")
-
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [testtoken, setToken] = useState(false);
+    
+    useEffect(() => {
+        checkIsLoggedIn();
+    }, []);
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -42,13 +47,31 @@ export default function MapPage() {
         };
         document.head.appendChild(script);
     
-        // Cleanup function to remove the script element when the component unmounts
         return () => {
-            //document.head.removeChild(script);
         };
     }, [ps]);
 
     // ----------------------------------------------
+
+    const checkIsLoggedIn = async () => { //로그인 확인 함수
+        // 로컬 스토리지에서 토큰 가져오기
+        const token = localStorage.getItem("your_token_key_here");
+
+        // 토큰이 없으면 처리
+        if (!token) {
+            console.error("Token not found in local storage");
+            setLoggedIn(true);
+            return;
+        }
+
+        // API 요청 헤더에 토큰 추가
+        /*const headers = {
+            Authorization: `Bearer ${token}`,
+            Content-Type: 'application/json',
+            // 다른 헤더도 필요한 경우 추가
+        };*/
+        setLoggedIn(true);
+    };
 
     const fetchData = async () => {
         try {
@@ -120,11 +143,6 @@ export default function MapPage() {
                     location: new window.kakao.maps.LatLng(latitude, longitude),
                     //level = level,
                 });
-        
-                // 검색 결과를 목록에 표시
-                if (result && result.length > 0) {
-                    displayPlaces(result);
-                }
             } else{
                 //console.error('Error handling map drag end: ps is null')
             }
@@ -172,24 +190,16 @@ export default function MapPage() {
     const placesSearchCB = (data, status, pagination) => {
 
         if (status === kakao.maps.services.Status.OK) {
-    
-            // 정상적으로 검색이 완료됐으면
-            // 검색 목록과 마커를 표출합니다
+            // 정상적으로 검색이 완료됐으면 검색 목록과 마커를 표출합니다
             displayPlaces(data);
-    
             // 페이지 번호를 표출합니다
             displayPagination(pagination);
-    
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-    
             alert('검색 결과가 존재하지 않습니다.');
             return;
-    
         } else if (status === kakao.maps.services.Status.ERROR) {
-    
             alert('검색 결과 중 오류가 발생했습니다.');
             return;
-    
         }
     }
 
@@ -410,6 +420,7 @@ export default function MapPage() {
             closeModal={closeModal}
             onClickSubmitReview={onClickSubmitReview}
             onClickWish={onClickWish}
+            isLoggedIn={isLoggedIn}
         />
     );
         
@@ -443,6 +454,9 @@ export default function MapPage() {
             setKwError("")
         }
     }
+    const onClickLogout = (event) => {
+        setLoggedIn(false)
+    }
 
     // 별점 평점 -------
 
@@ -451,7 +465,6 @@ export default function MapPage() {
         <>
             <Modal
                 isOpen={isModalOpen}
-                onRequestClose={closeModal}
                 style={modalStyles}
             >
                 {modalContent && [modalContent]}
@@ -467,6 +480,8 @@ export default function MapPage() {
                 keyword = {keyword}
                 radius = {radius}
                 searchPlaces = {searchPlaces}
+                isLoggedIn = {isLoggedIn}
+                onClickLogout = {onClickLogout}
             />
         </>
         

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ModalPresenter from './Modal.presenter';
 
-const ModalContainer = ({ selectedPlace, closeModal, onClickSubmitReview, onClickWish }) => {
+const ModalContainer = (props) => {
     const [review, setReview] = useState("");
 
     const handleReviewChange = (event) => {
@@ -10,12 +10,13 @@ const ModalContainer = ({ selectedPlace, closeModal, onClickSubmitReview, onClic
 
     return (
         <ModalPresenter
-            selectedPlace={selectedPlace}
-            closeModal={closeModal}
+            selectedPlace={props.selectedPlace}
+            closeModal={props.closeModal}
             review={review}
             onReviewChange={handleReviewChange}
-            onClickSubmitReview={onClickSubmitReview}
-            onClickWish={onClickWish}
+            onClickSubmitReview={props.onClickSubmitReview}
+            onClickWish={props.onClickWish}
+            isLoggedIn = {props.isLoggedIn}
         />
     );
 };
