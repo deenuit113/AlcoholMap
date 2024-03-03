@@ -65,7 +65,7 @@ public class SecurityConfig {
 //                            .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
 //                            //.requestMatchers("/manager/**").access("hasAuthority('ROLE_ADMIN')")
 //                            .requestMatchers(("/admin/**")).hasAuthority("ADMIN")
-                    .anyRequest().authenticated();  // 이외의 요청은 모두 허용함
+                    .anyRequest().permitAll();
         });
 
         /**

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
     회원가입 성공 시, 로그인 상태로 메인페이지 라우터
 */
 
-const apiUrl = '/user/signup';
+const apiUrl = '/users/signup';
 
 export default function SignupPage(){
 
@@ -71,7 +71,11 @@ export default function SignupPage(){
     const handleFormSubmit = async (e, formData) => {
         const jsonformData = JSON.stringify(formData);
         try {
-            const response = await axios.post(apiUrl, jsonformData);
+            const response = await axios.post(apiUrl, jsonformData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             console.log('Response from server:', response.data);
         } catch (error){
             console.error('error submitting data:', error);
