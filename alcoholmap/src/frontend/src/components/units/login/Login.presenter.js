@@ -3,18 +3,18 @@ import * as S from "./Login.styles";
 export default function LoginUI(props){
     return (
         <S.Wrapper>
-            <S.Logo></S.Logo>
-            <S.Title>알콜맵 로그인</S.Title>
-                <S.EmailWrapper>
+            <S.Logo onClick={props.onClickMoveToMainpage}>AlcoholMap</S.Logo>
+            <S.Title>로그인</S.Title>
+                <S.InfoWrapper>
                     <S.Label>이메일: </S.Label>
-                    <S.InputEmail type="text" onChange={props.onChangeEmail} />
-                </S.EmailWrapper>
+                    <S.InputInfo type = "text" name = "email" value = {props.formData.email} onChange={props.onChangeInput} />
+                </S.InfoWrapper>
                 <S.ErrorMsgWrapper>{props.emailError}</S.ErrorMsgWrapper>
             
-                <S.PasswordWrapper>
+                <S.InfoWrapper>
                     <S.Label>비밀번호: </S.Label>
-                    <S.InputPassword type="password" onChange={props.onChangePassword} />
-                </S.PasswordWrapper>
+                    <S.InputInfo type="password" name = "password" value = {props.formData.password} onChange={props.onChangeInput} />
+                </S.InfoWrapper>
                 <S.ErrorMsgWrapper>{props.pwError}</S.ErrorMsgWrapper>
                 <S.ButtonWrapper>
                     <S.LoginButton onClick={props.onClickSubmit}>로그인</S.LoginButton>
