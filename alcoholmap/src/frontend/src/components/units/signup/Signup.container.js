@@ -71,7 +71,11 @@ export default function SignupPage(){
     const handleFormSubmit = async (e, formData) => {
         const jsonformData = JSON.stringify(formData);
         try {
-            const response = await axios.post(apiUrl, jsonformData);
+            const response = await axios.post(apiUrl, jsonformData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             console.log('Response from server:', response.data);
         } catch (error){
             console.error('error submitting data:', error);
