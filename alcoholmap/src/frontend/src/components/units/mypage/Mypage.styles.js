@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     padding-right: 102px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items:;
     justify-content: flex-start;
     border: none;
     box-shadow: 0px 0px 10px gray;
@@ -35,14 +35,19 @@ export const Smalltitle = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
-  padding-bottom: 15px;
+  padding-bottom: 7px;
 `;
 
-export const SmallInput = styled.input`
+export const UserInfo = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
-  padding-bottom: 15px;
+  padding: 3px;
+  border: 3px solid black;
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 15px;
+  margin-bottom: 7px;
 `;
 
 export const Logo = styled.div`
@@ -50,16 +55,16 @@ export const Logo = styled.div`
   font-size: 50px;
   font-weight: bold;
   padding-bottom: 15px;
+  cursor: pointer;
 `;
 
-export const EmailWrapper = styled.div`
+export const UserInfoWrapper = styled.div`
   width: 300px;
-  height: 500px;
   display: inline-block;
   flex-direction: column;
   align-items: center;
   padding-top: 15px;
-  padding-bottom: 0px;
+  padding-bottom: 15px;
   padding-left: 5px;
   margin: 5px;
   border: 1px solid black;
