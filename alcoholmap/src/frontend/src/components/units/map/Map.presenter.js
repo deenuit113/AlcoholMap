@@ -7,9 +7,19 @@ export default function MapUI(props) {
                     <S.AMTitle onClick={props.onClickReload}>AlcoholMap</S.AMTitle>
                 </S.AMHeader>
                 <S.MapNav>
-                    <S.LoginButton onClick={props.onClickMoveToLogin}>로그인</S.LoginButton>
-                    <S.SignupButton onClick={props.onClickMoveToSignup}>회원가입</S.SignupButton>
-                    <S.MypageButton onClick={props.onClickMoveToMypage}>마이페이지</S.MypageButton>
+                    {props.isLoggedIn ? (
+                        <>
+                            <S.MypageButton onClick={props.onClickMoveToMypage}>마이페이지</S.MypageButton>
+                            <S.LogoutButton onClick={props.onClickLogout}> 로그아웃</S.LogoutButton>
+                        </>
+                    ) : (
+                        <>
+                            <S.LoginButton onClick={props.onClickMoveToLogin}>로그인</S.LoginButton>
+                            <S.SignupButton onClick={props.onClickMoveToSignup}>회원가입</S.SignupButton>
+                        </>
+                    )}
+                    
+                    
                 </S.MapNav>
                 <S.MapWrap>
                     <S.MapMain id="map"></S.MapMain>

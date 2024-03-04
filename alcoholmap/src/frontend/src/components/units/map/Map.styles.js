@@ -49,6 +49,16 @@ export const LoginButton = styled.button`
     border-radius: 3px 3px 3px 3px;
 `
 
+export const LogoutButton = styled.button`
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100px;
+    float: right;
+    margin-left: 10px;
+    border-radius: 3px 3px 3px 3px;
+`
+
 export const SignupButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
