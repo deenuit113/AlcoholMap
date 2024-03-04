@@ -25,7 +25,6 @@ export default function MapPage() {
     const [selectedPlace, setSelectedPlace] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [radius, setRadius] = useState(0);
-    const [review, setReview] = useState("")
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [testtoken, setToken] = useState(false);
     
@@ -60,7 +59,7 @@ export default function MapPage() {
         // 토큰이 없으면 처리
         if (!token) {
             console.error("Token not found in local storage");
-            setLoggedIn(true);
+            setLoggedIn(true); //토큰이 없을 시 false
             return;
         }
 
@@ -406,20 +405,10 @@ export default function MapPage() {
         setIsModalOpen(false);
     };
 
-    const onClickSubmitReview = (event) => {
-        setReview(event.target.value)
-    }
-
-    const onClickWish = (event) => {
-        setReview(event.target.value)
-    }
-
     const modalContent = selectedPlace && (
         <ModalContainer
             selectedPlace={selectedPlace}
             closeModal={closeModal}
-            onClickSubmitReview={onClickSubmitReview}
-            onClickWish={onClickWish}
             isLoggedIn={isLoggedIn}
         />
     );

@@ -18,8 +18,8 @@ const ModalPresenter = (props) => {
                         <S.divInfo>장소 URL: <S.placeLink href={props.selectedPlace.place_url}  target='_blank'>정보 확인</S.placeLink></S.divInfo>
                         {props.isLoggedIn ? (
                             <>
-                                리뷰: <S.reviewInput type="text" placeholder="리뷰를 입력하세요" value={props.review} onChange={props.onReviewChange} />
-                                <S.reviewSubmitButton onClick={props.onClickSubmitReview}>리뷰 제출</S.reviewSubmitButton>
+                                리뷰: <S.reviewInput type="text" name ="review" placeholder="리뷰를 입력하세요" value = {props.reviewForm.review} onChange={props.onChangeReviewForm} />
+                                <S.reviewSubmitButton onClick={props.onClickReviewFormCheck}>리뷰 제출</S.reviewSubmitButton>
                                 <S.wishListButton onClick={props.onClickWish}>찜하기</S.wishListButton>
                             </>
                         ) : (
