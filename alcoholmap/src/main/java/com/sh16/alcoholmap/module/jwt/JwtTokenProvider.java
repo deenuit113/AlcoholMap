@@ -30,6 +30,10 @@ public class JwtTokenProvider {
         byte[] ketBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(ketBytes);
     }
+    @Value("${jwt.secret}")
+    public void setSecretKeyStatic(String secretKey) {
+        TokenUtils.setSECRET_KEY_STATIC(secretKey);
+    }
 
 
     /**

@@ -43,7 +43,7 @@ public class ReviewController {
     @PostMapping("/place/review")
     public ResponseEntity<Response> addPlaceReviews(@RequestHeader(AuthConst.AUTH_HEADER) String myToken, @RequestBody ReviewDto.ReviewRequest review) {
         String token = TokenUtils.getTokenFromHeader(myToken);
-        String userId = TokenUtils.getUserIdFromToken(token);
+        Integer userId = TokenUtils.getUserIdFromToken(token);
         return ReviewService.addPlaceReviews(userId, review);
     }
 

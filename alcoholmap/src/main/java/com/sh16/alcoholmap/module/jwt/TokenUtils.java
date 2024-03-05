@@ -15,6 +15,10 @@ public class TokenUtils {
 
     private static String SECRET_KEY_STATIC;
 
+    public static void setSECRET_KEY_STATIC(String secretKeyStatic) {
+        SECRET_KEY_STATIC = secretKeyStatic;
+    }
+
     // http 헤더에서 토큰 진짜 내용 가져오기
     public static String getTokenFromHeader(String header) {
         return header.split(" ")[1];
@@ -27,9 +31,9 @@ public class TokenUtils {
     }
 
     // Claims에서 user id 가져오기
-    public static String getUserIdFromToken(String token) {
+    public static Integer getUserIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
-        return (String) claims.get("id");
+        return (Integer) claims.get("id");
     }
 }
 

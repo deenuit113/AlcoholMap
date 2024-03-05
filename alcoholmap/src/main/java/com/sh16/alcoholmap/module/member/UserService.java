@@ -84,7 +84,7 @@ public class UserService {
      */
     @Transactional
     public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest request) {
-        String userId = TokenToId.check(request);
+        jwtTokenProvider.getAuthentication(request);
         Optional<User> checkUser = userRepository.findUserByNickname(requestDTO.getNickname());
         if (checkUser.isPresent() && !checkUser.get().getId().equals(userId)) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
