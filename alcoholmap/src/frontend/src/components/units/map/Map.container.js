@@ -456,7 +456,7 @@ export default function MapPage() {
                 isOpen={isModalOpen}
                 style={modalStyles}
             >
-                {modalContent && [modalContent]}
+                {modalContent}
             </Modal>
 
             <MapUI

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { FaStar } from 'react-icons/fa';
 
 const modalStyles = {
     overlay: {
@@ -36,7 +37,7 @@ export const modalContainer = styled.div`
 
 export const modalContent = styled.div`
     position: relative;
-    width: 400px;
+    width: 450px;
     height: 250px;
     flex-direction: column;
 `
@@ -55,6 +56,7 @@ export const placeLink = styled.a`
 `
 
 export const reviewInput = styled.input`
+    font-size: 15px;
     margin: 3px;
     radius: 5px;
 `
@@ -74,8 +76,11 @@ export const closeButton = styled.button`
 
 export const reviewSubmitButton = styled.button`
     background-color: #47C83E;
-    radius: 5px;
+    font-size: 15px;
+    padding: 3px;
+    border-radius: 7px;
     margin: 3px;
+    width: 80px;
     box-shadow: 0px 0px 1px 1px rgb(0,0,0);
 
     :hover{
@@ -85,8 +90,11 @@ export const reviewSubmitButton = styled.button`
 
 export const wishListButton = styled.button`
     background-color: #47C83E;
-    radius: 5px;
+    font-size: 15px;
+    padding: 3px;
+    border-radius: 7px;
     margin: 3px;
+    width: 80px;
     box-shadow: 0px 0px 1px 1px rgb(0,0,0);
 
     :hover{
@@ -94,4 +102,27 @@ export const wishListButton = styled.button`
     }
 `
 
+export const ErrorMsgWrapper = styled.div`
+    width: 300px;
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2px;
+    color: red;
+`
+
+export const starRateWrapper = styled.div`
+    width: 300px;
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 2px;
+`
+
+export const starRate = styled(FaStar)`
+    cursor: pointer;
+    box-sizing: content-box;
+    padding: 4px;
+    font-size: 35px;
+`
 export default modalStyles;

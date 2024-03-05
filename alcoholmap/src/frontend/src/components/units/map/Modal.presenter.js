@@ -1,9 +1,10 @@
 import React from 'react';
 import * as S from './Modal.styles'
+import { FaStar } from 'react-icons/fa';
 
 const ModalPresenter = (props) => {
     return (
-        <S.modalContainer>  {/* 모달 스타일을 적용합니다 */}
+        <S.modalContainer ref={props.modalRef}>  {/* 모달 스타일을 적용합니다 */}
             {props.selectedPlace && (
                 <>
                     <S.closeButton onClick={props.closeModal}>X</S.closeButton>
@@ -18,9 +19,24 @@ const ModalPresenter = (props) => {
                         <S.divInfo>장소 URL: <S.placeLink href={props.selectedPlace.place_url}  target='_blank'>정보 확인</S.placeLink></S.divInfo>
                         {props.isLoggedIn ? (
                             <>
-                                리뷰: <S.reviewInput type="text" name ="review" placeholder="리뷰를 입력하세요" value = {props.reviewForm.review} onChange={props.onChangeReviewForm} />
-                                <S.reviewSubmitButton onClick={props.onClickReviewFormCheck}>리뷰 제출</S.reviewSubmitButton>
-                                <S.wishListButton onClick={props.onClickWish}>찜하기</S.wishListButton>
+                                <div>
+                                    리뷰: <S.reviewInput type="text" name ="content" placeholder="리뷰를 입력하세요" value = {props.reviewForm.content} onChange={props.onChangeReviewForm} />
+                                    <S.reviewSubmitButton onClick={props.onClickReviewFormCheck}>리뷰 제출</S.reviewSubmitButton>
+                                    <S.wishListButton onClick={props.onClickWishList}>찜하기</S.wishListButton>
+                                </div>
+                                <S.starRateWrapper>
+                                    {props.stars.map((star, index) => (
+                                        <S.starRate
+                                            key={index}
+                                            onClick={() => props.onChangeReviewForm({ target: { name: "starRate", value: star } })}
+                                            color={star <= props.reviewForm.starRate ? "#ffff07" : "#5f5f5f"}
+                                            style={{ cursor: "pointer", marginRight: "2px" }}
+                                        />
+                                    ))}
+                                </S.starRateWrapper>
+                                <S.ErrorMsgWrapper>{props.rvError} {props.starError}</S.ErrorMsgWrapper>
+                                <hr/>
+                                
                             </>
                         ) : (
                             <>
