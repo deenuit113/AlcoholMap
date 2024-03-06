@@ -4,7 +4,7 @@ export default function MapUI(props) {
     return(
             <S.Wrapper>
                 <S.AMHeader>
-                    <S.AMTitle onClick={props.onClickReload}>GreenBottle</S.AMTitle>
+                    <S.AMTitle onClick={props.onClickReload} src="/GreenBottleLogo1.png"></S.AMTitle>
                 </S.AMHeader>
                 <S.MapNav>
                     {props.isLoggedIn ? (
@@ -26,9 +26,10 @@ export default function MapUI(props) {
                     <S.MenuWrap id="menu_wrap" className="bg_white">
                         <S.SearchWrapper>
                         <S.Form onSubmit={props.searchPlaces}>
-                            키워드 : 
+                            <span> 키워드 :  </span> 
                             <S.InputKeyword type="text" value={props.keyword} id="keyword" size="15" onChange={props.onChangeKeyword}/>
                             <S.InputRadius type="number" value={props.radius} onChange={props.onChangeRadius}></S.InputRadius>
+                            <span> m</span>
                             <S.SearchButton type="submit">검색하기</S.SearchButton>
                         </S.Form>
                         </S.SearchWrapper>

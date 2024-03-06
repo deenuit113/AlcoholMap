@@ -16,6 +16,7 @@ const modalStyles = {
         backgroundColor: '#47C83E', 
         transform: 'translate(-50%, -50%)', // 중앙 정렬
         zIndex: 1000, // 모달의 z-index 설정 (큰 값으로 지정)
+        borderRadius: 20,
     },
 };
 
@@ -26,7 +27,7 @@ export const modalContainer = styled.div`
     transform: translate(-50%, -50%);
     background-color: #f2f2f2;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 500px;  /* 모달 최대 너비 지정 */
     max-height: 600px;
