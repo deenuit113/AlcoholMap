@@ -136,7 +136,7 @@ export default function MapPage() {
                 const longitude = center.getLng();
                 const level = map.getLevel();
                 removeMarker();
-        
+                
                 // 검색어는 현재 입력된 keyword를 사용
                 const result = await ps.keywordSearch(keyword, placesSearchCB, {
                     location: new window.kakao.maps.LatLng(latitude, longitude),
@@ -179,7 +179,7 @@ export default function MapPage() {
 
             ps.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
-                radius: radius,
+                radius: (radius===0? 1000: radius), // 반경 설정 안 할 시 기본 1000m로
             });
         } catch (error) {
             console.error('Error searching places:', error);
@@ -362,7 +362,7 @@ export default function MapPage() {
 
     const displayInfowindow = (marker, title) => {
 
-        let content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+        let content = '<div style="padding:10px;z-index:1;font-size:15px;">' + title + '</div>';
     
         if (infowindow) {
             infowindow.setContent(content);

@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-    width: 600px;
-    /* height: 1847px; */
+    width: 800px;
+    height: 850px;
     border: 1px solid black;
     margin: 0 auto;
     padding-top: 80px;
@@ -26,7 +26,7 @@ export const AMTitle = styled.h1`
 ` 
 
 export const MapNav = styled.nav`
-    width: 600px;
+    width: 800px;
     display: inline-block;
     flex-direction: column;
     align-items: center;
@@ -115,10 +115,11 @@ export const MapWrapper = styled.div`
 `
 
 export const MapMain = styled.main`
-    width: 600px;
-    height: 500px;
+    width: 800px;
+    height: 650px;
     position: relative;
     overflow: hidden;
+    border: 1px solid black;
 `
 
 // -----------------
@@ -144,10 +145,13 @@ export const MenuWrap = styled.div`
     margin: 10px 0 30px 10px;
     padding: 5px;
     overflow-y: auto;
+    overflow-x: hidden;
     background: rgba(255, 255, 255, 0.7);
     z-index: 1;
     font-size: 18px;
     border-radius: 10px;
+    resize: horizontal;
+    width: 450px;
 
     .bg_white{
         background: #fff;

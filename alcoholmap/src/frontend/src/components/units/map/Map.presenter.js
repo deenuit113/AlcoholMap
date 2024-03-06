@@ -4,7 +4,7 @@ export default function MapUI(props) {
     return(
             <S.Wrapper>
                 <S.AMHeader>
-                    <S.AMTitle onClick={props.onClickReload}>AlcoholMap</S.AMTitle>
+                    <S.AMTitle onClick={props.onClickReload}>GreenBottle</S.AMTitle>
                 </S.AMHeader>
                 <S.MapNav>
                     {props.isLoggedIn ? (

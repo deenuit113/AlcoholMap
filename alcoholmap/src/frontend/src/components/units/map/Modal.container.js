@@ -10,6 +10,7 @@ const ModalContainer = (props) => {
     const stars = Array.from({ length: 5 }, (_, index) => index + 1);
     const [rvError, setRvError] = useState("");
     const [starError, setStarError] = useState("");
+    const [isReviewed, setIsReviewed] = useState(false)
     const [reviewForm, setReviewForm] = useState({
         placeId: 0,
         content: '',
@@ -18,7 +19,10 @@ const ModalContainer = (props) => {
     const modalRef = useRef();
 
     useEffect(() => {
-        console.log(props.selectedPlace)
+        
+    },[isReviewed]);
+
+    useEffect(() => {
         setReviewForm({
             ...reviewForm,
             placeId: props.selectedPlace.id,
@@ -66,8 +70,6 @@ const ModalContainer = (props) => {
         }
         
         if(errorcode === 0){
-            console.log(props.selectedPlace)
-            console.log(reviewForm)
             submitReviewForm(null,reviewForm)
         }
         
@@ -86,14 +88,23 @@ const ModalContainer = (props) => {
     const submitReviewForm = async (e, formData) => {
         const token = localStorage.getItem('jwtToken');
         const jsonformData = JSON.stringify(formData);
+        console.log(jsonformData)
         try {
-            const response = await axios.post(apiUrl, jsonformData, {
+            /*const response = await axios.post(apiUrl, jsonformData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
+            });*/
+            //console.log('Response from server:', response.data);
+
+            setReviewForm({
+                placeId: 0,
+                content: '',
+                starRate: 0,
             });
-            console.log('Response from server:', response.data);
+            setIsReviewed(true);
+
         } catch (error){
             console.error('error submitting data:', error);
         }
