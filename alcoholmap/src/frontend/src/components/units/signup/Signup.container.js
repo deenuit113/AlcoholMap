@@ -20,12 +20,34 @@ export default function SignupPage(){
     const [pwError, setPwError] = useState("")
     const [nnError, setNnError] = useState("")
     const [capaError, setCapaError] = useState("")
+    const [isDuplicate, setIsDuplicate] = useState(false)
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         nickname: '',
         capaSoju: 0,
     });
+
+    const validateEmail = (email) => {
+        // 이메일 형식 검증을 위한 정규표현식 사용
+        const emailForm = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
+        return emailForm.test(email);
+    };
+
+    const validatePassword = (password) => {
+        // 비밀번호가 최소 8자 이상, 대문자 및 숫자를 포함하는지 검증
+        return password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
+    };
+    
+    /*const checkDuplicateEmail = async () => {
+        try {
+            const response = await axios.get(`/api/check-email?email=${email}`);
+            setDuplicate(response.data.exists); // 서버에서 중복 여부를 응답으로 받아서 처리
+        } catch (error) {
+            console.error('Error checking duplicate email:', error);
+            return false;
+        }
+    };*/
 
 
     const onChangeInput = (event) => {
@@ -51,9 +73,20 @@ export default function SignupPage(){
 
     const onClickSubmit = () => {
         let errorcode = 0;
+        //checkDuplicateEmail();
         if(!formData.email) {
             setEmailError("이메일을 입력해주세요.")
             errorcode = 1
+        }
+
+        else if (!validateEmail(formData.email)) {
+            setEmailError('올바른 이메일 형식이 아닙니다.');
+            errorcode = 1
+        }
+
+        else if (isDuplicate) {
+            setError('이미 사용 중인 이메일입니다.');
+            errorcode = 1;
         }
 
         if(!formData.password) {
@@ -61,6 +94,11 @@ export default function SignupPage(){
             errorcode = 1
         }
 
+        else if (!validatePassword(formData.password)) {
+            setPwError('비밀번호는 최소 8자 이상, 대문자와 숫자를 포함해야 합니다.');
+            errorcode = 1
+        }
+      
         if(!formData.nickname) {
             setNnError("닉네임을 입력해주세요.")
             errorcode = 1
@@ -80,6 +118,7 @@ export default function SignupPage(){
 
     const handleFormSubmit = async (e, formData) => {
         const jsonformData = JSON.stringify(formData);
+        console.log(jsonformData)
         try {
             const response = await axios.post(apiUrl, jsonformData, {
                 headers: {
