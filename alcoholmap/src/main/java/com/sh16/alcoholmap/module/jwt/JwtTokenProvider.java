@@ -30,10 +30,7 @@ public class JwtTokenProvider {
         byte[] ketBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(ketBytes);
     }
-    @Value("${jwt.secret}")
-    public void setSecretKeyStatic(String secretKey) {
-        TokenUtils.setSECRET_KEY_STATIC(secretKey);
-    }
+
 
 
     /**
@@ -45,6 +42,11 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        UserCustom user = (UserCustom) authentication.getPrincipal();
+        UserCustom userDetails = (UserCustom) authentication.getPrincipal();
+        String userId = userDetails.getMemberCode();
+
+
         long now = (new Date()).getTime();
         // Access Token 생성
         // Date 생성자에 삽입하는 숫자 :
@@ -53,6 +55,9 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
+                .claim("id", userId)
+
+
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -88,7 +93,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Integer)claims.get("id"));
+        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (String) claims.get("id"));
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
     public Integer getMemberCodeByRefreshToken(String refreshToken){

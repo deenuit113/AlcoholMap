@@ -18,6 +18,7 @@ public class UserDTO {
     @NoArgsConstructor
     @Getter
     public static class UpdateRequest {
+        private String id;
         private String nickname;
         private int capaSoju;
     }

@@ -2,7 +2,7 @@ package com.sh16.alcoholmap.module.member;
 
 import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 import com.sh16.alcoholmap.module.jwt.TokenDto;
-import com.sh16.alcoholmap.module.jwt.TokenToId;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,6 +45,7 @@ public class UserService {
         User user = userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .nickname(dto.getNickname())
                 .capaSoju(dto.getCapaSoju())
                 .build());
         userRepository.save(user);
@@ -83,16 +84,15 @@ public class UserService {
      * 닉네임, capaSoju 변경 가능
      */
     @Transactional
-    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest request) {
-        jwtTokenProvider.getAuthentication(request);
-        Optional<User> checkUser = userRepository.findUserByNickname(requestDTO.getNickname());
-        if (checkUser.isPresent() && !checkUser.get().getId().equals(userId)) {
+    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
+        Optional<User> checkUser = userRepository.findUserByNickname(requestDTO.getId());
+        if (checkUser.isPresent() && !checkUser.get().getId().equals(requestDTO.getId())) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
         }
         if (requestDTO.getNickname().length() > 8) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "닉네임은 8자리 이하만 가능합니다.", null);
         }
-        Optional<User> user = userRepository.findUserById(userId);
+        Optional<User> user = userRepository.findUserById(requestDTO.getId());
         user.get().updateInfo(requestDTO.getNickname(), requestDTO.getCapaSoju());
         return Response.newResult(HttpStatus.OK, "정보가 업데이트 되었습니다.", null);
     }

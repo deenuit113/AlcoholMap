@@ -3,16 +3,19 @@ package com.sh16.alcoholmap.module.review;
 
 import com.sh16.alcoholmap.common.PageIndexLessThanZeroException;
 import com.sh16.alcoholmap.common.config.AuthConst;
-import com.sh16.alcoholmap.module.jwt.TokenUtils;
+import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
+
 import com.sh16.alcoholmap.module.member.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 public class ReviewController {
 
+    private final JwtTokenProvider jwtTokenProvider;
     private final ReviewService ReviewService;
 
     /**
@@ -42,8 +45,9 @@ public class ReviewController {
      */
     @PostMapping("/place/review")
     public ResponseEntity<Response> addPlaceReviews(@RequestHeader(AuthConst.AUTH_HEADER) String myToken, @RequestBody ReviewDto.ReviewRequest review) {
-        String token = TokenUtils.getTokenFromHeader(myToken);
-        Integer userId = TokenUtils.getUserIdFromToken(token);
+        jwtTokenProvider.validateToken(myToken);
+        Authentication authentication = jwtTokenProvider.getAuthentication(myToken);
+        String userId = authentication.getName();
         return ReviewService.addPlaceReviews(userId, review);
     }
 

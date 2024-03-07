@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.member;
 
+import com.sh16.alcoholmap.common.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,10 +39,11 @@ public class User implements UserDetails {
     private int capaSoju;
 
     @Column(name = "roles")
-    private String roles;
+    @Convert(converter = StringListConverter.class)
+    private List<String> roles;
 
     @Builder
-    public User(String email, String password, int capaSoju, String auth, String roles, String nickname){
+    public User(String email, String password, int capaSoju, String auth, List<String> roles, String nickname){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
