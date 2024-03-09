@@ -43,7 +43,7 @@ public class User implements UserDetails {
     private List<String> roles;
 
     @Builder
-    public User(String email, String password, int capaSoju, String auth, List<String> roles, String nickname){
+    public User(String email, String password, int capaSoju, List<String> roles, String nickname){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
