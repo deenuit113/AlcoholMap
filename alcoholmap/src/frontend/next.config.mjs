@@ -16,6 +16,11 @@ export default {
                 source: '/users/profile/:email',
                 destination: baseUrl + '/users/profile/:email',
             },
+
+            {
+                source: '/users/place/review',
+                destination: baseUrl + '/users/place/review',
+            },
         ];
     },
 };
