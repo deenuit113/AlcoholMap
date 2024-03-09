@@ -26,26 +26,8 @@ export const Label = styled.div`
   display: inline-block;
 `;
 
-export const EmailWrapper = styled.div`
+export const InfoWrapper = styled.div`
   width: 500px;
-  display: inline-block;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 15px;
-  padding-bottom: 0px;
-`
-
-export const PasswordWrapper = styled.div`
-  width: 300px;
-  display: inline-block;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 15px;
-  padding-bottom: 0px;
-`
-
-export const CapaWrapper = styled.div`
-  width: 300px;
   display: inline-block;
   flex-direction: column;
   align-items: center;
@@ -77,6 +59,10 @@ export const Logo = styled.div`
   cursor: pointer;
 `;
 
+export const ButtonWrapper = styled.div`
+  text-align: center;
+`
+
 export const SignUpButton = styled.button`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
@@ -86,22 +72,10 @@ export const SignUpButton = styled.button`
   float: right;
 `
 
-export const InputEmail = styled.input`
+export const InputInfo = styled.input`
   width: 200px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
   margin-left: 10px; 
   float: lefts;
-`
-
-export const InputPassword = styled.input`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 17px;
-  float: right;
-`
-
-export const InputCapa = styled.input`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 17px;
-  float: right;
 `
