@@ -17,6 +17,7 @@ const apiUrl = '/users/profile/${userEmail}';
 export default function MyPagePage(){
     const router = useRouter()
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [isEdit, setIsEdit] = useState(true);
     const [userData, setUserData] = useState({
         userEmail: '',
         capaSoju: 0,
@@ -88,15 +89,46 @@ export default function MyPagePage(){
         setLoggedIn(true);
     };
 
+    const onChangeInput = (event) => {
+        const { name, value } = event.target;
+        setUserData((prevData) => ({
+            ...prevData,
+            [name]: name === 'capaSoju' ? Number(value) : value,
+        }));
+        if(name === "email" && event.target.value !== ""){
+            //setEmailError("")
+        }
+        if(name === "capaSoju" && event.target.value !== ""){
+            //setCapaError("")
+        }
+        if(name === "nickname" && event.target.value !== ""){
+            //setNnError("")
+        }
+        
+    };
+
     const onClickMoveToMainpage = () => {
         router.push("../map")
+    }
+
+    const onClickEdit = () => {
+        setIsEdit(true);
+    }
+
+    const onClickEditSubmit = () => {
+        //데이터 전송
+        setIsEdit(false);
     }
 
 
     return (
         <MypageUI
             userData = {userData}
+            isEdit = {isEdit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
+            onClickEdit = {onClickEdit}
+            onClickEditSubmit = {onClickEditSubmit}
+            onChangeInput = {onChangeInput}
         />
         
     )

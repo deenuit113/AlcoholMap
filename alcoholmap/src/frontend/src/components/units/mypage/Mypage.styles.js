@@ -97,7 +97,29 @@ border: 1px solid black;
 border-radius: 10px 10px 10px 10px;
 `
 
+export const ButtonWrapper = styled.div`
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 5px;
+  margin: 5px;
+`
+
 export const EditButton = styled.button`
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  width: 100px;
+  height: 50px;
+  float: right;
+  border-radius: 10px 10px 10px 10px;
+`
+
+export const ConfirmButton = styled.button`
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   font-weight: bold;
