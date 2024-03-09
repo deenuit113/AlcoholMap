@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import MapUI from './Map.presenter';
 import _debounce from 'lodash/debounce'
-
 import Modal from 'react-modal';
 import ModalContainer from './Modal.container';
 import modalStyles from './Modal.styles'; 
@@ -136,7 +135,7 @@ export default function MapPage() {
                 const longitude = center.getLng();
                 const level = map.getLevel();
                 removeMarker();
-        
+                
                 // 검색어는 현재 입력된 keyword를 사용
                 const result = await ps.keywordSearch(keyword, placesSearchCB, {
                     location: new window.kakao.maps.LatLng(latitude, longitude),
@@ -179,7 +178,7 @@ export default function MapPage() {
 
             ps.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
-                radius: radius,
+                radius: (radius===0? 1000: radius), // 반경 설정 안 할 시 기본 1000m로
             });
         } catch (error) {
             console.error('Error searching places:', error);
@@ -280,22 +279,22 @@ export default function MapPage() {
     }
 
     const getListItem = (index, places) => {
-
         const el = document.createElement('li'),
-        itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                    '<div class="info">' +
-                    '   <h5>' + places.place_name + '</h5>';
+        itemStr = (`<span style ="float:right"><img src ="/soju1.png"/></span>`).repeat(5);
+        itemStr += `<div style="font-size: 25px; font-weight:bold;margin-bottom:10px;">${places.place_name}</div>`;
     
         if (places.road_address_name) {
-            itemStr += '    <span>' + places.road_address_name + '</span>' +
-                        '   <span class="jibun gray">' +  places.address_name  + '</span>';
+            itemStr += `<span>${places.road_address_name}</span>
+                        <span style="overflow:hidden">${places.address_name}</span><br/>`;
         } else {
-            itemStr += '    <span>' +  places.address_name  + '</span>'; 
+            itemStr += `<span>${places.address_name}</span><br/>`; 
         }
-                     
-          itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                    '</div>';           
-    
+        if (places.phone){
+            itemStr += `<span class="tel">☎ ${places.phone}</span><hr/></div>`;     
+        } else {
+            itemStr += '<hr/>';
+        }
+                
         el.innerHTML = itemStr;
         el.className = 'item';
     
@@ -362,7 +361,7 @@ export default function MapPage() {
 
     const displayInfowindow = (marker, title) => {
 
-        let content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+        let content = '<div style="padding:10px;z-index:1;font-size:15px;">' + title + '</div>';
     
         if (infowindow) {
             infowindow.setContent(content);
@@ -456,7 +455,7 @@ export default function MapPage() {
                 isOpen={isModalOpen}
                 style={modalStyles}
             >
-                {modalContent && [modalContent]}
+                {modalContent}
             </Modal>
 
             <MapUI

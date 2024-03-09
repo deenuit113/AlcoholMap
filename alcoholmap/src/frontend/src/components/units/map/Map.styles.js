@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-    width: 600px;
-    /* height: 1847px; */
+    width: 800px;
+    height: 850px;
     border: 1px solid black;
     margin: 0 auto;
     padding-top: 80px;
@@ -11,22 +11,24 @@ export const Wrapper = styled.div`
     padding-right: 102px;
     display: flex;
     flex-direction: column;
-    align-items: ;
+    align-items: center;
     justify-content: flex-start;
-    border: none;
+    border: 1px solid gray;
+    border-radius: 30px;
     box-shadow: 0px 0px 10px gray;
+    background-color: #B7F0B1;
 `;
 
 export const AMHeader = styled.header`
     
 `
 
-export const AMTitle = styled.h1`
-    cursor:pointer;
+export const AMTitle = styled.img`
+    cursor: pointer
 ` 
 
 export const MapNav = styled.nav`
-    width: 600px;
+    width: 800px;
     display: inline-block;
     flex-direction: column;
     align-items: center;
@@ -41,70 +43,83 @@ export const footer = styled.footer`
 
 export const LoginButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     width: 100px;
     float: right;
     margin-left: 10px;
-    border-radius: 3px 3px 3px 3px;
+    background-color: #B7F0B1;
+    border: 5px solid #47C83E;
+    border-radius: 8px;
 `
 
 export const LogoutButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
-    width: 100px;
+    width: 120px;
     float: right;
     margin-left: 10px;
-    border-radius: 3px 3px 3px 3px;
+    background-color: #B7F0B1;
+    border: 5px solid #47C83E;
+    border-radius: 8px;
 `
 
 export const SignupButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     width: 100px;
     float: right;
     margin-left: 10px;
-    border-radius: 3px 3px 3px 3px;
+    background-color: #B7F0B1;
+    border: 5px solid #47C83E;
+    border-radius: 8px;
 `
 
 export const MypageButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
-    width: 100px;
+    width: 130px;
     float: right;
     margin-left: 10px;
-    border-radius: 3px 3px 3px 3px;
+    background-color: #B7F0B1;
+    border: 5px solid #47C83E;
+    border-radius: 8px;
 `
 
 export const SearchWrapper = styled.div`
     width: 500px;
-    display: inline-block;
-    flex-direction: column;
-    align-items: center;
+    display: flex;
+    align-contents: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
 `
 
 export const SearchButton = styled.button`
     margin-left:5px;
     width: 100px;
+    font-size: 20px;
 `
 
 export const InputKeyword = styled.input`
     width: 150px;
     height: 20px;
-    font-size: 15px;
-    margin-top: 15px;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-left: 5px;
 `
 
 export const InputRadius = styled.input`
     width: 50px;
     height: 20px;
-    font-size: 15px;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     margin-left: 10px;
+    margin-right: 3px;
 `
 
 export const MapWrapper = styled.div`
@@ -115,10 +130,13 @@ export const MapWrapper = styled.div`
 `
 
 export const MapMain = styled.main`
-    width: 600px;
-    height: 500px;
+    width: 800px;
+    height: 650px;
     position: relative;
     overflow: hidden;
+    border: 20px solid #47C83E;
+    margin-right: 10px;
+    border-radius: 30px;
 `
 
 // -----------------
@@ -140,14 +158,17 @@ export const MenuWrap = styled.div`
     top: 0;
     left: 0;
     bottom: 0;
-    width: 400px;
-    margin: 10px 0 30px 10px;
+    width: 450px;
+    margin: 10px 0 10px 10px;
     padding: 5px;
+    padding-right: 30px;
     overflow-y: auto;
+    overflow-x: hidden;
     background: rgba(255, 255, 255, 0.7);
     z-index: 1;
     font-size: 18px;
     border-radius: 10px;
+    width: 450px;
 
     .bg_white{
         background: #fff;
@@ -163,123 +184,13 @@ export const Option = styled.div`
     text-align: center;
 `;
 
-export const Form = styled.form``;
-
-export const KeywordInput = styled.input`
-    width: 200px;
-    height: 20px;
-    font-size: 15px;
-    margin-top: 15px;
+export const Form = styled.form`
+    display: flex;
+    align-items: center;
 `;
 
 export const PlacesList = styled.ul`
     list-style: none;
-`;
-
-export const PlacesListItem = styled.li`
-    position: relative;
-    border-bottom: 1px solid #888;
-    overflow: hidden;
-    cursor: pointer;
-    min-height: 65px;
-
-    span {
-        display: block;
-        margin-top: 4px;
-    }
-
-    h5,
-    .info {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    .info {
-        padding: 10px 0 10px 55px;
-
-        .gray {
-            color: #8a8a8a;
-        }
-
-        .jibun {
-            padding-left: 26px;
-            background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
-        }
-
-        .tel {
-            color: #009900;
-        }
-    }
-
-    .markerbg {
-        float: left;
-        position: absolute;
-        width: 36px;
-        height: 37px;
-        margin: 10px 0 0 10px;
-        background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
-    }
-
-    .marker_1 {
-        background-position: 0 -10px;
-    }
-
-    .marker_2 {
-        background-position: 0 -56px;
-    }
-
-    .marker_3 {
-        background-position: 0 -102px;
-    }
-
-    .marker_4 {
-        background-position: 0 -148px;
-    }
-
-    .marker_5 {
-        background-position: 0 -194px;
-    }
-
-    .marker_6 {
-        background-position: 0 -240px;
-    }
-
-    .marker_7 {
-        background-position: 0 -286px;
-    }
-
-    .marker_8 {
-        background-position: 0 -332px;
-    }
-
-    .marker_9 {
-        background-position: 0 -378px;
-    }
-
-    .marker_10 {
-        background-position: 0 -423px;
-    }
-
-    .marker_11 {
-        background-position: 0 -470px;
-    }
-
-    .marker_12 {
-        background-position: 0 -516px;
-    }
-
-    .marker_13 {
-        background-position: 0 -562px;
-    }
-
-    .marker_14 {
-        background-position: 0 -608px;
-    }
-
-    .marker_15 {
-        background-position: 0 -654px;
-    }
 `;
 
 export const Pagination = styled.div`
