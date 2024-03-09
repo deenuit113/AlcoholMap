@@ -24,6 +24,22 @@ export default function LoginPage(){
     
     const router = useRouter()
 
+
+    //-----------중복 (추후 Custom Hook)-------------
+
+    const validateEmail = (email) => {
+        // 이메일 형식 검증을 위한 정규표현식 사용
+        const emailForm = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
+        return emailForm.test(email);
+    };
+
+    const validatePassword = (password) => {
+        // 비밀번호가 최소 8자 이상, 대문자 및 숫자를 포함하는지 검증
+        return password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
+    };
+
+    //-----------중복 (추후 Custom Hook)-------------
+
     const onChangeInput = (event) => {
         const { name, value } = event.target;
         setFormData({
@@ -45,8 +61,18 @@ export default function LoginPage(){
             errorcode = 1
         }
 
+        else if (!validateEmail(formData.email)) {
+            setEmailError('올바른 이메일 형식이 아닙니다.');
+            errorcode = 1
+        }
+
         if(!formData.password) {
             setPwError("비밀번호를 입력해주세요.")
+            errorcode = 1
+        }
+
+        else if (!validatePassword(formData.password)) {
+            setPwError('비밀번호는 최소 8자 이상, 대문자와 숫자를 포함해야 합니다.');
             errorcode = 1
         }
 
