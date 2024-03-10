@@ -1,7 +1,8 @@
-import {useState} from 'react'
+import { ChangeEvent, useState } from 'react'
 import SignupUI from './Signup.presenter'
 import axios from 'axios';
 import { useRouter } from 'next/router'
+import { SignupForm } from './Signup.types';
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -21,20 +22,20 @@ export default function SignupPage(){
     const [nnError, setNnError] = useState("")
     const [capaError, setCapaError] = useState("")
     const [isDuplicate, setIsDuplicate] = useState(false)
-    const [formData, setFormData] = useState({
+    const [signupForm, setSignupForm] = useState<SignupForm>({
         email: '',
         password: '',
         nickname: '',
         capaSoju: 0,
     });
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string): boolean => {
         // 이메일 형식 검증을 위한 정규표현식 사용
         const emailForm = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
         return emailForm.test(email);
     };
 
-    const validatePassword = (password) => {
+    const validatePassword = (password: string): boolean => {
         // 비밀번호가 최소 8자 이상, 대문자 및 숫자를 포함하는지 검증
         return password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
     };
@@ -45,15 +46,16 @@ export default function SignupPage(){
             setDuplicate(response.data.exists); // 서버에서 중복 여부를 응답으로 받아서 처리
         } catch (error) {
             console.error('Error checking duplicate email:', error);
+            setDuplicate(false);
             return false;
         }
     };*/
 
 
-    const onChangeInput = (event) => {
+    const onChangeInput = (event: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = event.target;
-        setFormData({
-            ...formData,
+        setSignupForm({
+            ...signupForm,
             [name]: name === 'capaSoju' ? Number(value) : value,
         });
         if(name === "email" && event.target.value !== ""){
@@ -71,56 +73,56 @@ export default function SignupPage(){
         
     };
 
-    const onClickSubmit = () => {
+    const onClickSubmit = (): void => {
         let errorcode = 0;
         //checkDuplicateEmail();
-        if(!formData.email) {
+        if(!signupForm.email) {
             setEmailError("이메일을 입력해주세요.")
             errorcode = 1
         }
 
-        else if (!validateEmail(formData.email)) {
+        else if (!validateEmail(signupForm.email)) {
             setEmailError('올바른 이메일 형식이 아닙니다.');
             errorcode = 1
         }
 
         else if (isDuplicate) {
-            setError('이미 사용 중인 이메일입니다.');
+            setEmailError('이미 사용 중인 이메일입니다.');
             errorcode = 1;
         }
 
-        if(!formData.password) {
+        if(!signupForm.password) {
             setPwError("비밀번호를 입력해주세요.")
             errorcode = 1
         }
 
-        else if (!validatePassword(formData.password)) {
+        else if (!validatePassword(signupForm.password)) {
             setPwError('비밀번호는 최소 8자 이상, 대문자와 숫자를 포함해야 합니다.');
             errorcode = 1
         }
       
-        if(!formData.nickname) {
+        if(!signupForm.nickname) {
             setNnError("닉네임을 입력해주세요.")
             errorcode = 1
         }
 
-        if(!formData.capaSoju) {
+        if(!signupForm.capaSoju) {
             setCapaError("주량을 입력하세요.")
             errorcode = 1
         }
         
         if(errorcode === 0){
-            console.log(formData)
-            handleFormSubmit(null,formData)
+            console.log(signupForm)
+            submitSignupForm(signupForm)
         }
         
     };
 
-    const handleFormSubmit = async (e, formData) => {
-        const jsonformData = JSON.stringify(formData);
-        console.log(jsonformData)
+    const submitSignupForm = async (signupForm: SignupForm) => {
+        const jsonSignupForm = JSON.stringify(signupForm);
+        console.log(jsonSignupForm)
         try {
-            const response = await axios.post(apiUrl, jsonformData, {
+            const response = await axios.post(apiUrl, jsonSignupForm, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -131,7 +133,7 @@ export default function SignupPage(){
         }
     };
 
-    const onClickMoveToMainpage = () => {
+    const onClickMoveToMainpage = (): void => {
         router.push("../map")
     }
 
@@ -173,8 +175,8 @@ export default function SignupPage(){
             capaError = {capaError}
             onClickSubmit = {onClickSubmit}
             onChangeInput = {onChangeInput}
-            formData = {formData}
-            handleFormSubmit = {handleFormSubmit}
+            signupForm = {signupForm}
+            submitSignupForm = {submitSignupForm}
             onClickMoveToMainpage = {onClickMoveToMainpage}
         />
     )

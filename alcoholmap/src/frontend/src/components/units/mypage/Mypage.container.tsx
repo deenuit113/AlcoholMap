@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import MypageUI from './Mypage.presenter'
 import axios from 'axios';
 import { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken';
+import { userData } from './Mypage.types'
 
 /*  수정 버튼 누를 시에 수정페이지로 이동
     수정 내용 비밀번호?
@@ -18,7 +19,7 @@ export default function MyPagePage(){
     const router = useRouter()
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(true);
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState<userData>({
         userEmail: '',
         capaSoju: 0,
         nickname: '',
@@ -89,7 +90,7 @@ export default function MyPagePage(){
         setLoggedIn(true);
     };
 
-    const onChangeInput = (event) => {
+    const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setUserData((prevData) => ({
             ...prevData,
@@ -107,16 +108,15 @@ export default function MyPagePage(){
         
     };
 
-    const onClickMoveToMainpage = () => {
+    const onClickMoveToMainpage = (): void => { // 메인페이지로 이동
         router.push("../map")
     }
 
-    const onClickEdit = () => {
+    const onClickEdit = (): void => { //수정하기 버튼
         setIsEdit(true);
     }
 
-    const onClickEditSubmit = () => {
-        //데이터 전송
+    const onClickEditSubmit = (): void => { //수정한 내용 제출
         setIsEdit(false);
     }
 

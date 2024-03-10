@@ -69,7 +69,7 @@ export const SignupButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: bold;
-    width: 100px;
+    width: 110px;
     float: right;
     margin-left: 10px;
     background-color: #B7F0B1;
