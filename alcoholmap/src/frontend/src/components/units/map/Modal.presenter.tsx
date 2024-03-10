@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ChangeEvent, MouseEvent } from 'react';
 import * as S from './Modal.styles'
-import { FaStar } from 'react-icons/fa';
 import ModalReview from './ModalReview.container';
+import { IModalUIProps } from './Modal.types';
 
-const ModalPresenter = (props) => {
+const ModalPresenter = (props: IModalUIProps): JSX.Element => {
     return (
         <S.modalContainer ref={props.modalRef}>  {/* 모달 스타일을 적용합니다 */}
             {props.selectedPlace && (
@@ -24,15 +24,15 @@ const ModalPresenter = (props) => {
                             {props.isLoggedIn ? (
                                 <>
                                     <S.rvinputWrapper>
-                                        리뷰: <S.reviewInput type="text" name ="content" placeholder="리뷰를 입력하세요" value = {props.reviewForm.content} onChange={props.onChangeReviewForm} />
+                                        리뷰: <S.reviewInput name ="content" placeholder="리뷰를 입력하세요" value = {props.reviewForm.content} onChange={props.onChangeReviewForm} />
                                         <S.reviewSubmitButton onClick={props.onClickReviewFormCheck}>리뷰 제출</S.reviewSubmitButton>
                                         <S.wishListButton onClick={props.onClickWishList}>찜하기</S.wishListButton>
                                     </S.rvinputWrapper>
                                     <S.starRateWrapper>
-                                        {props.stars.map((star, index) => (
+                                        {props.stars.map((star: number, index: number) => (
                                             <S.starRate
                                                 key={index}
-                                                onClick={() => props.onChangeReviewForm({ target: { name: "starRate", value: star } })}
+                                                onClick={() => props.onChangeReviewForm({ target: { name: "starRate", value: star.toString() } } as ChangeEvent<HTMLTextAreaElement>)}
                                                 color={star <= props.reviewForm.starRate ? "#ffd400" : "#5f5f5f"}
                                                 style={{ cursor: "pointer", marginRight: "2px" }}
                                             />

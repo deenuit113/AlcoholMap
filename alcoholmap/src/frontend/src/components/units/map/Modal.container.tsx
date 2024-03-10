@@ -1,12 +1,12 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, ChangeEvent, MouseEvent } from 'react';
 import ModalPresenter from './Modal.presenter';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { FaStar } from 'react-icons/fa';
+import { IModalProps, ReviewForm } from './Modal.types';
 
 const apiUrl = '/users/place/review';
 
-const ModalContainer = (props) => {
+const ModalContainer = (props: IModalProps): JSX.Element => {
     const stars = Array.from({ length: 5 }, (_, index) => index + 1);
     const [rvError, setRvError] = useState("");
     const [starError, setStarError] = useState("");
@@ -16,24 +16,25 @@ const ModalContainer = (props) => {
         content: '',
         starRate: 0,
     });
-    const modalRef = useRef();
+    const modalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         
     },[isReviewed]);
 
     useEffect(() => {
+        console.log(props.selectedPlace)
         setReviewForm({
             ...reviewForm,
-            placeId: props.selectedPlace.id,
+            placeId: +props.selectedPlace.id,
         })
-        document.addEventListener('mousedown', onClickCloseModal);
+        document.addEventListener('mousedown', onClickCloseModal as EventListener);
         return () => {
-            document.removeEventListener('mousedown', onClickCloseModal);
+            document.removeEventListener('mousedown', onClickCloseModal as EventListener);
         }
     },[]);
 
-    /*const extractEmailfromToken = () => {
+    /*const extractEmailfromToken = (): void => {
         const token = localStorage.getItem('jwtToken');
         const decodedToken = jwt.decode(token);
 
@@ -42,22 +43,26 @@ const ModalContainer = (props) => {
         return userEmail;
     }*/
 
-    const onChangeReviewForm = (event) => {
-        const { name, value } = event.target;
-        //const email = extractEmailfromToken();
+    const onChangeReviewForm = (event: ChangeEvent<HTMLTextAreaElement>): void => {
+        const { name, value } = event.target as HTMLTextAreaElement;
+    
+        // value를 number로 변환
+        const numValue = name === 'starRate' ? +value : value;
+    
         setReviewForm({
             ...reviewForm,
-            [name]: name === 'starRate' ? Number(value) : value,
+            [name]: numValue,
         });
-        if(name === "content" && event.target.value !== ""){
-            setRvError("")
+    
+        if (name === "content" && value !== "") {
+            setRvError("");
         }
-        if(name === "starRate" && event.target.value !== 0){
-            setStarError("")
-        }       
+        if (name === "starRate" && +value !== 0) {
+            setStarError("");
+        }
     };
 
-    const onClickReviewFormCheck = () => {
+    const onClickReviewFormCheck = (): void => {
         let errorcode = 0;
         if(!reviewForm.content) {
             setRvError("리뷰를 입력해주세요.")
@@ -70,24 +75,25 @@ const ModalContainer = (props) => {
         }
         
         if(errorcode === 0){
-            submitReviewForm(null,reviewForm)
+            submitReviewForm(reviewForm)
         }
         
     };
 
-    const onClickWishList = () => {
+    const onClickWishList = (): void => {
         alert("찜했슴다!")
     }
 
-    const onClickCloseModal = (e) => {
-        if (modalRef.current && !modalRef.current.contains(e.target) && e.target !== modalRef.current) {
+    const onClickCloseModal = (event: CustomEvent<MouseEvent>): void => {
+        const targetNode = event.target as Node;
+        if (!modalRef.current?.contains(targetNode) && targetNode !== modalRef.current) {
             props.closeModal();
         }
     };
 
-    const submitReviewForm = async (e, formData) => {
+    const submitReviewForm = async (reviewForm: ReviewForm) => {
         const token = localStorage.getItem('jwtToken');
-        const jsonformData = JSON.stringify(formData);
+        const jsonformData = JSON.stringify(reviewForm);
         console.log(jsonformData)
         try {
             /*const response = await axios.post(apiUrl, jsonformData, {

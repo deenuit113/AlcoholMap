@@ -1,6 +1,10 @@
 import * as S from "./Mypage.styles"
+import { ChangeEvent } from "react";
+import { MypageUIProps } from "./Mypage.types";
 
-export default function MypageUI(props) {
+
+
+export default function MypageUI(props: MypageUIProps): JSX.Element {
     return(
         <S.Wrapper>
             <S.Logo onClick={props.onClickMoveToMainpage}>AlcoholMap</S.Logo>

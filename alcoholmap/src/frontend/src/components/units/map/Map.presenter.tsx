@@ -1,6 +1,7 @@
 import * as S from "./Map.styles";
+import { IMapUIProps } from "./Map.types";
 
-export default function MapUI(props) {
+export default function MapUI(props: IMapUIProps): JSX.Element{
     return(
             <S.Wrapper>
                 <S.AMHeader>
@@ -27,7 +28,7 @@ export default function MapUI(props) {
                         <S.SearchWrapper>
                         <S.Form onSubmit={props.searchPlaces}>
                             <span> 키워드 :  </span> 
-                            <S.InputKeyword type="text" value={props.keyword} id="keyword" size="15" onChange={props.onChangeKeyword}/>
+                            <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
                             <S.InputRadius type="number" value={props.radius} onChange={props.onChangeRadius}></S.InputRadius>
                             <span> m</span>
                             <S.SearchButton type="submit">검색하기</S.SearchButton>

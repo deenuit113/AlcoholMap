@@ -1,7 +1,8 @@
 import React from 'react';
 import * as S from './ModalReview.styles'
+import { IModalReviewUIProps } from './ModalReview.types';
 
-const ModalReviewUI = (props) => {
+const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
     return(
         <S.ReviewDataWrapper id = "ReviewDataWrapper">
             <S.ReviewListUl>
@@ -11,7 +12,7 @@ const ModalReviewUI = (props) => {
                     </S.Reviewinfo>
                 ))}
             </S.ReviewListUl>
-            {props.loading && <div>Loading...</div>}
+            {props.isloading && <div>Loading...</div>}
         </S.ReviewDataWrapper>
     );
 };

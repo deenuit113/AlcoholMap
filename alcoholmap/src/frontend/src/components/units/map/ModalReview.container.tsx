@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ModalReviewUI from './ModalReview.presenter';
 
-const ModalReview = () => {
-    const [data, setData] = useState([]);
+const ModalReview = (): JSX.Element => {
+    const [data, setData] = useState<{ userId: string; review: string; }[]>([]);
     const [isloading, setisLoading] = useState(false);
 
     useEffect(() => {
@@ -21,16 +21,16 @@ const ModalReview = () => {
         };
         const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
     
-        ReviewDataWrapper.addEventListener('scroll', handleScroll);
+        ReviewDataWrapper?.addEventListener('scroll', handleScroll);
     
         return () => {
-            ReviewDataWrapper.removeEventListener('scroll', handleScroll);
+            ReviewDataWrapper?.removeEventListener('scroll', handleScroll);
         };
     }, [isloading]);
 
     // -------test--------
 
-    const generateData = (start, end) => {
+    const generateData = (start: number, end: number): Array<{ userId: string; review: string; }> => {
         const data = [];
         for (let i = start; i <= end; i++) {
             data.push({
@@ -47,6 +47,7 @@ const ModalReview = () => {
         setisLoading(true);
         setTimeout(() => {
             //const newData = [...data, ...new Array(10).fill('New Data')];
+            
             const newData = [...data, ...generateData(data.length + 1, data.length + 10)];
             setData(newData);
             setisLoading(false);
