@@ -63,15 +63,33 @@ public class UserApiController {
     /**
      *  로그인
      */
+//    @PostMapping("/users/login")
+//    public TokenDto login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+//        String email = userLoginRequestDto.getEmail();
+//        String password = userLoginRequestDto.getPassword();
+//        TokenDto tokenInfo = userService.login(email, password);
+//        return tokenInfo;
+//    }
+
     @PostMapping("/users/login")
-    public TokenDto login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
-        String email = userLoginRequestDto.getEmail();
-        String password = userLoginRequestDto.getPassword();
-        TokenDto tokenInfo = userService.login(email, password);
-        return tokenInfo;
+    public ResponseEntity<TokenResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        //1. AuthenticationManager를 통해 인증을 시도하고 인증이 성공하면 Authentication 객체를 리턴받는다.
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
+        // 해당 부분에 왔을 때 UserDetailsServiceImpl의 loadUserByUsername() 메소드가 실행된다.
+        Authentication authentication = authenticationManager.getObject().authenticate(authenticationToken);
+
+        //2. SecurityContextHolder에 위에서 생성한 Authentication 객체를 저장한다.
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //3. JwtTokenProvider를 통해 JWT 토큰을 생성한다.
+        String jwtToken = jwtTokenProvider.createToken(authentication);
+
+        //4. 생성한 JWT 토큰을 Response Header에 담아서 리턴한다.
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwtToken);
+
+        return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(new TokenResponseDto(jwtToken));
     }
-
-
 
 
 
