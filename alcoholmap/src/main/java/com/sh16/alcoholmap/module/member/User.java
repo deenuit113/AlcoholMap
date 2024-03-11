@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.member;
 
+import com.sh16.alcoholmap.common.StringListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
-    private String id;
+    private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -41,7 +42,7 @@ public class User implements UserDetails {
     private String roles;
 
     @Builder
-    public User(String email, String password, int capaSoju, String auth, String roles, String nickname){
+    public User(String email, String password, int capaSoju, String roles, String nickname){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;

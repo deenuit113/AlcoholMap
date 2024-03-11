@@ -2,9 +2,10 @@ package com.sh16.alcoholmap.module.member;
 
 import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 import com.sh16.alcoholmap.module.jwt.TokenDto;
-import com.sh16.alcoholmap.module.jwt.TokenToId;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -45,6 +47,7 @@ public class UserService {
         User user = userRepository.save(User.builder()
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
+                .nickname(dto.getNickname())
                 .capaSoju(dto.getCapaSoju())
                 .build());
         userRepository.save(user);
@@ -83,16 +86,15 @@ public class UserService {
      * 닉네임, capaSoju 변경 가능
      */
     @Transactional
-    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest request) {
-        String userId = TokenToId.check(request);
-        Optional<User> checkUser = userRepository.findUserByNickname(requestDTO.getNickname());
-        if (checkUser.isPresent() && !checkUser.get().getId().equals(userId)) {
+    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
+        Optional<User> checkUser = userRepository.findUserById(requestDTO.getId());
+        if (checkUser.isPresent() && !checkUser.get().getId().equals(requestDTO.getId())) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
         }
         if (requestDTO.getNickname().length() > 8) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "닉네임은 8자리 이하만 가능합니다.", null);
         }
-        Optional<User> user = userRepository.findUserById(userId);
+        Optional<User> user = userRepository.findUserById(requestDTO.getId());
         user.get().updateInfo(requestDTO.getNickname(), requestDTO.getCapaSoju());
         return Response.newResult(HttpStatus.OK, "정보가 업데이트 되었습니다.", null);
     }
@@ -107,13 +109,14 @@ public class UserService {
     public TokenDto login(String email, String password) {
         // 1. Login email/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-
+        log.info("authenticationToken =  + authenticationToken");
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
+        log.info("authentication = " + authentication);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = jwtTokenProvider.generateToken(authentication);
 

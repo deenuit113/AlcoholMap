@@ -32,6 +32,7 @@ public class JwtTokenProvider {
     }
 
 
+
     /**
      * AccessToken, RefreshToken 생성 메서드
      */
@@ -41,6 +42,11 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        UserCustom user = (UserCustom) authentication.getPrincipal();
+        UserCustom userDetails = (UserCustom) authentication.getPrincipal();
+        Long userId = userDetails.getMemberCode();
+
+
         long now = (new Date()).getTime();
         // Access Token 생성
         // Date 생성자에 삽입하는 숫자 :
@@ -49,6 +55,9 @@ public class JwtTokenProvider {
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
+                .claim("id", userId)
+
+
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -84,7 +93,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Integer)claims.get("id"));
+        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Long) claims.get("id"));
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
     public Integer getMemberCodeByRefreshToken(String refreshToken){

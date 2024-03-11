@@ -67,7 +67,9 @@ public class UserApiController {
     public TokenDto login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         String email = userLoginRequestDto.getEmail();
         String password = userLoginRequestDto.getPassword();
+
         TokenDto tokenInfo = userService.login(email, password);
+
         return tokenInfo;
     }
 
