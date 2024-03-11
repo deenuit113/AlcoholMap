@@ -44,7 +44,7 @@ public class JwtTokenProvider {
 
         UserCustom user = (UserCustom) authentication.getPrincipal();
         UserCustom userDetails = (UserCustom) authentication.getPrincipal();
-        String userId = userDetails.getMemberCode();
+        Long userId = userDetails.getMemberCode();
 
 
         long now = (new Date()).getTime();
@@ -93,7 +93,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (String) claims.get("id"));
+        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Long) claims.get("id"));
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
     public Integer getMemberCodeByRefreshToken(String refreshToken){

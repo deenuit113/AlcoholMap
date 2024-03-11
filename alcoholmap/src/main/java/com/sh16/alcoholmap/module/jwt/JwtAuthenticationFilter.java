@@ -24,6 +24,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String requestURI = httpRequest.getRequestURI();
+
         if (!requestURI.equals("/users/login")) {
 
             // 1. Request Header 에서 JWT 토큰 추출

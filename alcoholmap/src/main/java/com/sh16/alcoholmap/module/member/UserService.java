@@ -5,6 +5,7 @@ import com.sh16.alcoholmap.module.jwt.TokenDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -85,7 +87,7 @@ public class UserService {
      */
     @Transactional
     public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
-        Optional<User> checkUser = userRepository.findUserByNickname(requestDTO.getId());
+        Optional<User> checkUser = userRepository.findUserById(requestDTO.getId());
         if (checkUser.isPresent() && !checkUser.get().getId().equals(requestDTO.getId())) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
         }
@@ -107,13 +109,14 @@ public class UserService {
     public TokenDto login(String email, String password) {
         // 1. Login email/PW 를 기반으로 Authentication 객체 생성
         // 이때 authentication 는 인증 여부를 확인하는 authenticated 값이 false
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         // authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-
+        log.info("authenticationToken =  + authenticationToken");
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
+        log.info("authentication = " + authentication);
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = jwtTokenProvider.generateToken(authentication);
 

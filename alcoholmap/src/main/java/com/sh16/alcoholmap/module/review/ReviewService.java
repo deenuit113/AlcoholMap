@@ -23,8 +23,8 @@ public class ReviewService {
      * @param review
      * @return
      */
-    public ResponseEntity<Response> addPlaceReviews(String userId, ReviewDto.ReviewRequest review) {
-        Optional<User> user = userRepository.findUserById(userId);
+    public ResponseEntity<Response> addPlaceReviews(String email, ReviewDto.ReviewRequest review) {
+        Optional<User> user = userRepository.findByEmail(email);
         if (!user.isPresent()) {
             return Response.newResult(HttpStatus.UNAUTHORIZED, "로그인 후 이용해주세요.", null);
         }

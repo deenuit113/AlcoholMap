@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
-    private String id;
+    private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -39,11 +39,10 @@ public class User implements UserDetails {
     private int capaSoju;
 
     @Column(name = "roles")
-    @Convert(converter = StringListConverter.class)
-    private List<String> roles;
+    private String roles;
 
     @Builder
-    public User(String email, String password, int capaSoju, List<String> roles, String nickname){
+    public User(String email, String password, int capaSoju, String roles, String nickname){
         this.email = email;
         this.password = password;
         this.capaSoju = capaSoju;
