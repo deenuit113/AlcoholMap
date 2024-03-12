@@ -4,6 +4,8 @@ import com.sh16.alcoholmap.module.jwt.TokenDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class UserApiController {
 
     private final UserService userService;
@@ -49,15 +52,15 @@ public class UserApiController {
      * 회원 정보 수정
      * 닉네임, capaSoju 변경 가능 ----> 구현 예정
      */
-//    @PutMapping("/users/profile")
-//    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
-//        ResponseEntity<Response> updateResponse = userService.updateInfo(requestDTO, httpRequest);
-//        if (updateResponse.getStatusCode() != HttpStatus.OK) {
-//            return Response.newResult(updateResponse.getStatusCode(), updateResponse.getBody().getMessage(), null);
-//        }
-//        ResponseEntity<Response> response = userService.getProfile(TokenToId.check(httpRequest), httpRequest);
-//        return Response.newResult(response.getStatusCode(), "정보를 수정했습니다.", response.getBody());
-//    }
+    @PutMapping("/users/profile")
+    public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
+        ResponseEntity<Response> updateResponse = userService.updateInfo(requestDTO, httpRequest);
+        if (updateResponse.getStatusCode() != HttpStatus.OK) {
+            return Response.newResult(updateResponse.getStatusCode(), updateResponse.getBody().getMessage(), null);
+        }
+        log.info("updateResponse : " + updateResponse);
+        return Response.newResult(updateResponse.getStatusCode(), "정보를 수정했습니다.", updateResponse.getBody());
+    }
 
 
     /**
