@@ -7,10 +7,10 @@ import { MypageUIProps } from "./Mypage.types";
 export default function MypageUI(props: MypageUIProps): JSX.Element {
     return(
         <S.Wrapper>
-            <S.Logo onClick={props.onClickMoveToMainpage}>AlcoholMap</S.Logo>
+            <S.Logo onClick={props.onClickMoveToMainpage} src="/GreenBottleLogo1.png"></S.Logo>
             <S.Title>마이페이지</S.Title>
             <S.UserInfoWrapper>
-                <S.Smalltitle>이메일</S.Smalltitle>
+                <S.InfoTitle>이메일</S.InfoTitle>
                 {props.isEdit ? (
                     <input
                         type="text"
@@ -21,7 +21,7 @@ export default function MypageUI(props: MypageUIProps): JSX.Element {
                 ) : (
                     <S.UserInfo>{props.userData.userEmail}</S.UserInfo>
                 )}
-                <S.Smalltitle>주량</S.Smalltitle>
+                <S.InfoTitle>주량</S.InfoTitle>
                 {props.isEdit ? (
                     <input
                         type="number"
@@ -32,7 +32,7 @@ export default function MypageUI(props: MypageUIProps): JSX.Element {
                 ) : (
                     <S.UserInfo>{props.userData.capaSoju}</S.UserInfo>
                 )}
-                <S.Smalltitle>닉네임</S.Smalltitle>
+                <S.InfoTitle>닉네임</S.InfoTitle>
                 {props.isEdit ? (
                     <input
                         type="text"
@@ -45,11 +45,11 @@ export default function MypageUI(props: MypageUIProps): JSX.Element {
                 )}
             </S.UserInfoWrapper>
             <S.WishListWrapper>
-                <S.Smalltitle>찜목록</S.Smalltitle>
+                <S.InfoTitle>찜목록</S.InfoTitle>
                 <S.Label>찜한 가게들의 리스트입니다.</S.Label>
             </S.WishListWrapper>
             <S.RatedListWrapper>
-                <S.Smalltitle>평가한 가게</S.Smalltitle>
+                <S.InfoTitle>평가한 가게</S.InfoTitle>
                 <S.Label>평가한 가게들의 리스트입니다.</S.Label>
             </S.RatedListWrapper>
             <S.ButtonWrapper>

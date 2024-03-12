@@ -4,7 +4,7 @@ import { SignupUIProps } from "./Signup.types";
 export default function SignupUI(props: SignupUIProps): JSX.Element {
     return(
         <S.Wrapper>
-            <S.Logo onClick={props.onClickMoveToMainpage}>AlcoholMap</S.Logo>
+            <S.Logo onClick={props.onClickMoveToMainpage} src="/GreenBottleLogo1.png"></S.Logo>
             <S.Title>회원가입</S.Title>
                 <S.InfoWrapper>
                     <S.Label>이메일: </S.Label>

@@ -18,7 +18,7 @@ const apiUrl = '/users/profile/${userEmail}';
 export default function MyPagePage(){
     const router = useRouter()
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const [isEdit, setIsEdit] = useState(true);
+    const [isEdit, setIsEdit] = useState(false);
     const [userData, setUserData] = useState<userData>({
         userEmail: '',
         capaSoju: 0,

@@ -103,7 +103,7 @@ export default function LoginPage(): JSX.Element{
     const onClickMoveToMainpage = (): void => {
         router.push("../map")
     }
-
+    console.log("rerendering")
     return (
         <LoginUI
             loginForm = {loginForm}

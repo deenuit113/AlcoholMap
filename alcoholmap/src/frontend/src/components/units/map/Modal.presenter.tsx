@@ -47,10 +47,11 @@ const ModalPresenter = (props: IModalUIProps): JSX.Element => {
                             )}
                         </S.reviewWrapper>
                         <hr/>
-                        <S.reviewerWrapper>
-                                <ModalReview/>
-                        </S.reviewerWrapper>
-                        
+                        <S.CenterWrapper>
+                            <S.reviewerWrapper>
+                                    <ModalReview/>
+                            </S.reviewerWrapper>
+                        </S.CenterWrapper>
                     </S.modalContent>
                 </>
             )}

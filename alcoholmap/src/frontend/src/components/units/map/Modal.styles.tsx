@@ -7,8 +7,8 @@ const modalStyles = {
         zIndex: 990,
     },
     content: {
-        width: 500,
-        height: 600,
+        width: '80%',
+        height: '70%',
         top: '50%',
         left: '50%',
         right: '0',
@@ -22,6 +22,8 @@ const modalStyles = {
 
 export const modalContainer = styled.div`
     position: fixed;
+    width: 95%;
+    height: 95%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -29,17 +31,14 @@ export const modalContainer = styled.div`
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 500px;  /* 모달 최대 너비 지정 */
-    max-height: 600px;
-    width: 100%;
-    height: 600px;
     box-sizing: border-box;
 `
 
 export const modalContent = styled.div`
     position: relative;
-    width: 450px;
-    height: 400px;
+    width: 95%;
+    height: 95%;
+    display: flex;
     flex-direction: column;
 `
 
@@ -59,7 +58,7 @@ export const placeLink = styled.a`
 export const reviewInput = styled.textarea`
     font-size: 17px;
     height: 40px;
-    width: 210px;
+    width: 50%;
     margin: 3px;
     radius: 5px;
     resize: none;
@@ -118,12 +117,9 @@ export const ErrorMsgWrapper = styled.div`
 `
 
 export const starRateWrapper = styled.div`
-    width: 300px;
-    display: inline-block;
-    flex-direction: column;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    padding-left: 2px;
-    margin-left: 10px;
 `
 
 export const starRate = styled(FaStar)`
@@ -138,7 +134,7 @@ export const placeinfoWrapper = styled.div`
 `
 
 export const reviewWrapper = styled.div`
-    padding-top: 3px;
+    padding-top: 20px;
     display: inline-block;
     flex-direction: column;
     align-items: center;
@@ -151,15 +147,21 @@ export const rvinputWrapper = styled.div`
 `
 
 export const reviewerWrapper = styled.div`
-    border: 1px solid black;
     border-radius: 10px;
     padding: 5px;
-    width: 400px;
-    height: 265px;
-    display: inline-block;
+    margin-top: 10px;
+    width: 90%;
+    height: 95%;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: auto;
+    overflow-x: hidden;
+`
+export const CenterWrapper = styled.div`
+    display: flex;
+    height: 65%;
+    justify-content: center;
+    align-items: center;
 `
 
 export default modalStyles;

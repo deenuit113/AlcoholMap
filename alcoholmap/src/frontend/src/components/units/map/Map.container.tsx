@@ -127,11 +127,6 @@ export default function MapPage(): JSX.Element{
 
     const handleMapDragEnd = _debounce(async () => {
         try {
-            // ps가 초기화되지 않았을 때의 처리
-            if (!ps || !map) {
-                const newPs = new window.kakao.maps.services.Places();
-                setPs(newPs);
-            }
             if (ps && map){ // 맵의 중심 좌표를 가져와서 검색 수행
                  //@ts-ignore // kakao api 함수
                 const center = map.getCenter();
@@ -289,16 +284,15 @@ export default function MapPage(): JSX.Element{
     const getListItem = (index: number, places: any): any => {
         const el: HTMLElement = document.createElement('li');
         let itemStr : string = (`<span style ="float:right"><img src ="/soju1.png"/></span>`).repeat(5);
-        itemStr += `<div style="font-size: 25px; font-weight:bold;margin-bottom:10px;">${places.place_name}</div>`;
+        itemStr += `<div>${places.place_name}</div>`;
     
         if (places.road_address_name) {
-            itemStr += `<span>${places.road_address_name}</span>
-                        <span style="overflow:hidden">${places.address_name}</span><br/>`;
+            itemStr += `<span>${places.road_address_name}</span><br/>`;
         } else {
             itemStr += `<span>${places.address_name}</span><br/>`; 
         }
         if (places.phone){
-            itemStr += `<span class="tel">☎ ${places.phone}</span><hr/></div>`;     
+            itemStr += `<span class="tel">☎ ${places.phone}</span><hr/>`;     
         } else {
             itemStr += '<hr/>';
         }
