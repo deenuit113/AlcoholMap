@@ -48,6 +48,9 @@ export const Label = styled.div`
     float: left;
 `;
 
+export const LoginForm = styled.form`
+`
+
 export const InfoWrapper = styled.div`
     width: 100%;
     padding: 10px;
