@@ -16,7 +16,7 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                         {props.isEdit ? (
                         <S.InputInfo
                             type="text"
-                            {...register('userEmail', { required: true })}
+                            {...register('userEmail',{value:props.userInfo.userEmail})}
                         />
                     ) : (
                         <S.UserInfo>{props.userInfo.userEmail}</S.UserInfo>
@@ -29,7 +29,8 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                         {props.isEdit ? (
                         <S.InputInfo
                             type="password"
-                            {...register('password')}
+                            
+                            {...register('password',{value:props.userInfo.password})}
                         />
                     ) : (
                         <S.UserInfo>{props.userInfo.password}</S.UserInfo>
@@ -42,7 +43,7 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                         {props.isEdit ? (
                         <S.InputInfo
                             type="text"
-                            {...register('nickname')}
+                            {...register('nickname',{value:props.userInfo.nickname})}
                         />
                     ) : (
                         <S.UserInfo>{props.userInfo.nickname}</S.UserInfo>
@@ -55,7 +56,7 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                         {props.isEdit ? (
                         <S.InputInfo
                             type="text"
-                            {...register('capaSoju')}
+                            {...register('capaSoju',{value:props.userInfo.capaSoju})}
                         />
                     ) : (
                         <S.UserInfo>{props.userInfo.capaSoju}</S.UserInfo>
