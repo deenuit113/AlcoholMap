@@ -19,7 +19,7 @@ public class ReviewService {
 
     /**
      * 식당 리뷰 추가(저장)
-     * @param userId
+     * @param email
      * @param review
      * @return
      */

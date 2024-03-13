@@ -41,6 +41,7 @@ public class JwtTokenProvider {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+        log.info("authorities : " + authorities);
 
         UserCustom user = (UserCustom) authentication.getPrincipal();
         UserCustom userDetails = (UserCustom) authentication.getPrincipal();
@@ -62,6 +63,7 @@ public class JwtTokenProvider {
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
+
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
                 .setExpiration(new Date(now + 86400000))
@@ -80,7 +82,10 @@ public class JwtTokenProvider {
      */
     public Authentication getAuthentication(String accessToken){
         //토큰 복호화
+        System.out.println("accessToken = " + accessToken);
         Claims claims = parseClaims(accessToken);
+        log.info("claims : " + claims);
+        log.info("claims.get(auth) : " + claims.get("auth"));
 
         if (claims.get("auth") == null){
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
@@ -93,12 +98,14 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, (Long) claims.get("id"));
+        Number idNumber = (Number) claims.get("id");
+        Long userId = idNumber.longValue();
+        UserCustom principal = new UserCustom(claims.getSubject(), "", authorities, userId);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
-    public Integer getMemberCodeByRefreshToken(String refreshToken){
+    public Long getMemberCodeByRefreshToken(String refreshToken){
         Claims claims = parseClaims(refreshToken);
-        return (Integer)claims.get("id");
+        return (Long)claims.get("id");
     }
 
     /**
@@ -107,6 +114,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            log.info("validateToken : " + token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token", e);

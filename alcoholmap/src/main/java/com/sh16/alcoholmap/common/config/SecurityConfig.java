@@ -56,15 +56,7 @@ public class SecurityConfig {
             authorize
                     .requestMatchers("/users/signup").permitAll()
                     .requestMatchers("/users/login").permitAll()
-//                    .requestMatchers("/users/**").hasAnyRole("USER","MANAGER","ADMIN")
-//                    .requestMatchers("/manager/**").hasAnyRole("MANAGER","ADMIN")
-//                    .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                    // hasAnyRole() 메소드는 자동으로 앞에 ROLE_을 추가해서 체크해준다 (각 파라미터는 or 연산)
-//                            .requestMatchers("/user/**").hasAnyAuthority("USER","MANAGER","ADMIN")
-//                            .requestMatchers("/user/**").authenticated()
-//                            .requestMatchers("/manager/**").hasAnyAuthority("MANAGER", "ADMIN")
-//                            //.requestMatchers("/manager/**").access("hasAuthority('ROLE_ADMIN')")
-//                            .requestMatchers(("/admin/**")).hasAuthority("ADMIN")
+                    //.requestMatchers("/users/profile/**").authenticated(); //로그인한 사용자만 접근 가능 추후 모든 설정 일괄로
                     .anyRequest().permitAll();
         });
 

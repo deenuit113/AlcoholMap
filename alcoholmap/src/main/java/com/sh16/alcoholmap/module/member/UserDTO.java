@@ -11,8 +11,11 @@ public class UserDTO {
     private String email;
     private String password;
     private String nickname;
-
     private int capaSoju;
+    private String roles;
+
+
+
 
     @AllArgsConstructor
     @NoArgsConstructor
@@ -21,6 +24,7 @@ public class UserDTO {
         private Long id;
         private String nickname;
         private int capaSoju;
+        private String email;
     }
 
 }

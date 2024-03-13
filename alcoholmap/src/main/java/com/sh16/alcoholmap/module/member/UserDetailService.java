@@ -44,7 +44,7 @@ public class UserDetailService implements UserDetailsService {
                 , user.getPassword(), authorities(user.getRoles())
                 , user.getId()
         );
-        System.out.println("userCustom = " + userCustom);
+        ;
 
         return userCustom;
     }

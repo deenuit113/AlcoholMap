@@ -7,12 +7,14 @@ import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 
 import com.sh16.alcoholmap.module.member.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewController {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -45,10 +47,13 @@ public class ReviewController {
      */
     @PostMapping("/place/review")
     public ResponseEntity<Response> addPlaceReviews(@RequestHeader(AuthConst.AUTH_HEADER) String myToken, @RequestBody ReviewDto.ReviewRequest review) {
+        if (myToken != null && myToken.startsWith("Bearer ")) {
+            myToken = myToken.substring(7); // "Bearer " 문자열 이후의 토큰 값을 추출
+        }
         jwtTokenProvider.validateToken(myToken);
         Authentication authentication = jwtTokenProvider.getAuthentication(myToken);
-        String userId = authentication.getName();
-        return ReviewService.addPlaceReviews(userId, review);
+        String email = authentication.getName();
+        return ReviewService.addPlaceReviews(email, review);
     }
 
     /**

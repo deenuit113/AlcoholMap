@@ -49,6 +49,7 @@ public class UserService {
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .nickname(dto.getNickname())
                 .capaSoju(dto.getCapaSoju())
+                .roles(dto.getRoles())
                 .build());
         userRepository.save(user);
         return Response.newResult(HttpStatus.OK, "회원가입이 완료되었습니다.", null);
@@ -57,13 +58,13 @@ public class UserService {
     /**
      * 회원 조회 (마이 페이지)
      */
+    @Transactional
     public UserDTO getUserInfoByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException(email + " : 등록되지 않은 이메일 입니다.")
         );
         UserDTO dto = new UserDTO();
         dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword()); // 실제 배포시에는 비밀번호 반환x
         dto.setCapaSoju(user.getCapaSoju());
         dto.setNickname(user.getNickname());
         return dto;
@@ -87,13 +88,18 @@ public class UserService {
      */
     @Transactional
     public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
-        Optional<User> checkUser = userRepository.findUserById(requestDTO.getId());
+
+        Optional<User> checkUser = userRepository.findByEmail(requestDTO.getEmail());
         if (checkUser.isPresent() && !checkUser.get().getId().equals(requestDTO.getId())) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
         }
         if (requestDTO.getNickname().length() > 8) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "닉네임은 8자리 이하만 가능합니다.", null);
         }
+        if (requestDTO.getCapaSoju() > 20) {
+            return Response.newResult(HttpStatus.BAD_REQUEST, "소주 주량은 20병 이하만 가능합니다.", null);
+        }
+        log.info("checkUser : " + checkUser);
         Optional<User> user = userRepository.findUserById(requestDTO.getId());
         user.get().updateInfo(requestDTO.getNickname(), requestDTO.getCapaSoju());
         return Response.newResult(HttpStatus.OK, "정보가 업데이트 되었습니다.", null);
