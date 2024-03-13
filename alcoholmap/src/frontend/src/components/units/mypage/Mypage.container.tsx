@@ -33,7 +33,7 @@ export default function MyPagePage(){
 
     const { register, handleSubmit, formState } = useForm<userData>({
         mode: 'onChange',
-        resolver: yupResolver(mypageEditSchema(userInfo.userEmail, userInfo.password, userInfo.nickname, userInfo.capaSoju)),
+        resolver: yupResolver(mypageEditSchema),
         reValidateMode: 'onChange',
         defaultValues: {
           userEmail: userInfo.userEmail,
@@ -65,7 +65,7 @@ export default function MyPagePage(){
         }
         
 
-    }, []);
+    }, [isEdit]);
 
     const fetchData = async () => { // 사용자 정보 받아오기
         try {
@@ -144,7 +144,7 @@ export default function MyPagePage(){
     const onClickMoveToMainpage = (): void => { // 메인페이지로 이동
         router.push("../map")
     }
-    console.log("rerendering");
+    console.log(userInfo);
 
     return (
         <MypageUI
