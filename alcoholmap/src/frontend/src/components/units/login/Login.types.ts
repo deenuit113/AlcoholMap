@@ -1,5 +1,4 @@
-import { ChangeEvent } from "react";
-
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 // Login container interface
 
 export interface LoginForm {
@@ -8,16 +7,11 @@ export interface LoginForm {
 }
 
 // Login presenter interface
+type PickFormMethods = Pick<UseFormReturn<LoginForm>, 'register' | 'handleSubmit' | 'formState'>;
 
 export interface LoginUIProps {
-    loginForm: {
-        email: string;
-        password: string;
-    };
-    onChangeInput: (event: ChangeEvent<HTMLInputElement>) => void;
+    formMethods: PickFormMethods;
+    onSubmit: SubmitHandler<LoginForm>;
     onClickMoveToMainpage: () => void;
     onClickMoveToSignup: () => void;
-    onClickSubmit: () => void;
-    emailError: string;
-    pwError: string;
 }
