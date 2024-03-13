@@ -4,6 +4,9 @@ import axios from 'axios';
 import { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken';
 import { userData } from './Mypage.types'
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { mypageEditSchema } from "../../../commons/yupSchemas";
 
 /*  수정 버튼 누를 시에 수정페이지로 이동
     수정 내용 비밀번호?
@@ -19,32 +22,52 @@ export default function MyPagePage(){
     const router = useRouter()
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [userData, setUserData] = useState<userData>({
+    const [userInfo, setUserInfo] = useState<userData>({
         userEmail: '',
-        capaSoju: 0,
+        password: '',
         nickname: '',
+        capaSoju: 0,
         // 찜한가게 (가게 이름, 위도 경도 값)
         // 평가한 가게 (가게 이름, 위도 경도 값, 평점, 리뷰)
     });
 
+    const { register, handleSubmit, formState } = useForm<userData>({
+        mode: 'onChange',
+        resolver: yupResolver(mypageEditSchema(userInfo.userEmail, userInfo.password, userInfo.nickname, userInfo.capaSoju)),
+        reValidateMode: 'onChange',
+        defaultValues: {
+          userEmail: userInfo.userEmail,
+          password: userInfo.password,
+          nickname: userInfo.nickname,
+          capaSoju: userInfo.capaSoju,
+        },
+        shouldFocusError: true,
+        shouldUnregister: true,
+    });
+
     useEffect(() => {
+
+        setUserInfo({
+            ...userInfo,
+            userEmail: "kimseyoung@gmail.com",
+            password: "kimseyoung123",
+            nickname: "kimtax0",
+            capaSoju: 3,
+            
+        });
+        
         checkIsLoggedIn();
         if(!isLoggedIn){
             alert("로그인 후 이용해주세요");
-            setUserData({
-                ...userData,
-                userEmail: "kimseyoung@gmail.com",
-                capaSoju: 3,
-                nickname: "kimtax0",
-            });
             //router.push('../login');
         } else{
             //fetchData();
         }
+        
 
     }, []);
 
-    const fetchData = async () => {
+    const fetchData = async () => { // 사용자 정보 받아오기
         try {
             // 토큰 decode
             const token = localStorage.getItem('jwtToken');
@@ -56,14 +79,14 @@ export default function MyPagePage(){
             // API 호출
             const response = await axios.get(apiUrl, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+                    Authorization: `Bearer ${token}}`,
                 },
                 params: {
                     email: userEmail,
                 },
             });
             // 가져온 데이터를 상태에 저장
-            setUserData(response.data);
+            setUserInfo(response.data);
 
             console.log('User data:', response.data);
         } catch (error) {
@@ -90,45 +113,47 @@ export default function MyPagePage(){
         setLoggedIn(true);
     };
 
-    const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setUserData((prevData) => ({
-            ...prevData,
-            [name]: name === 'capaSoju' ? Number(value) : value,
-        }));
-        if(name === "email" && event.target.value !== ""){
-            //setEmailError("")
-        }
-        if(name === "capaSoju" && event.target.value !== ""){
-            //setCapaError("")
-        }
-        if(name === "nickname" && event.target.value !== ""){
-            //setNnError("")
-        }
-        
+    const onSubmit: SubmitHandler<userData> = (data: userData) => {
+        // 로그인 처리 로직 추가
+        console.log(data);
+        setIsEdit(false);
+        onSendEditForm(data);
     };
+
+    const onSendEditForm = async (editForm: userData) => {
+        const jsonEditForm = JSON.stringify(editForm);
+        console.log(jsonEditForm)
+        try {
+            const response = await axios.post(apiUrl, jsonEditForm, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('Response from server:', response.data);
+            alert("회원정보 수정 완료.")
+        } catch (error){
+            console.error('error submitting data:', error);
+            alert("회원정보 수정 실패.")
+        }
+    };
+
+    const onClickEdit = (): void => { //수정한 내용 제출
+        setIsEdit(true);
+    }
 
     const onClickMoveToMainpage = (): void => { // 메인페이지로 이동
         router.push("../map")
     }
-
-    const onClickEdit = (): void => { //수정하기 버튼
-        setIsEdit(true);
-    }
-
-    const onClickEditSubmit = (): void => { //수정한 내용 제출
-        setIsEdit(false);
-    }
-
+    console.log("rerendering");
 
     return (
         <MypageUI
-            userData = {userData}
+            userInfo = {userInfo}
             isEdit = {isEdit}
+            formMethods={{ register, handleSubmit, formState }}
+            onSubmit={onSubmit}
+            onClickEdit={onClickEdit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
-            onClickEdit = {onClickEdit}
-            onClickEditSubmit = {onClickEditSubmit}
-            onChangeInput = {onChangeInput}
         />
         
     )
