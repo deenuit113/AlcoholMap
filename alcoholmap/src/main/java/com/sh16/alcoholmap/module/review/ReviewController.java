@@ -47,14 +47,11 @@ public class ReviewController {
      */
     @PostMapping("/place/review")
     public ResponseEntity<Response> addPlaceReviews(@RequestHeader(AuthConst.AUTH_HEADER) String myToken, @RequestBody ReviewDto.ReviewRequest review) {
-        log.info("myToken : " + myToken);
         if (myToken != null && myToken.startsWith("Bearer ")) {
             myToken = myToken.substring(7); // "Bearer " 문자열 이후의 토큰 값을 추출
         }
         jwtTokenProvider.validateToken(myToken);
-        log.info("validate ok");
         Authentication authentication = jwtTokenProvider.getAuthentication(myToken);
-        log.info("authentication : " + authentication);
         String email = authentication.getName();
         return ReviewService.addPlaceReviews(email, review);
     }

@@ -50,7 +50,7 @@ public class UserApiController {
 
     /**
      * 회원 정보 수정
-     * 닉네임, capaSoju 변경 가능 ----> 구현 예정
+     * 닉네임, capaSoju 변경 가능
      */
     @PutMapping("/users/profile")
     public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {

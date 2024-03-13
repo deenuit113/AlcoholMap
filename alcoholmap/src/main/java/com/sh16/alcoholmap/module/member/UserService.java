@@ -49,6 +49,7 @@ public class UserService {
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .nickname(dto.getNickname())
                 .capaSoju(dto.getCapaSoju())
+                .roles(dto.getRoles())
                 .build());
         userRepository.save(user);
         return Response.newResult(HttpStatus.OK, "회원가입이 완료되었습니다.", null);
@@ -88,7 +89,7 @@ public class UserService {
     @Transactional
     public ResponseEntity<Response> updateInfo(@RequestBody UserDTO.UpdateRequest requestDTO, HttpServletRequest httpRequest) {
 
-        Optional<User> checkUser = userRepository.findUserById(requestDTO.getId());
+        Optional<User> checkUser = userRepository.findByEmail(requestDTO.getEmail());
         if (checkUser.isPresent() && !checkUser.get().getId().equals(requestDTO.getId())) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "이미 존재하는 닉네임입니다.", null);
         }
