@@ -63,6 +63,7 @@ export default function SignupPage(){
             });
             console.log('Response from server:', response.data);
             alert("회원 가입 성공.")
+            router.push("../login")
         } catch (error){
             console.error('error submitting data:', error);
             alert("회원 가입 실패.")

@@ -15,7 +15,8 @@ import { mypageEditSchema } from "../../../commons/yupSchemas";
     이메일 받아오기
 */
 
-const apiUrl = '/users/profile/${userEmail}';
+const getUserInfoApiUrl = '/users/profile/${userEmail}';
+const editUserInfoApiUrl = '/users/profile';
 
 
 export default function MyPagePage(){
@@ -47,21 +48,21 @@ export default function MyPagePage(){
 
     useEffect(() => {
 
-        setUserInfo({
+        /*setUserInfo({
             ...userInfo,
             userEmail: "kimseyoung@gmail.com",
             password: "kimseyoung123",
             nickname: "kimtax0",
             capaSoju: 3,
             
-        });
+        });*/
         
         checkIsLoggedIn();
         if(!isLoggedIn){
             alert("로그인 후 이용해주세요");
-            //router.push('../login');
+            router.push('../login');
         } else{
-            //fetchData();
+            fetchData();
         }
         
 
@@ -77,7 +78,7 @@ export default function MyPagePage(){
             const userEmail = decodedToken.email;
 
             // API 호출
-            const response = await axios.get(apiUrl, {
+            const response = await axios.get(getUserInfoApiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}}`,
                 },
@@ -122,11 +123,13 @@ export default function MyPagePage(){
 
     const onSendEditForm = async (editForm: userData) => {
         const jsonEditForm = JSON.stringify(editForm);
+        const token = localStorage.getItem('jwtToken');
         console.log(jsonEditForm)
         try {
-            const response = await axios.post(apiUrl, jsonEditForm, {
+            const response = await axios.put(editUserInfoApiUrl, jsonEditForm, {
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}}`,
                 },
             });
             console.log('Response from server:', response.data);

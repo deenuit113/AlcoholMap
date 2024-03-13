@@ -9,7 +9,7 @@ export const loginSchema = yup.object({
     email: yup
         .string()
         .required('이메일을 입력하세요.')
-        .matches(emailRegex, '올바른 이메일 형식이 아닙니다.1'),
+        .matches(emailRegex, '올바른 이메일 형식이 아닙니다.'),
     password: yup
         .string()
         .required('비밀번호를 입력하세요.'),
