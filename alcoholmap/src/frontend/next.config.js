@@ -1,28 +1,26 @@
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:8080';
 module.exports = {
   async rewrites() {
     return [
       {
         source: '/users/signup',
-        destination: baseUrl + '/users/signup',
+        destination: `http://localhost:8080/users/signup`,
       },
       {
         source: '/users/profile/:email',
-        destination: baseUrl + '/users/profile/:email',
+        destination: `http://localhost:8080/users/profile/:userEmail`,
       },
       {
         source: '/users/place/review',
-        destination: baseUrl + '/users/place/review',
+        destination: `http://localhost:8080//users/place/review`,
       },
       {
         source: '/users/profile',
-        destination: baseUrl + '/users/profile',
+        destination: `http://localhost:8080//users/profile`,
       },
+      {
+        source: '/users/login',
+        destination: `http://localhost:8080/users/login`,
+      }
     ];
-  },
-
-  async onProxyReq(proxyReq) {
-    // 프록시 요청 설정
-    proxyReq.setHeader('Host', 'localhost:8080');
   },
 };
