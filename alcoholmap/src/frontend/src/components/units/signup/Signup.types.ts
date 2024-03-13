@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 
 // Signup container interface
 export interface SignupForm {
@@ -8,20 +8,11 @@ export interface SignupForm {
     capaSoju: number;
 }
 
+type PickFormMethods = Pick<UseFormReturn<SignupForm>, 'register' | 'handleSubmit' | 'formState'>;
+
 // Signup presenter interface
 export interface SignupUIProps {
-    emailError: string;
-    pwError: string;
-    nnError: string;
-    capaError: string;
-    onClickSubmit: () => void;
-    onChangeInput: (event: ChangeEvent<HTMLInputElement>) => void;
+    formMethods: PickFormMethods;
+    onSubmit: SubmitHandler<SignupForm>;
     onClickMoveToMainpage: () => void;
-    submitSignupForm: (signupForm: SignupForm) => void;
-    signupForm: {
-        email: string;
-        password: string;
-        nickname: string;
-        capaSoju: number;
-    };
 }

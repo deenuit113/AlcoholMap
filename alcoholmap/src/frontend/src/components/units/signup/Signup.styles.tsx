@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 40%;
     transform: translate(-50%, -50%);
     border: 1px solid black;
     margin: 10 10 10 10px;
@@ -20,36 +21,32 @@ export const Wrapper = styled.div`
     background-color: #f0fdef;
 
     @media all and (min-width: 480px) and (max-width: 1439px) {
-        // 모바일 세로
+        // 태블릿
         width: 95%;
-        min-height: 95%;
-        padding-top: 10px;
-        padding-left: 50px;
-        padding-right: 50px;
+        height: 95%;
     }
 `;
 
 
 export const Label = styled.div`
-  padding-bottom: 16px;
-  font-size: 16px;
-  font-weight: 500;
-  margin-right: 5px;
-  margin-left: 5px;
-  display: inline-block;
+    padding-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
 `;
 
-export const InfoWrapper = styled.div`
-  width: 500px;
-  display: inline-block;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 15px;
-  padding-bottom: 0px;
+export const SignupForm = styled.form`
+    width: 100%;
 `
 
+export const InfoWrapper = styled.div`
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+`;
+
 export const ErrorMsgWrapper = styled.div`
-  width: 300px;
+  width: 100%;
   display: inline-block;
   flex-direction: column;
   align-items: center;
@@ -58,10 +55,9 @@ export const ErrorMsgWrapper = styled.div`
 `
 
 export const Title = styled.div`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 30px;
-  font-weight: bold;
-  padding-bottom: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
 `;
 
 export const Logo = styled.img`
@@ -74,22 +70,35 @@ export const Logo = styled.img`
 `
 
 export const ButtonWrapper = styled.div`
-  text-align: center;
-`
+    width: 100%;
+    margin-top: 16px;
+    display: flex;
+    justify-content: end;
+`;
 
 export const SignUpButton = styled.button`
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 10px;
-  width: 100px;
-  float: right;
-`
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+`;
 
 export const InputInfo = styled.input`
-  width: 200px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 17px;
-  margin-left: 10px; 
-  float: lefts;
-`
+    width: 100%;
+    padding: 10px;
+    margin-left: 13px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    @media all and (min-width: 480px) and (max-width: 1439px) {
+        width: 95%;
+    }
+`;
