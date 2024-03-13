@@ -21,6 +21,11 @@ export default {
                 source: '/users/place/review',
                 destination: baseUrl + '/users/place/review',
             },
-        ];
+
+            {
+                source: '/users/profile',
+                destination: baseUrl + '/users/profile',
+            },
+        ];        
     },
 };

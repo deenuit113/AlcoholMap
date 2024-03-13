@@ -96,13 +96,13 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
         const jsonformData = JSON.stringify(reviewForm);
         console.log(jsonformData)
         try {
-            /*const response = await axios.post(apiUrl, jsonformData, {
+            const response = await axios.post(apiUrl, jsonformData, {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    //'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-            });*/
-            //console.log('Response from server:', response.data);
+            });
+            console.log('Response from server:', response.data);
 
             setReviewForm({
                 placeId: 0,
