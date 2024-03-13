@@ -1,7 +1,11 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import SignupUI from './Signup.presenter'
 import axios from 'axios';
 import { useRouter } from 'next/router'
+import { SignupForm } from './Signup.types';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { signupSchema } from "../../../commons/yupSchemas";
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -16,69 +20,56 @@ export default function SignupPage(){
 
     const router = useRouter()
 
-    const [emailError, setEmailError] = useState("")
-    const [pwError, setPwError] = useState("")
-    const [capaError, setCapaError] = useState("")
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        capaSoju: 0,
+    const { register, handleSubmit, formState } = useForm<SignupForm>({
+        mode: 'onChange',
+        resolver: yupResolver(signupSchema),
+        reValidateMode: 'onChange',
+        defaultValues: {
+          email: '',
+          password: '',
+          nickname: '',
+          capaSoju: 0,
+        },
+        shouldFocusError: true,
+        shouldUnregister: true,
     });
-
-
-    const onChangeInput = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-            ...formData,
-            [name]: name === 'capaSoju' ? Number(value) : value,
-        });
-        if(name === "email" && event.target.value !== ""){
-            setEmailError("")
-        }
-        if(name === "password" && event.target.value !== ""){
-            setPwError("")
-        }
-        if(name === "capaSoju" && event.target.value !== ""){
-            setCapaError("")
-        }
-        
-    };
-
-    const onClickSubmit = () => {
-        let errorcode = 0;
-        if(!formData.email) {
-            setEmailError("이메일을 입력해주세요.")
-            errorcode = 1
-        }
-
-        if(!formData.password) {
-            setPwError("비밀번호를 입력해주세요.")
-            errorcode = 1
-        }
-
-        if(!formData.capaSoju) {
-            setCapaError("주량을 입력하세요.")
-            errorcode = 1
-        }
-        
-        if(errorcode === 0){
-            console.log(formData)
-            handleFormSubmit(null,formData)
-        }
-        
-    };
-
-    const handleFormSubmit = async (e, formData) => {
-        const jsonformData = JSON.stringify(formData);
+    const [isDuplicated, setIsDuplicated] = useState(false);
+    
+    /*const checkDuplicateEmail = async () => {
         try {
-            const response = await axios.post(apiUrl, jsonformData);
+            const response = await axios.get(`/api/check-email?email=${email}`);
+            setDuplicate(response.data.exists); // 서버에서 중복 여부를 응답으로 받아서 처리
+        } catch (error) {
+            console.error('Error checking duplicate email:', error);
+            setDuplicate(false);
+            return false;
+        }
+    };*/
+
+    const onSubmit: SubmitHandler<SignupForm> = (data: SignupForm) => {
+        // 로그인 처리 로직 추가
+        console.log(data);
+        onSendSignupForm(data);
+    };
+
+    const onSendSignupForm = async (signupForm: SignupForm) => {
+        const jsonSignupForm = JSON.stringify(signupForm);
+        console.log(jsonSignupForm)
+        try {
+            const response = await axios.post(apiUrl, jsonSignupForm, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             console.log('Response from server:', response.data);
+            alert("회원 가입 성공.")
         } catch (error){
             console.error('error submitting data:', error);
+            alert("회원 가입 실패.")
         }
     };
 
-    const onClickMoveToMainpage = () => {
+    const onClickMoveToMainpage = (): void => {
         router.push("../map")
     }
 
@@ -114,13 +105,8 @@ export default function SignupPage(){
 
     return (
         <SignupUI
-            emailError = {emailError}
-            pwError = {pwError}
-            capaError = {capaError}
-            onClickSubmit = {onClickSubmit}
-            onChangeInput = {onChangeInput}
-            formData = {formData}
-            handleFormSubmit = {handleFormSubmit}
+            formMethods={{ register, handleSubmit, formState }}
+            onSubmit={onSubmit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
         />
     )
