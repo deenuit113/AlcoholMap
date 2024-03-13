@@ -1,65 +1,85 @@
 import * as S from "./Mypage.styles"
-import { ChangeEvent } from "react";
-import { MypageUIProps } from "./Mypage.types";
+import { userData, MypageUIProps } from "./Mypage.types";
 
 
 
-export default function MypageUI(props: MypageUIProps): JSX.Element {
+export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIProps): JSX.Element {
+    const { register, handleSubmit, formState: { errors } } = formMethods;
     return(
-        <S.Wrapper>
-            <S.Logo onClick={props.onClickMoveToMainpage} src="/GreenBottleLogo1.png"></S.Logo>
-            <S.Title>마이페이지</S.Title>
-            <S.UserInfoWrapper>
-                <S.InfoTitle>이메일</S.InfoTitle>
-                {props.isEdit ? (
-                    <input
-                        type="text"
-                        name="userEmail"
-                        value={props.userData.userEmail}
-                        onChange={props.onChangeInput}
-                    />
-                ) : (
-                    <S.UserInfo>{props.userData.userEmail}</S.UserInfo>
-                )}
-                <S.InfoTitle>주량</S.InfoTitle>
-                {props.isEdit ? (
-                    <input
-                        type="number"
-                        name="capaSoju"
-                        value={props.userData.capaSoju}
-                        onChange={props.onChangeInput}
-                    />
-                ) : (
-                    <S.UserInfo>{props.userData.capaSoju}</S.UserInfo>
-                )}
-                <S.InfoTitle>닉네임</S.InfoTitle>
-                {props.isEdit ? (
-                    <input
-                        type="text"
-                        name="nickname"
-                        value={props.userData.nickname}
-                        onChange={props.onChangeInput}
-                    />
-                ) : (
-                    <S.UserInfo>{props.userData.nickname}</S.UserInfo>
-                )}
-            </S.UserInfoWrapper>
-            <S.WishListWrapper>
-                <S.InfoTitle>찜목록</S.InfoTitle>
-                <S.Label>찜한 가게들의 리스트입니다.</S.Label>
-            </S.WishListWrapper>
-            <S.RatedListWrapper>
-                <S.InfoTitle>평가한 가게</S.InfoTitle>
-                <S.Label>평가한 가게들의 리스트입니다.</S.Label>
-            </S.RatedListWrapper>
-            <S.ButtonWrapper>
-                {props.isEdit ? (
-                    <S.ConfirmButton onClick={props.onClickEditSubmit}>확인</S.ConfirmButton>
-                ) : (
-                    <S.EditButton onClick={props.onClickEdit}>수정</S.EditButton>
-                )}
-            </S.ButtonWrapper>
-        </S.Wrapper>
+        <>
+            <S.Wrapper>
+                <S.Logo onClick={props.onClickMoveToMainpage} src="/GreenBottleLogo1.png"></S.Logo>
+                <S.Title>마이페이지</S.Title>
+                <S.UserInfoForm onSubmit= {handleSubmit(onSubmit)}>
+                    <S.InfoWrapper>
+                        <S.InfoLabel>이메일: </S.InfoLabel>
+                        {props.isEdit ? (
+                        <S.InputInfo
+                            type="text"
+                            {...register('userEmail', { required: true })}
+                        />
+                    ) : (
+                        <S.UserInfo>{props.userInfo.userEmail}</S.UserInfo>
+                        )}
+                        {errors?.userEmail && <S.ErrorMsgWrapper>{errors.userEmail.message}</S.ErrorMsgWrapper>}
+                    </S.InfoWrapper>
+
+                    <S.InfoWrapper>
+                        <S.InfoLabel>비밀번호: </S.InfoLabel>
+                        {props.isEdit ? (
+                        <S.InputInfo
+                            type="password"
+                            {...register('password')}
+                        />
+                    ) : (
+                        <S.UserInfo>{props.userInfo.password}</S.UserInfo>
+                        )}
+                        {errors?.password && <S.ErrorMsgWrapper>{errors.password.message}</S.ErrorMsgWrapper>}
+                    </S.InfoWrapper>
+
+                    <S.InfoWrapper>
+                        <S.InfoLabel>닉네임: </S.InfoLabel>
+                        {props.isEdit ? (
+                        <S.InputInfo
+                            type="text"
+                            {...register('nickname')}
+                        />
+                    ) : (
+                        <S.UserInfo>{props.userInfo.nickname}</S.UserInfo>
+                        )}
+                        {errors?.nickname && <S.ErrorMsgWrapper>{errors.nickname.message}</S.ErrorMsgWrapper>}
+                    </S.InfoWrapper>
+
+                    <S.InfoWrapper>
+                        <S.InfoLabel>주량: </S.InfoLabel>
+                        {props.isEdit ? (
+                        <S.InputInfo
+                            type="text"
+                            {...register('capaSoju')}
+                        />
+                    ) : (
+                        <S.UserInfo>{props.userInfo.capaSoju}</S.UserInfo>
+                        )}
+                        {errors?.capaSoju && <S.ErrorMsgWrapper>{errors.capaSoju.message}</S.ErrorMsgWrapper>}
+                    </S.InfoWrapper>
+                    <S.ButtonWrapper>
+                        {props.isEdit ? (
+                            <S.ConfirmButton type="submit">확인</S.ConfirmButton>
+                        ) : (
+                            <S.EditButton onClick={props.onClickEdit}>수정</S.EditButton>
+                        )}
+                    </S.ButtonWrapper>
+                </S.UserInfoForm>
+                <S.WishListWrapper>
+                    <S.InfoTitle>찜목록</S.InfoTitle>
+                    <S.Label>찜한 가게들의 리스트입니다.</S.Label>
+                </S.WishListWrapper>
+                <S.RatedListWrapper>
+                    <S.InfoTitle>평가한 가게</S.InfoTitle>
+                    <S.Label>평가한 가게들의 리스트입니다.</S.Label>
+                </S.RatedListWrapper>   
+            </S.Wrapper>
+        </>
     )
 }
 

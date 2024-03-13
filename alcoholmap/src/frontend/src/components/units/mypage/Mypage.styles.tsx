@@ -4,8 +4,8 @@ export const Wrapper = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid black;
     margin: 10 10 10 10px;
     padding-top: 80px;
     padding-bottom: 100px;
@@ -18,23 +18,28 @@ export const Wrapper = styled.div`
     border-radius: 30px;
     box-shadow: 0px 0px 10px gray;
     background-color: #f0fdef;
-    overflow-y: visible;
+    overflow: auto;
 
     @media all and (min-width: 480px) and (max-width: 1439px) {
-        // 모바일 세로
+        // 태블릿
         width: 95%;
-        min-height: 95%;
-        padding-top: 10px;
-        padding-left: 50px;
-        padding-right: 50px;
+        height: 95%;
     }
 `;
 
+
 export const Label = styled.div`
-      padding-bottom: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      float: left;
+    padding-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+`;
+
+export const InfoLabel = styled.span`
+    padding-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
 `;
 
 export const Title = styled.div`
@@ -52,25 +57,25 @@ export const InfoTitle = styled.div`
 `;
 
 export const UserInfo = styled.div`
-    width: 95%;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 3px;
-    border: 3px solid black;
-    border-radius: 5px;
-    margin-left: 5px;
-    margin-right: 15px;
-    margin-bottom: 7px;
-`;
-
-export const UserInfoInput = styled.input`
     width: 100%;
     padding: 10px;
     margin-left: 13px;
     box-sizing: border-box;
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 4px solid #47C83E;
+    border-radius: 8px;
+
+    @media all and (min-width: 480px) and (max-width: 1439px) {
+        width: 95%;
+    }
+`;
+
+export const InputInfo = styled.input`
+    width: 100%;
+    padding: 10px;
+    margin-left: 13px;
+    box-sizing: border-box;
+    font-size: 16px;
     border-radius: 4px;
 
     @media all and (min-width: 480px) and (max-width: 1439px) {
@@ -87,20 +92,23 @@ export const Logo = styled.img`
     }
 `
 
-export const UserInfoWrapper = styled.div`
-    width: 80%;
-    height: 100%;
-    display: inline-block;
+export const UserInfoForm = styled.form`
+    width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 5px;
-    margin: 5px;
-    border: 1px solid black;
-    border-radius: 10px 10px 10px 10px;
-    overflow-y: visible;
+    justify-content: space-between;
+    height: 100%;
 `
+
+export const InfoWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    height: 25%;
+    padding: 10px;
+    box-sizing: border-box;
+    flex-direction: column;
+`;
 
 export const WishListWrapper = styled.div`
     width: 80%;
@@ -129,6 +137,7 @@ export const RatedListWrapper = styled.div`
 `
 
 export const ButtonWrapper = styled.div`
+    position: relative;
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -137,14 +146,22 @@ export const ButtonWrapper = styled.div`
     padding-bottom: 15px;
     padding-left: 5px;
     margin: 5px;
-    border: 1px solid black;
+    float: right;
+`
+
+export const ErrorMsgWrapper = styled.div`
+    width: 300px;
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2px;
+    color: red;
 `
 
 export const EditButton = styled.button`
-    background-color: #4caf50;
+    background-color: #008CBA;
     color: white;
     border: none;
-    margin-right: 10px;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -155,10 +172,9 @@ export const EditButton = styled.button`
 `
 
 export const ConfirmButton = styled.button`
-    background-color: #4caf50;
+    background-color: #008CBA;
     color: white;
     border: none;
-    margin-right: 10px;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
