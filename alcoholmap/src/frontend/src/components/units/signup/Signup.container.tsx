@@ -1,8 +1,11 @@
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import SignupUI from './Signup.presenter'
 import axios from 'axios';
 import { useRouter } from 'next/router'
 import { SignupForm } from './Signup.types';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { signupSchema } from "../../../commons/yupSchemas";
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -17,28 +20,20 @@ export default function SignupPage(){
 
     const router = useRouter()
 
-    const [emailError, setEmailError] = useState("")
-    const [pwError, setPwError] = useState("")
-    const [nnError, setNnError] = useState("")
-    const [capaError, setCapaError] = useState("")
-    const [isDuplicate, setIsDuplicate] = useState(false)
-    const [signupForm, setSignupForm] = useState<SignupForm>({
-        email: '',
-        password: '',
-        nickname: '',
-        capaSoju: 0,
+    const { register, handleSubmit, formState } = useForm<SignupForm>({
+        mode: 'onChange',
+        resolver: yupResolver(signupSchema),
+        reValidateMode: 'onChange',
+        defaultValues: {
+          email: '',
+          password: '',
+          nickname: '',
+          capaSoju: 0,
+        },
+        shouldFocusError: true,
+        shouldUnregister: true,
     });
-
-    const validateEmail = (email: string): boolean => {
-        // 이메일 형식 검증을 위한 정규표현식 사용
-        const emailForm = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
-        return emailForm.test(email);
-    };
-
-    const validatePassword = (password: string): boolean => {
-        // 비밀번호가 최소 8자 이상, 대문자 및 숫자를 포함하는지 검증
-        return password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password);
-    };
+    const [isDuplicated, setIsDuplicated] = useState(false);
     
     /*const checkDuplicateEmail = async () => {
         try {
@@ -51,74 +46,13 @@ export default function SignupPage(){
         }
     };*/
 
-
-    const onChangeInput = (event: ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = event.target;
-        setSignupForm({
-            ...signupForm,
-            [name]: name === 'capaSoju' ? Number(value) : value,
-        });
-        if(name === "email" && event.target.value !== ""){
-            setEmailError("")
-        }
-        if(name === "password" && event.target.value !== ""){
-            setPwError("")
-        }
-        if(name === "capaSoju" && event.target.value !== ""){
-            setCapaError("")
-        }
-        if(name === "nickname" && event.target.value !== ""){
-            setNnError("")
-        }
-        
+    const onSubmit: SubmitHandler<SignupForm> = (data: SignupForm) => {
+        // 로그인 처리 로직 추가
+        console.log(data);
+        onSendSignupForm(data);
     };
 
-    const onClickSubmit = (): void => {
-        let errorcode = 0;
-        //checkDuplicateEmail();
-        if(!signupForm.email) {
-            setEmailError("이메일을 입력해주세요.")
-            errorcode = 1
-        }
-
-        else if (!validateEmail(signupForm.email)) {
-            setEmailError('올바른 이메일 형식이 아닙니다.');
-            errorcode = 1
-        }
-
-        else if (isDuplicate) {
-            setEmailError('이미 사용 중인 이메일입니다.');
-            errorcode = 1;
-        }
-
-        if(!signupForm.password) {
-            setPwError("비밀번호를 입력해주세요.")
-            errorcode = 1
-        }
-
-        else if (!validatePassword(signupForm.password)) {
-            setPwError('비밀번호는 최소 8자 이상, 대문자와 숫자를 포함해야 합니다.');
-            errorcode = 1
-        }
-      
-        if(!signupForm.nickname) {
-            setNnError("닉네임을 입력해주세요.")
-            errorcode = 1
-        }
-
-        if(!signupForm.capaSoju) {
-            setCapaError("주량을 입력하세요.")
-            errorcode = 1
-        }
-        
-        if(errorcode === 0){
-            console.log(signupForm)
-            submitSignupForm(signupForm)
-        }
-        
-    };
-
-    const submitSignupForm = async (signupForm: SignupForm) => {
+    const onSendSignupForm = async (signupForm: SignupForm) => {
         const jsonSignupForm = JSON.stringify(signupForm);
         console.log(jsonSignupForm)
         try {
@@ -128,8 +62,10 @@ export default function SignupPage(){
                 },
             });
             console.log('Response from server:', response.data);
+            alert("회원 가입 성공.")
         } catch (error){
             console.error('error submitting data:', error);
+            alert("회원 가입 실패.")
         }
     };
 
@@ -169,14 +105,8 @@ export default function SignupPage(){
 
     return (
         <SignupUI
-            emailError = {emailError}
-            pwError = {pwError}
-            nnError = {nnError}
-            capaError = {capaError}
-            onClickSubmit = {onClickSubmit}
-            onChangeInput = {onChangeInput}
-            signupForm = {signupForm}
-            submitSignupForm = {submitSignupForm}
+            formMethods={{ register, handleSubmit, formState }}
+            onSubmit={onSubmit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
         />
     )
