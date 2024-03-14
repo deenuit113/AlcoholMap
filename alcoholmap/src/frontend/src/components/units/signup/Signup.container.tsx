@@ -6,7 +6,6 @@ import { SignupForm } from './Signup.types';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from "../../../commons/yupSchemas";
-import baseUrl from "../../../commons/baseUrl";
 
 /*  백엔드 서버에 이메일아이디 + @ + 도메인 합쳐서 보내기
     비밀번호 보내기
@@ -15,7 +14,7 @@ import baseUrl from "../../../commons/baseUrl";
     회원가입 성공 시, 로그인 상태로 메인페이지 라우터
 */
 
-const apiUrl = baseUrl + '/user/signup';
+const apiUrl = '/users/signup';
 
 export default function SignupPage(){
 
