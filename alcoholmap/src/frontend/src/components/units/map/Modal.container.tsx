@@ -3,9 +3,8 @@ import ModalPresenter from './Modal.presenter';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { IModalProps, ReviewForm } from './Modal.types';
-import baseUrl from "../../../commons/baseUrl";
 
-const apiUrl = baseUrl +  '/users/place/review';
+const apiUrl = '/users/place/review';
 
 const ModalContainer = (props: IModalProps): JSX.Element => {
     const stars = Array.from({ length: 5 }, (_, index) => index + 1);
