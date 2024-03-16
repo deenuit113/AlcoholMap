@@ -15,7 +15,6 @@ import { mypageEditSchema } from "../../../commons/yupSchemas";
     이메일 받아오기
 */
 
-const getUserInfoApiUrl = '/users/profile/${userEmail}';
 const editUserInfoApiUrl = '/users/profile';
 
 
@@ -24,9 +23,9 @@ export default function MyPagePage(){
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [userInfo, setUserInfo] = useState<userData>({
-        userEmail: '',
-        password: '',
-        nickname: '',
+        userEmail: "",
+        password: "",
+        nickname: "",
         capaSoju: 0,
         // 찜한가게 (가게 이름, 위도 경도 값)
         // 평가한 가게 (가게 이름, 위도 경도 값, 평점, 리뷰)
@@ -47,16 +46,6 @@ export default function MyPagePage(){
     });
 
     useEffect(() => {
-
-        /*setUserInfo({
-            ...userInfo,
-            userEmail: "kimseyoung@gmail.com",
-            password: "kimseyoung123",
-            nickname: "kimtax0",
-            capaSoju: 3,
-            
-        });*/
-        
         checkIsLoggedIn();
         if(!isLoggedIn){
             alert("로그인 후 이용해주세요");
@@ -75,15 +64,16 @@ export default function MyPagePage(){
             const decodedToken = jwt.decode(token);
 
             // decode된 토큰에서 사용자 이메일 추출
-            const userEmail = decodedToken.email;
+            const userEmail = decodedToken.userId;
 
+            const getUserInfoApiUrl = '/users/profile/${userEmail}';
             // API 호출
             const response = await axios.get(getUserInfoApiUrl, {
                 headers: {
-                    Authorization: `Bearer ${token}}`,
+                    Authorization: `Bearer ${token}`,
                 },
                 params: {
-                    email: userEmail,
+                    userEmail: userEmail,
                 },
             });
             // 가져온 데이터를 상태에 저장
@@ -102,15 +92,8 @@ export default function MyPagePage(){
         // 토큰이 없으면 처리
         if (!token) {
             console.error("Token not found in local storage");
-            setLoggedIn(true);
+            alert("마이페이지 조회 실패.")
         }
-
-        // API 요청 헤더에 토큰 추가
-        /*const headers = {
-            Authorization: `Bearer ${token}`,
-            Content-Type: 'application/json',
-            // 다른 헤더도 필요한 경우 추가
-        };*/
         setLoggedIn(true);
     };
 
@@ -129,7 +112,7 @@ export default function MyPagePage(){
             const response = await axios.put(editUserInfoApiUrl, jsonEditForm, {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
             console.log('Response from server:', response.data);

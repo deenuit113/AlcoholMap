@@ -39,9 +39,21 @@ export const ReviewListUl = styled.ul`
     min-height: 100%;
 `
 
-export const Reviewinfo = styled.li`
+export const ReviewInfo = styled.li`
     margin-top: 2px;
     margin-bottom: 2px;
     font-size: 20px;
     border-bottom: 1px solid gray;
+    display: flex; /* Flex 컨테이너로 설정 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: space-between; /* 자식 요소 사이의 간격을 최대화하여 왼쪽과 오른쪽 끝에 정렬 */
+`;
+
+export const StarRateWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end;
 `
+
+export const StarRate = styled.div`
+    float: right;
+`;

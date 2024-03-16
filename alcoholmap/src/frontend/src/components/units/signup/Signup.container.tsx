@@ -14,7 +14,7 @@ import { signupSchema } from "../../../commons/yupSchemas";
     회원가입 성공 시, 로그인 상태로 메인페이지 라우터
 */
 
-const apiUrl = '/user/signup';
+const apiUrl = '/users/signup';
 
 export default function SignupPage(){
 
@@ -25,9 +25,9 @@ export default function SignupPage(){
         resolver: yupResolver(signupSchema),
         reValidateMode: 'onChange',
         defaultValues: {
-          email: '',
-          password: '',
-          nickname: '',
+          email: "",
+          password: "",
+          nickname: "",
           capaSoju: 0,
         },
         shouldFocusError: true,
@@ -52,7 +52,8 @@ export default function SignupPage(){
         onSendSignupForm(data);
     };
 
-    const onSendSignupForm = async (signupForm: SignupForm) => {
+    const onSendSignupForm = async (signupForm: any) => {
+        signupForm.roles = "USER";
         const jsonSignupForm = JSON.stringify(signupForm);
         console.log(jsonSignupForm)
         try {
