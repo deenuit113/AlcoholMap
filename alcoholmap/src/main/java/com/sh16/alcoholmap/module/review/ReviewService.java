@@ -4,6 +4,7 @@ import com.sh16.alcoholmap.module.member.Response;
 import com.sh16.alcoholmap.module.member.User;
 import com.sh16.alcoholmap.module.member.UserRepository;
 import com.sh16.alcoholmap.module.place.Place;
+import com.sh16.alcoholmap.module.place.PlaceReviewAndUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -71,20 +72,19 @@ public class ReviewService {
 
         PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
         List<Object[]> items = reviewRepository.getPlaceReviewsByPlaceId(placeId, pageRequest);
-        ArrayList<PlaceReviewAndUserResponse> arr = new ArrayList<>();
+        ArrayList<PlaceReviewAndUserDto> arr = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 
         for (Object[] item : items) {
             String format = formatter.format(item[4]);
-            arr.add(PlaceReviewAndUserResponse.builder()
+            arr.add(PlaceReviewAndUserDto.builder()
                     .reviewId((int) item[0])
                     .starRate((float) item[1])
                     .content((String) item[2])
                     .userId((String) item[3])
                     .craeteDate(format)
-                    .reviewImage((String) item[5])
-                    .userNickname((String) item[6])
-                    .userProfileImage((String) item[7])
+                    .userNickname((String) item[5])
+                    .userProfileImage((String) item[6])
                     .build());
         }
         hashMap.put("reviews", arr);
