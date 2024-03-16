@@ -5,5 +5,6 @@ export interface IModalReviewUIProps {
     data: {
         userId: string;
         review: string;
+        starRate: number;
     }[];
 }

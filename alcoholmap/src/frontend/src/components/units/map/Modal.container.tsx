@@ -13,7 +13,7 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
     const [isReviewed, setIsReviewed] = useState(false)
     const [reviewForm, setReviewForm] = useState({
         placeId: 0,
-        content: '',
+        content: "",
         starRate: 0,
     });
     const modalRef = useRef<HTMLDivElement>(null);
@@ -103,10 +103,11 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                 },
             });
             console.log('Response from server:', response.data);
+            alert("리뷰가 등록되었습니다.")
 
             setReviewForm({
                 placeId: 0,
-                content: '',
+                content: "",
                 starRate: 0,
             });
             setIsReviewed(true);

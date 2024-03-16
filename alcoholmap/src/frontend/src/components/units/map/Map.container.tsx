@@ -438,6 +438,7 @@ export default function MapPage(): JSX.Element{
 
     const onClickLogout = () => {
         setLoggedIn(false)
+        localStorage.removeItem("jwtToken")
     }
 
     const onClickReload = () => {
