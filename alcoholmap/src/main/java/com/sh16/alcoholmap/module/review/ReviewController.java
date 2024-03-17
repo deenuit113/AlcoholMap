@@ -24,20 +24,21 @@ public class ReviewController {
      * 식당 리뷰 가져오기
      * @param placeId
      * @param page
-     * @param pagesize
+     * @param pageSize
      * @return
      * @throws PageIndexLessThanZeroException
      */
-//    @GetMapping("/place/review/{placeId}")
-//    public ResponseEntity<Response> getPlaceReviewsByUser(@PathVariable int placeId
-//            , @RequestParam(defaultValue = "1") int page
-//            , @RequestParam(defaultValue = "10") int pagesize) throws PageIndexLessThanZeroException {
-//        try {
-//            return ReviewService.getPlaceAllReviewsByPlaceId(placeId, page, pagesize);
-//        } catch (ArithmeticException | IllegalArgumentException e) {
-//            throw new PageIndexLessThanZeroException();
-//        }
-//    }
+    @GetMapping("/place/review/{placeId}")
+    public ResponseEntity<Response> getPlaceReviewsByUser(
+              @PathVariable Long placeId
+            , @RequestParam(defaultValue = "1") int page
+            , @RequestParam(defaultValue = "10") int pageSize) throws PageIndexLessThanZeroException {
+        try {
+            return ReviewService.getPlaceAllReviewsByPlaceId(placeId, page, pageSize);
+        } catch (ArithmeticException | IllegalArgumentException e) {
+            throw new PageIndexLessThanZeroException();
+        }
+    }
 
     /**
      * 식당 리뷰 추가(저장)
