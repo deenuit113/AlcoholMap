@@ -84,10 +84,12 @@ public class ReviewService {
                     .userId((String) item[3])
                     .craeteDate(format)
                     .userNickname((String) item[5])
-                    .userProfileImage((String) item[6])
                     .build());
         }
         hashMap.put("reviews", arr);
-        return Response.newResult(HttpStatus.OK, placeId + "의 모든 리뷰 목록 조회에 성공했습니다.", hashMap);
+        return Response.newResult(HttpStatus.OK, placeId + "의 모든 리뷰 목록 조회에 성공했습니다.", arr);
+        /**
+         * 추후 front-end 단 수정 완료 되면 arr 대신 hashMap 리턴
+         */
     }
 }
