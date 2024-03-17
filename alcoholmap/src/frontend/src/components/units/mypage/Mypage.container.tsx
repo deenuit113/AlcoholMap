@@ -64,9 +64,9 @@ export default function MyPagePage(){
             const decodedToken = jwt.decode(token);
 
             // decode된 토큰에서 사용자 이메일 추출
-            const userEmail = decodedToken.userId;
+            const userEmail = decodedToken.sub;
 
-            const getUserInfoApiUrl = '/users/profile/${userEmail}';
+            const getUserInfoApiUrl = `/users/profile/${userEmail}`;
             // API 호출
             const response = await axios.get(getUserInfoApiUrl, {
                 headers: {
