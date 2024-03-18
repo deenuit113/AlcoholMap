@@ -17,16 +17,18 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
     
     useEffect(() => {
         const handleScroll = () => {
-            const scrollHeight = document.documentElement.scrollHeight;
-            const scrollTop = document.documentElement.scrollTop;
-            const clientHeight = document.documentElement.clientHeight;
+            const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
+            const scrollHeight = ReviewDataWrapper?.scrollHeight;
+            const scrollTop = ReviewDataWrapper?.scrollTop;
+            const clientHeight = ReviewDataWrapper?.clientHeight;
     
-            if (scrollTop + clientHeight >= scrollHeight - 5 && !isloading) {
+            // 현재 스크롤 위치가 문서 전체 높이의 95%를 넘어서고 데이터가 로드되지 않았을 때만 새 데이터 요청
+            if ((scrollTop + clientHeight) / scrollHeight >= 0.99 && !isloading) {
                 fetchData(curPage);
             }
         };
-        const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
     
+        const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
         ReviewDataWrapper?.addEventListener('scroll', handleScroll);
     
         return () => {
@@ -49,21 +51,23 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
     };
     
     // -------test--------
-    /*
-    const fetchData = async () => {
+    
+    const fetchData = async (curpage: number) => {
         setisLoading(true);
         setTimeout(() => {
             //const newData = [...data, ...new Array(10).fill('New Data')];
             
             const newData = [...data, ...generateData(data.length + 1, data.length + 10)];
             setData(newData);
+            setCurPage(prevCount => prevCount + 1)
+            console.log(curPage);
             setisLoading(false);
         }, 500);
-    };*/
+    };
 
     // --------------- test -----------------
     
-    const fetchData = async (page : number) => {
+    /*const fetchData = async (page : number) => {
         setisLoading(true);
         const token = localStorage.getItem('jwtToken');
         const apiUrlPlaceId = `/place/review/${props.selectedPlace.id}`;
@@ -85,7 +89,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             setCurPage(prevCount => prevCount + 1)
             setisLoading(false);
         }
-    };
+    };*/
     
     return(
         <ModalReviewUI
