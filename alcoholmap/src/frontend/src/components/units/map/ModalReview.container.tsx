@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import ModalReviewUI from './ModalReview.presenter';
+import { IModalReviewProps } from './ModalReview.types';
 import axios from 'axios';
+import PagesManifestPlugin from 'next/dist/build/webpack/plugins/pages-manifest-plugin';
 
-const apiUrl = '/users/place/reviewList';
+const apiUrl = '/place/review';
 
-const ModalReview = (): JSX.Element => {
+const ModalReview = (props: IModalReviewProps): JSX.Element => {
     const [data, setData] = useState<{ userId: string; review: string; starRate: number;}[]>([]);
     const [isloading, setisLoading] = useState(false);
+    const [curPage, setCurPage] = useState(1);
 
     useEffect(() => {
-        fetchData();
+        fetchData(curPage);
     }, []);
     
     useEffect(() => {
@@ -19,7 +22,7 @@ const ModalReview = (): JSX.Element => {
             const clientHeight = document.documentElement.clientHeight;
     
             if (scrollTop + clientHeight >= scrollHeight - 5 && !isloading) {
-                fetchData();
+                fetchData(curPage);
             }
         };
         const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
@@ -60,19 +63,26 @@ const ModalReview = (): JSX.Element => {
 
     // --------------- test -----------------
     
-    const fetchData = async () => {
+    const fetchData = async (page : number) => {
         setisLoading(true);
         const token = localStorage.getItem('jwtToken');
+        const apiUrlPlaceId = `/place/review/${props.selectedPlace.id}`;
+        const pageSize = 10;
         try {
-            const response = await axios.get(apiUrl, {
+            const response = await axios.get(apiUrlPlaceId, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                },
+                params:{
+                    page: page,
+                    pageSize: pageSize,
                 },
             });
             setData(prevData => [...prevData, ...response.data]);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
+            setCurPage(prevCount => prevCount + 1)
             setisLoading(false);
         }
     };

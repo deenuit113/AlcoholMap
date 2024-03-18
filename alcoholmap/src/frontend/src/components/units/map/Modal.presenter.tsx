@@ -49,7 +49,9 @@ const ModalPresenter = (props: IModalUIProps): JSX.Element => {
                         <hr/>
                         <S.CenterWrapper>
                             <S.reviewerWrapper>
-                                    <ModalReview/>
+                                    <ModalReview
+                                        selectedPlace = {props.selectedPlace}
+                                    />
                             </S.reviewerWrapper>
                         </S.CenterWrapper>
                     </S.modalContent>
