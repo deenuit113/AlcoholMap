@@ -7,20 +7,14 @@ const modalStyles = {
         zIndex: 990,
     },
     content: {
-        width: '80%',
-        height: '70%',
         top: '50%',
         left: '50%',
-        right: '0',
-        bottom: '30%',
-        backgroundColor: '#47C83E', 
-        transform: 'translate(-50%, -50%)', // 중앙 정렬
-        zIndex: 1000, // 모달의 z-index 설정 (큰 값으로 지정)
-        borderRadius: 20,
-    },
+        width: '5%',
+        height: '1%',
+    }
 };
 
-export const modalContainer = styled.div`
+export const ModalContainer = styled.div`
     position: fixed;
     width: 95%;
     height: 95%;
@@ -29,12 +23,19 @@ export const modalContainer = styled.div`
     transform: translate(-50%, -50%);
     background-color: #f2f2f2;
     padding: 20px;
+    border: 5px solid #47C83E;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
+    overflow: hidden;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        height: 70%;
+        border: 5px solid #47C83E;
+    }
 `
 
-export const modalContent = styled.div`
+export const ModalContent = styled.div`
     position: relative;
     width: 95%;
     height: 95%;
@@ -47,6 +48,10 @@ export const placeInfo = styled.div`
     font-size: 16px;
     font-weight: normal;
     font-family: sans-serif;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 12px;
+    }
 `
 
 export const placeLink = styled.a`
@@ -90,6 +95,10 @@ export const reviewSubmitButton = styled.button`
     :hover{
         background-color: #B7F0B1;
     }
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 12px;
+    }
 `
 
 export const wishListButton = styled.button`
@@ -104,6 +113,10 @@ export const wishListButton = styled.button`
 
     :hover{
         background-color: #B7F0B1;
+    }
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 12px;
     }
 `
 
@@ -134,7 +147,7 @@ export const placeinfoWrapper = styled.div`
 `
 
 export const reviewWrapper = styled.div`
-    padding-top: 20px;
+    padding-top: 10px;
     display: inline-block;
     flex-direction: column;
     align-items: center;
@@ -149,7 +162,6 @@ export const rvinputWrapper = styled.div`
 export const reviewerWrapper = styled.div`
     border-radius: 10px;
     padding: 5px;
-    margin-top: 10px;
     width: 90%;
     height: 95%;
     display: flex;
