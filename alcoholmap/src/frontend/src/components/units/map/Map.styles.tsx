@@ -66,7 +66,7 @@ export const Wrapper = styled.div`
         display: none;
     }
 
-    @media all and (min-width:359px) and (max-width: 1439px) {
+    @media all and (min-width:359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
         height: 100%;
@@ -82,7 +82,7 @@ export const Wrapper = styled.div`
 `;
 
 export const GBHeader = styled.header`
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         width: 60%;
         height: 100px;
 
@@ -104,7 +104,7 @@ export const MapNav = styled.nav`
     justify-content: space-between;
     margin-bottom: 20px;
 
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         width: 95%;
         display: flex;
         flex-direction: row;
@@ -128,7 +128,7 @@ export const LoginButton = styled.button`
     background-color: #B7F0B1;
     border: 5px solid #47C83E;
     border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         font-size: 13px;
         float: none;
         display: flex;
@@ -148,7 +148,7 @@ export const LogoutButton = styled.button`
     background-color: #B7F0B1;
     border: 5px solid #47C83E;
     border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         font-size: 13px;
         float: none;
         display: flex;
@@ -168,7 +168,7 @@ export const SignupButton = styled.button`
     background-color: #B7F0B1;
     border: 5px solid #47C83E;
     border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         font-size: 13px;
         float: none;
         display: flex;
@@ -188,7 +188,7 @@ export const MypageButton = styled.button`
     background-color: #B7F0B1;
     border: 5px solid #47C83E;
     border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         font-size: 13px;
         float: none;
         display: flex;
@@ -208,7 +208,7 @@ export const ToggleButton1 = styled.button`
     z-index: 2;
     visibility: hidden;
 
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         position: relative;
         width: 60%;
@@ -229,7 +229,7 @@ export const ToggleButton2 = styled.button`
     border: 1px solid #47C83E;
     border-radius: 20px;
     z-index: 2;
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         display: none;
     }
 `;
@@ -253,7 +253,7 @@ export const HamburgerWrapper = styled.div`
     cursor: pointer;
     z-index: 500;
     visibility: hidden;
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         visibility: visible;
     }
@@ -304,7 +304,7 @@ export const InputRadius = styled.input`
     -webkit-appearance: none;
     margin: 0;
     }
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         font-size: 13px;
     }
@@ -321,7 +321,7 @@ export const MapWrapper = styled.div`
     width: 100%;
     height: 100%;
 
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
         height: 100%;
@@ -334,10 +334,10 @@ export const MapMain = styled.main`
     position: relative;
     overflow: hidden;
     border: 20px solid #47C83E;
-    border-radius: 30px;
+    border-radius: 10px;
     margin-bottom: 20px;
     
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
         height: 100%;
@@ -412,7 +412,7 @@ export const MenuWrap = styled.div`
         }
     }
 
-    @media all and (min-width: 359px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         position: relative;
         width: 95%;

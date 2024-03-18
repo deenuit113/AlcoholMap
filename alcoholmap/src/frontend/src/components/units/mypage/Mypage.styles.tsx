@@ -20,10 +20,18 @@ export const Wrapper = styled.div`
     background-color: #f0fdef;
     overflow: auto;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
-        // 태블릿
-        width: 95%;
-        height: 95%;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 100%;
+        height: 100%;
+        padding-top: 60px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 50px;
+        overflow: auto;
+        overflow-x: hidden;
+        border: none;
+        border-radius: 0px;
     }
 `;
 
@@ -43,10 +51,9 @@ export const InfoLabel = styled.span`
 `;
 
 export const Title = styled.div`
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 34px;
+    font-size: 24px;
     font-weight: bold;
-    padding-bottom: 15px;
+    margin-bottom: 16px;
 `;
 
 export const InfoTitle = styled.div`
@@ -65,7 +72,7 @@ export const UserInfo = styled.div`
     border: 4px solid #47C83E;
     border-radius: 8px;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         width: 95%;
     }
 `;
@@ -78,7 +85,7 @@ export const InputInfo = styled.input`
     font-size: 16px;
     border-radius: 4px;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         width: 95%;
     }
 `;
@@ -86,9 +93,9 @@ export const InputInfo = styled.input`
 export const Logo = styled.img`
     cursor: pointer;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
-        width: 40%;
+        width: 60%;
     }
 `
 

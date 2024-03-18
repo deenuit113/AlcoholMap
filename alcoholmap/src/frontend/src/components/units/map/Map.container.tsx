@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import ModalContainer from './Modal.container';
 import modalStyles from './Modal.styles';
 import { Coordinates ,Options } from './Map.types';
+import { ModalWrapper } from './Modal.styles';
 
 Modal.setAppElement('#__next');
 

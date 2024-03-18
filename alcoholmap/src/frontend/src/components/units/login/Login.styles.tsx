@@ -21,19 +21,27 @@ export const Wrapper = styled.div`
     box-shadow: 0px 0px 10px gray;
     background-color: #f0fdef;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
-        // 태블릿
-        width: 95%;
-        height: 95%;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 100%;
+        height: 100%;
+        padding-top: 60px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 50px;
+        overflow: auto;
+        overflow-x: hidden;
+        border: none;
+        border-radius: 0px;
     }
 `;
 
 export const Logo = styled.img`
     cursor: pointer;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
-        // 태블릿
-        width: 40%;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 60%;
     }
 `
 // ------------공통---------------
@@ -90,6 +98,10 @@ export const LoginButton = styled.button`
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        padding: 5px 10px;
+    }
 `;
 
 export const SignUpButton = styled.button`
@@ -97,12 +109,17 @@ export const SignUpButton = styled.button`
     color: white;
     border: none;
     padding: 10px 20px;
+    margin-right: 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        padding: 5px 10px;
+    }
 `;
 
 export const InputInfo = styled.input`
@@ -114,7 +131,7 @@ export const InputInfo = styled.input`
     border: 1px solid #ddd;
     border-radius: 4px;
 
-    @media all and (min-width: 480px) and (max-width: 1439px) {
+    @media all and (min-width: 359px) and (max-width: 799px) {
         width: 95%;
     }
 `;

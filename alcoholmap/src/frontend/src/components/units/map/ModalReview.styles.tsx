@@ -7,6 +7,7 @@ export const ReviewDataWrapper = styled.div`
     padding-left: 15px;
     border: 10px solid #b7f0b1;
     border-radius: 10px;
+    overflow-x: hidden;
 
     &::-webkit-scrollbar {
         width: 12px;

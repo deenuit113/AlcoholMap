@@ -5,11 +5,11 @@ import { IModalUIProps } from './Modal.types';
 
 const ModalPresenter = (props: IModalUIProps): JSX.Element => {
     return (
-        <S.modalContainer ref={props.modalRef}>  {/* 모달 스타일을 적용합니다 */}
+        <S.ModalContainer ref={props.modalRef}>  {/* 모달 스타일을 적용합니다 */}
             {props.selectedPlace && (
                 <>
                     <S.closeButton onClick={props.closeModal}>X</S.closeButton>
-                    <S.modalContent>
+                    <S.ModalContent>
                         {/* 모달 상단에 닫기 버튼(X) 추가 */}
                         <S.placeinfoWrapper>
                             <S.placeInfo>장소명: {props.selectedPlace.place_name}</S.placeInfo>
@@ -24,7 +24,7 @@ const ModalPresenter = (props: IModalUIProps): JSX.Element => {
                             {props.isLoggedIn ? (
                                 <>
                                     <S.rvinputWrapper>
-                                        리뷰: <S.reviewInput name ="content" placeholder="리뷰를 입력하세요" value = {props.reviewForm.content} onChange={props.onChangeReviewForm} />
+                                        <S.reviewInput name ="content" placeholder="리뷰를 입력하세요" value = {props.reviewForm.content} onChange={props.onChangeReviewForm} />
                                         <S.reviewSubmitButton onClick={props.onClickReviewFormCheck}>리뷰 제출</S.reviewSubmitButton>
                                         <S.wishListButton onClick={props.onClickWishList}>찜하기</S.wishListButton>
                                     </S.rvinputWrapper>
@@ -54,10 +54,10 @@ const ModalPresenter = (props: IModalUIProps): JSX.Element => {
                                     />
                             </S.reviewerWrapper>
                         </S.CenterWrapper>
-                    </S.modalContent>
+                    </S.ModalContent>
                 </>
             )}
-        </S.modalContainer>
+        </S.ModalContainer>
     );
 };
 
