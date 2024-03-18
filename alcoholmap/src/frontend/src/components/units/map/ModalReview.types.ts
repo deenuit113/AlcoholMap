@@ -1,3 +1,7 @@
+// ModalReview container interface
+export interface IModalReviewProps{
+    selectedPlace: any;
+}
 
 // ModalReview presenter interface
 export interface IModalReviewUIProps {

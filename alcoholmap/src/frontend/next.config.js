@@ -22,8 +22,8 @@ module.exports = {
         destination: 'http://localhost:8080/users/login',
       },
       {
-        source: '/users/place/reviewList',
-        destination: 'http://localhost:8080/users/place/reviewList',
+        source: '/place/review/:placeId',
+        destination: 'http://localhost:8080/place/review/:placeId',
       }
     ];
   },

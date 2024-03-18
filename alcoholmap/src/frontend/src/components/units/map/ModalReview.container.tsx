@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import ModalReviewUI from './ModalReview.presenter';
+import { IModalReviewProps } from './ModalReview.types';
 import axios from 'axios';
+import PagesManifestPlugin from 'next/dist/build/webpack/plugins/pages-manifest-plugin';
 
-const apiUrl = '/users/place/reviewList';
+const apiUrl = '/place/review';
 
-const ModalReview = (): JSX.Element => {
+const ModalReview = (props: IModalReviewProps): JSX.Element => {
     const [data, setData] = useState<{ userId: string; review: string; starRate: number;}[]>([]);
     const [isloading, setisLoading] = useState(false);
+    const [curPage, setCurPage] = useState(1);
 
     useEffect(() => {
-        fetchData();
+        fetchData(curPage);
     }, []);
     
     useEffect(() => {
         const handleScroll = () => {
-            const scrollHeight = document.documentElement.scrollHeight;
-            const scrollTop = document.documentElement.scrollTop;
-            const clientHeight = document.documentElement.clientHeight;
+            const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
+            const scrollHeight = ReviewDataWrapper?.scrollHeight;
+            const scrollTop = ReviewDataWrapper?.scrollTop;
+            const clientHeight = ReviewDataWrapper?.clientHeight;
     
-            if (scrollTop + clientHeight >= scrollHeight - 5 && !isloading) {
-                fetchData();
+            // 현재 스크롤 위치가 문서 전체 높이의 95%를 넘어서고 데이터가 로드되지 않았을 때만 새 데이터 요청
+            if ((scrollTop + clientHeight) / scrollHeight >= 0.99 && !isloading) {
+                fetchData(curPage);
             }
         };
-        const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
     
+        const ReviewDataWrapper = document.getElementById('ReviewDataWrapper');
         ReviewDataWrapper?.addEventListener('scroll', handleScroll);
     
         return () => {
@@ -46,36 +51,45 @@ const ModalReview = (): JSX.Element => {
     };
     
     // -------test--------
-    /*
-    const fetchData = async () => {
+    
+    const fetchData = async (curpage: number) => {
         setisLoading(true);
         setTimeout(() => {
             //const newData = [...data, ...new Array(10).fill('New Data')];
             
             const newData = [...data, ...generateData(data.length + 1, data.length + 10)];
             setData(newData);
+            setCurPage(prevCount => prevCount + 1)
+            console.log(curPage);
             setisLoading(false);
         }, 500);
-    };*/
+    };
 
     // --------------- test -----------------
     
-    const fetchData = async () => {
+    /*const fetchData = async (page : number) => {
         setisLoading(true);
         const token = localStorage.getItem('jwtToken');
+        const apiUrlPlaceId = `/place/review/${props.selectedPlace.id}`;
+        const pageSize = 10;
         try {
-            const response = await axios.get(apiUrl, {
+            const response = await axios.get(apiUrlPlaceId, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                },
+                params:{
+                    page: page,
+                    pageSize: pageSize,
                 },
             });
             setData(prevData => [...prevData, ...response.data]);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
+            setCurPage(prevCount => prevCount + 1)
             setisLoading(false);
         }
-    };
+    };*/
     
     return(
         <ModalReviewUI
