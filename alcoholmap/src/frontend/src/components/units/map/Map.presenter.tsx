@@ -1,16 +1,28 @@
 import * as S from "./Map.styles";
 import { IMapUIProps } from "./Map.types";
 import { useState } from "react";
+import MapHBMenu from "./MapHBMenu";
 
 export default function MapUI(props: IMapUIProps): JSX.Element{
-    const [isMenuOpen, setIsMenuOpen] = useState(true);
+    const [isMenuOpen, setIsPlaceListOpen] = useState(true);
+    const [isHBMenuOpen, setIsHBMenuOpen] = useState(false);
     
-    const handleOpenClick = () => {
-        setIsMenuOpen(true);
+    const onClickPlaceListOpen = () => {
+        setIsPlaceListOpen(true);
     };
     
-    const handleCloseClick = () => {
-        setIsMenuOpen(false);
+    const onClickPlaceListClose = () => {
+        setIsPlaceListOpen(false);
+    };
+
+    const onClickHBMenuOpen = () => {
+        console.log("onClickHBMenuOpen");
+        setIsHBMenuOpen(true);
+    };
+
+    const onclickHBMenuClose = () => {
+        console.log("onclickHBMenuClose");
+        setIsHBMenuOpen(false);
     };
 
     return(
@@ -34,16 +46,16 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                 </S.MapNav>
                 <S.MapWrapper>
                     <S.MapMain id="map"></S.MapMain>
-                    <S.ToggleButton1 onClick={isMenuOpen ? handleCloseClick : handleOpenClick}>
+                    <S.ToggleButton1 onClick={isMenuOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
                         {isMenuOpen ? '▲' : '▼'}
                     </S.ToggleButton1>
-                    <S.ToggleButton2 onClick={isMenuOpen ? handleCloseClick : handleOpenClick}>
+                    <S.ToggleButton2 onClick={isMenuOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
                         {isMenuOpen ? '◀' : '▶'}
                     </S.ToggleButton2>
                     <S.MenuWrap id="menu_wrap" className={`bg_white ${isMenuOpen ? '' : 'closed'}`}>
                         <S.SearchWrapper>
                         <S.Form onSubmit={props.searchPlaces}>
-                            <S.Label>키워드 : </S.Label> 
+                            <S.Label>키워드</S.Label> 
                             <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
                             <S.InputRadius type="number" value={props.radius} onChange={props.onChangeRadius}></S.InputRadius>
                             <S.Label> m</S.Label>
@@ -56,6 +68,21 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     </S.MenuWrap>
                     
                 </S.MapWrapper>
+                {/* 햄버거 버튼 */}
+                <S.HamburgerWrapper onClick={isHBMenuOpen ? onclickHBMenuClose : onClickHBMenuOpen}>
+                    <S.HamburgerLine/>
+                    <S.HamburgerLine/>
+                    <S.HamburgerLine/>
+                </S.HamburgerWrapper>
+                <MapHBMenu
+                    isHBMenuOpen={isHBMenuOpen}
+                    isLoggedIn={props.isLoggedIn}
+                    onClickLogout={props.onClickLogout}
+                    onClickMoveToLogin={props.onClickMoveToLogin}
+                    onClickMoveToSignup={props.onClickMoveToSignup}
+                    onClickMoveToMypage={props.onClickMoveToMypage}
+                />
+
             </S.Wrapper>
         </>
     )
