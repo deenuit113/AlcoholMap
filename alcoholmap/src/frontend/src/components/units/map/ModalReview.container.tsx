@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ModalReviewUI from './ModalReview.presenter';
 import { IModalReviewProps } from './ModalReview.types';
 import axios from 'axios';
-import PagesManifestPlugin from 'next/dist/build/webpack/plugins/pages-manifest-plugin';
 
 const apiUrl = '/place/review';
 
@@ -22,7 +21,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             const scrollTop = ReviewDataWrapper?.scrollTop;
             const clientHeight = ReviewDataWrapper?.clientHeight;
     
-            // 현재 스크롤 위치가 문서 전체 높이의 95%를 넘어서고 데이터가 로드되지 않았을 때만 새 데이터 요청
+            // @ts-ignore
             if ((scrollTop + clientHeight) / scrollHeight >= 0.99 && !isloading) {
                 fetchData(curPage);
             }
