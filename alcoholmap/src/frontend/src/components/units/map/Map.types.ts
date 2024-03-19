@@ -28,5 +28,7 @@ export interface IMapUIProps {
     isLoggedIn: boolean;
     keyword: string;
     radius: number;
+    isDragSearch: boolean;
     onClickRefreshLocation: () => void;
+    onClickDragSearch: () => void;
 }

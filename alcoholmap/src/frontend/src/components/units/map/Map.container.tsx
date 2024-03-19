@@ -25,16 +25,18 @@ export default function MapPage(): JSX.Element{
     const [userPosition,setUserPosition] = useState<Coordinates | null>({
         coords:{latitude: 0, longitude: 0},
     });
-    const [userMarker, setUserMarker] = useState<any>(null);
     const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [radius, setRadius] = useState(0);
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [isDragSearch, setIsDragSearch] = useState(false)
     //const [testtoken, setToken] = useState(false);
     
     useEffect(() => {
         checkIsLoggedIn();
     }, []);
+
+
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -53,6 +55,45 @@ export default function MapPage(): JSX.Element{
         return () => {
         };
     }, [ps]);
+
+    useEffect(() => {
+        const handleMapDragEnd = _debounce(async () => {
+            try {
+                //console.log(isDragSearch)
+                if (ps && map){ // 맵의 중심 좌표를 가져와서 검색 수행
+                    //@ts-ignore // kakao api 함수
+                    const center = map.getCenter();
+                    const latitude = center.getLat();
+                    const longitude = center.getLng(); //@ts-ignore // kakao api 함수
+                    const level = map.getLevel();
+                    removeMarker();
+                    
+                    //@ts-ignore // kakao api 함수
+                    const result = await ps.keywordSearch(keyword, placesSearchCB, {
+                        location: new window.kakao.maps.LatLng(latitude, longitude),
+                        radius: (radius===0? 500: radius),
+                        level: 5,
+                        //level = level,
+                    });
+                } else{
+                    //console.error('Error handling map drag end: ps is null')
+                }
+                
+            } catch (error) {
+                console.error('Error handling map drag end:', error);
+            }
+        }, 500);
+    
+        if (map && isDragSearch) {
+            window.kakao.maps.event.addListener(map, 'dragend', handleMapDragEnd);
+        }
+    
+        return () => {
+            if (map) {
+                window.kakao.maps.event.removeListener(map, 'dragend', handleMapDragEnd);
+            }
+        };
+    }, [map, isDragSearch]);
 
     // ----------------------------------------------
 
@@ -78,6 +119,7 @@ export default function MapPage(): JSX.Element{
 
     const fetchData = async () => {
         try {
+            console.log("fetchData");
             // 사용자의 현재 위치를 받아오기
             const userPosition= await getUserPosition();
             setUserPosition(userPosition as Coordinates)
@@ -101,67 +143,28 @@ export default function MapPage(): JSX.Element{
             );
             setMap(newMap);
 
-            const UserMarkerPos = new window.kakao.maps.LatLng( //지도에 사용자 위치 표시
-                (userPosition as Coordinates | null)?.coords.latitude,
-                (userPosition as Coordinates | null)?.coords.longitude
-            );
-            const userMarker = new window.kakao.maps.Marker({
-                position: UserMarkerPos,
-                map: newMap,
-                title: '사용자 위치',
-            });
-            setUserMarker(userMarker);
-
             const newPs = ps || new window.kakao.maps.services.Places();
             setPs(newPs);
-
-            if (!infowindow) {
-                const newInfowindow = new window.kakao.maps.InfoWindow({
-                    map: newMap,
-                    position: options.center,
-                    content: '',
-                });
-            setInfowindow(newInfowindow);
-
-            newInfowindow.close();
-            }
-            kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
+            
+            //kakao.maps.event.addListener(newMap, 'dragend', handleMapDragEnd);
             //kakao.maps.event.addListener(newMap, 'zoom_changed', handleMapDragEnd);
             //고려사항 zoom in/out 할때도 검색 진행?
-            handleMapDragEnd();
+
+            const center = map?.getCenter();
+            const latitude = center?.getLat();
+            const longitude = center?.getLng(); //@ts-ignore // kakao api 함수
+
+            //@ts-ignore // kakao api 함수
+            await ps?.keywordSearch(keyword, placesSearchCB, {
+                location: new window.kakao.maps.LatLng(latitude, longitude),
+                radius: (radius===0? 500: radius),
+                level: 5,
+            });
             
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
-
-    const handleMapDragEnd = _debounce(async () => {
-        try {
-            if (ps && map){ // 맵의 중심 좌표를 가져와서 검색 수행
-                 //@ts-ignore // kakao api 함수
-                const center = map.getCenter();
-                const latitude = center.getLat();
-                const longitude = center.getLng(); //@ts-ignore // kakao api 함수
-                const level = map.getLevel();
-                removeMarker();
-                
-                //@ts-ignore // kakao api 함수
-                const result = await ps.keywordSearch(keyword, placesSearchCB, {
-                    location: new window.kakao.maps.LatLng(latitude, longitude),
-                    radius: (radius===0? 500: radius),
-                    level: 5,
-                    //level = level,
-                });
-            } else{
-                //console.error('Error handling map drag end: ps is null')
-            }
-
-            
-        } catch (error) {
-            console.error('Error handling map drag end:', error);
-        }
-    }, 500);
-
 
     const getUserPosition = async (): Promise<Coordinates | null> => {
         return new Promise((resolve, reject) => {
@@ -198,19 +201,22 @@ export default function MapPage(): JSX.Element{
     };
 
     const placesSearchCB = (data: any, status: string, pagination: any): void => {
-        console.log("data:", data);
-        console.log("status:", status);
-        console.log("pagination:", pagination);
+        //console.log("data:", data);
+        //console.log("status:", status);
+        //console.log("pagination:", pagination);
         if (status === kakao.maps.services.Status.OK) {
             // 정상적으로 검색이 완료됐으면 검색 목록과 마커를 표출합니다
             displayPlaces(data);
             // 페이지 번호를 표출합니다
             displayPagination(pagination);
-        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-            alert('검색 결과가 존재하지 않습니다.');
             return;
-        } else if (status === kakao.maps.services.Status.ERROR) {
-            alert('검색 결과 중 오류가 발생했습니다.');
+        } 
+        else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+            console.log('Zero result');
+            return;
+        }
+        else if (status === kakao.maps.services.Status.ERROR) {
+            console.log('Error');
             return;
         }
     }
@@ -402,40 +408,42 @@ export default function MapPage(): JSX.Element{
             }
           }
     };
-
+    
     const onClickRefreshLocation = async (): Promise<void> => {
         try {
             const newPosition = await getUserPosition();
             setUserPosition(newPosition);
-            
-            // Remove the existing user marker
-            removeUserMarker();
-    
-            // Create a new user marker with updated position
-            const newPositionLatLng = new window.kakao.maps.LatLng(
-                newPosition?.coords.latitude,
-                newPosition?.coords.longitude
+            const newPositionLatLng = new kakao.maps.LatLng(
+                userPosition?.coords.latitude,
+                userPosition?.coords.longitude
             );
-            const newUserMarker = new window.kakao.maps.Marker({
-                position: newPositionLatLng,
-                map: map,
-                title: '사용자 위치'
-            });
-            setUserMarker(newUserMarker);
-            
-            // Update the map to center on the new position
+            const UserMarkerPos = new window.kakao.maps.LatLng( //지도에 사용자 위치 표시
+                (userPosition as Coordinates | null)?.coords.latitude,
+                (userPosition as Coordinates | null)?.coords.longitude
+            );
+            createAndRemoveMarker(UserMarkerPos);
+
             map.panTo(newPositionLatLng);
         } catch (error) {
-            console.error('Error refreshing location:', error);
+            console.error('Error handling button click:', error);
         }
     };
 
-    const removeUserMarker = (): void => {
-        // 이전에 생성된 사용자 마커가 있으면 제거합니다
-        if (userMarker) {
-            userMarker.setMap(null);
-            setUserMarker(null); // 상태도 null로 업데이트합니다
-        }
+    const createAndRemoveMarker = (userMarkerPos: any) => {
+        // 마커 생성
+        const newMarker = new kakao.maps.Marker({
+            position: userMarkerPos,
+            map: map,
+            title: '마커',
+        });
+    
+        // 5초 후에 마커를 제거하는 타이머 설정
+        setTimeout(() => {
+            // 마커가 존재하면 지도에서 제거
+            if (newMarker) {
+                newMarker.setMap(null);
+            }
+        }, 5000);
     };
 
     // -------------------모달 관련 함수-----------------------
@@ -472,6 +480,10 @@ export default function MapPage(): JSX.Element{
     );
         
     // -------------------------------------------------------
+    const onClickDragSearch = () => {
+        setIsDragSearch(prevIsDragSearch => !prevIsDragSearch);
+        //console.log(isDragSearch)
+    };
 
     const onClickMoveToMypage = () => {
         router.push("../mypage")
@@ -532,7 +544,9 @@ export default function MapPage(): JSX.Element{
                 keyword = {keyword}
                 radius = {radius}
                 isLoggedIn = {isLoggedIn}
+                isDragSearch = {isDragSearch}
                 onClickRefreshLocation = {onClickRefreshLocation}
+                onClickDragSearch = {onClickDragSearch}
             />
         </>
         

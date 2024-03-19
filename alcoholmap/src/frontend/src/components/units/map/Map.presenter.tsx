@@ -67,6 +67,10 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                         <S.Pagination id="pagination"></S.Pagination>
                     </S.MenuWrap>
                 <button onClick={props.onClickRefreshLocation}>내 위치 새로고침</button>
+                <label>
+                    <input type="checkbox" defaultChecked={props.isDragSearch} onChange={props.onClickDragSearch} />
+                    드래그 검색
+                </label>
                 </S.MapWrapper>
                 {/* 햄버거 버튼 */}
                 <S.HamburgerWrapper onClick={isHBMenuOpen ? onclickHBMenuClose : onClickHBMenuOpen}>
