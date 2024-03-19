@@ -28,4 +28,5 @@ export interface IMapUIProps {
     isLoggedIn: boolean;
     keyword: string;
     radius: number;
+    onClickRefreshLocation: () => void;
 }

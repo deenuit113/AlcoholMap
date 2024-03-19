@@ -66,7 +66,7 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                         <S.PlacesList id="placesList"></S.PlacesList>
                         <S.Pagination id="pagination"></S.Pagination>
                     </S.MenuWrap>
-                    
+                <button onClick={props.onClickRefreshLocation}>내 위치 새로고침</button>
                 </S.MapWrapper>
                 {/* 햄버거 버튼 */}
                 <S.HamburgerWrapper onClick={isHBMenuOpen ? onclickHBMenuClose : onClickHBMenuOpen}>
