@@ -6,7 +6,6 @@ import Modal from 'react-modal';
 import ModalContainer from './Modal.container';
 import modalStyles from './Modal.styles';
 import { Coordinates ,Options } from './Map.types';
-import { ModalWrapper } from './Modal.styles';
 
 Modal.setAppElement('#__next');
 
@@ -78,7 +77,6 @@ export default function MapPage(): JSX.Element{
 
     const fetchData = async () => {
         try {
-            
             // 사용자의 현재 위치를 받아오기
             const userPosition= await getUserPosition();
             setUserPosition(userPosition as Coordinates)
@@ -93,7 +91,6 @@ export default function MapPage(): JSX.Element{
                 level: 2,
             };
             console.log(options);
-
             setOptions(options);
 
             // 기존의 맵이 있으면 그 맵을 사용하고, 없으면 새로운 맵을 생성
@@ -102,6 +99,16 @@ export default function MapPage(): JSX.Element{
                 options
             );
             setMap(newMap);
+
+            const markerPosition = new window.kakao.maps.LatLng( //지도에 사용자 위치 표시
+                (userPosition as Coordinates | null)?.coords.latitude,
+                (userPosition as Coordinates | null)?.coords.longitude
+            );
+            const userMarker = new window.kakao.maps.Marker({
+                position: markerPosition,
+                map: newMap,
+                title: '사용자 위치',
+            }); 
 
             const newPs = ps || new window.kakao.maps.services.Places();
             setPs(newPs);
@@ -139,6 +146,8 @@ export default function MapPage(): JSX.Element{
                 //@ts-ignore // kakao api 함수
                 const result = await ps.keywordSearch(keyword, placesSearchCB, {
                     location: new window.kakao.maps.LatLng(latitude, longitude),
+                    radius: 500,
+                    level: 5,
                     //level = level,
                 });
             } else{
@@ -152,7 +161,7 @@ export default function MapPage(): JSX.Element{
     }, 500);
 
 
-    const getUserPosition = async () => {
+    const getUserPosition = async (): Promise<Coordinates | null> => {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(
                 (position) => resolve(position),
@@ -179,7 +188,7 @@ export default function MapPage(): JSX.Element{
             //@ts-ignore // kakao api 함수
             ps?.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
-                radius: (radius===0? 1000: radius), // 반경 설정 안 할 시 기본 1000m로
+                radius: (radius===0? 500: radius), // 반경 설정 안 할 시 기본 1000m로
             });
         } catch (error) {
             console.error('Error searching places:', error);
@@ -187,7 +196,9 @@ export default function MapPage(): JSX.Element{
     };
 
     const placesSearchCB = (data: any, status: string, pagination: any): void => {
-        console.log(data, status, pagination);
+        console.log("data:", data);
+        console.log("status:", status);
+        console.log("pagination:", pagination);
         if (status === kakao.maps.services.Status.OK) {
             // 정상적으로 검색이 완료됐으면 검색 목록과 마커를 표출합니다
             displayPlaces(data);
@@ -390,6 +401,25 @@ export default function MapPage(): JSX.Element{
           }
     };
 
+    const onClickRefreshLocation = async (): Promise<void> => {
+        try {
+            // 사용자 위치 다시 받아오기
+            const newPosition = await getUserPosition();
+            setUserPosition(newPosition);
+
+            // 새로 받아온 위치로 지도 이동
+            if (map && newPosition) {
+                const newPositionLatLng = new window.kakao.maps.LatLng(
+                    newPosition.coords.latitude,
+                    newPosition.coords.longitude
+                );
+                map.panTo(newPositionLatLng); // 사용자 위치로 지도 이동
+            }
+        } catch (error) {
+            console.error('Error refreshing location:', error);
+        }
+    };
+
     // -------------------모달 관련 함수-----------------------
 
     // 마커 클릭 이벤트 핸들러
@@ -484,6 +514,7 @@ export default function MapPage(): JSX.Element{
                 keyword = {keyword}
                 radius = {radius}
                 isLoggedIn = {isLoggedIn}
+                onClickRefreshLocation = {onClickRefreshLocation}
             />
         </>
         
