@@ -19,6 +19,7 @@ export const HBMenuWrapper = styled.div`
     border: 5px solid #b7f0b1;
     border-left: none;
     border-radius: 10px;
+    visibility: hidden;
 
     &.closed {
         display: none;
@@ -47,6 +48,11 @@ export const HBMenuWrapper = styled.div`
         &::-webkit-scrollbar {
             width: 12px;
         }
+    }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        visibility: visible;
     }
 `;
 

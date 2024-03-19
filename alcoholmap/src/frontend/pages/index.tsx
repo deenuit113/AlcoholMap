@@ -1,13 +1,7 @@
-import styles from '../styles/Home.module.css'
+import MainPage from '../src/components/main/Main'
 
 export default function Home() {
   return (
-    <>
-      <main className={styles.main}>
-          <p>
-            안녕하세요, 알콜맵입니다.
-          </p>
-      </main>
-    </>
+        <MainPage/>
   )
 }

@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
     border: 1px solid gray;
     border-radius: 30px;
     box-shadow: 0px 0px 10px gray;
-    background-color: #f0fdef;
+    background-color: #ffffff;
     overflow: auto;
 
     @media all and (min-width: 359px) and (max-width: 799px) {

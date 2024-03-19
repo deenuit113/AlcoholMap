@@ -171,7 +171,7 @@ export const reviewerWrapper = styled.div`
 `
 export const CenterWrapper = styled.div`
     display: flex;
-    height: 65%;
+    height: 63%;
     justify-content: center;
     align-items: center;
 `

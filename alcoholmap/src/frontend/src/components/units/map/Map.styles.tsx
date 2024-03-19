@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
     border: 1px solid gray;
     border-radius: 30px;
     box-shadow: 0px 0px 10px gray;
-    background-color: #f0fdef;
+    background-color: #ffffff;
     boxing: border-box;
 
     /* Style for the container that will hold the custom scrollbar */
@@ -76,6 +76,7 @@ export const Wrapper = styled.div`
         padding-bottom: 50px;
         overflow: auto;
         overflow-x: hidden;
+        overflow-y: hidden;
         border: none;
         border-radius: 0px;
     }
