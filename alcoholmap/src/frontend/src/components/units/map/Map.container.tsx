@@ -25,6 +25,7 @@ export default function MapPage(): JSX.Element{
     const [userPosition,setUserPosition] = useState<Coordinates | null>({
         coords:{latitude: 0, longitude: 0},
     });
+    const [userMarker, setUserMarker] = useState<any>(null);
     const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [radius, setRadius] = useState(0);
@@ -100,15 +101,16 @@ export default function MapPage(): JSX.Element{
             );
             setMap(newMap);
 
-            const markerPosition = new window.kakao.maps.LatLng( //지도에 사용자 위치 표시
+            const UserMarkerPos = new window.kakao.maps.LatLng( //지도에 사용자 위치 표시
                 (userPosition as Coordinates | null)?.coords.latitude,
                 (userPosition as Coordinates | null)?.coords.longitude
             );
             const userMarker = new window.kakao.maps.Marker({
-                position: markerPosition,
+                position: UserMarkerPos,
                 map: newMap,
                 title: '사용자 위치',
-            }); 
+            });
+            setUserMarker(userMarker);
 
             const newPs = ps || new window.kakao.maps.services.Places();
             setPs(newPs);
@@ -146,7 +148,7 @@ export default function MapPage(): JSX.Element{
                 //@ts-ignore // kakao api 함수
                 const result = await ps.keywordSearch(keyword, placesSearchCB, {
                     location: new window.kakao.maps.LatLng(latitude, longitude),
-                    radius: 500,
+                    radius: (radius===0? 500: radius),
                     level: 5,
                     //level = level,
                 });
@@ -403,20 +405,36 @@ export default function MapPage(): JSX.Element{
 
     const onClickRefreshLocation = async (): Promise<void> => {
         try {
-            // 사용자 위치 다시 받아오기
             const newPosition = await getUserPosition();
             setUserPosition(newPosition);
-
-            // 새로 받아온 위치로 지도 이동
-            if (map && newPosition) {
-                const newPositionLatLng = new window.kakao.maps.LatLng(
-                    newPosition.coords.latitude,
-                    newPosition.coords.longitude
-                );
-                map.panTo(newPositionLatLng); // 사용자 위치로 지도 이동
-            }
+            
+            // Remove the existing user marker
+            removeUserMarker();
+    
+            // Create a new user marker with updated position
+            const newPositionLatLng = new window.kakao.maps.LatLng(
+                newPosition?.coords.latitude,
+                newPosition?.coords.longitude
+            );
+            const newUserMarker = new window.kakao.maps.Marker({
+                position: newPositionLatLng,
+                map: map,
+                title: '사용자 위치'
+            });
+            setUserMarker(newUserMarker);
+            
+            // Update the map to center on the new position
+            map.panTo(newPositionLatLng);
         } catch (error) {
             console.error('Error refreshing location:', error);
+        }
+    };
+
+    const removeUserMarker = (): void => {
+        // 이전에 생성된 사용자 마커가 있으면 제거합니다
+        if (userMarker) {
+            userMarker.setMap(null);
+            setUserMarker(null); // 상태도 null로 업데이트합니다
         }
     };
 
