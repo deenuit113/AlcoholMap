@@ -380,7 +380,7 @@ export default function MapPage(): JSX.Element{
         if(listEl){
             removeAllChildNods(listEl);
         }
-    
+        
         // 지도에 표시되고 있는 마커를 제거합니다
         removeMarker();
         
@@ -390,7 +390,7 @@ export default function MapPage(): JSX.Element{
         for (let i=0; i<places.length; i++ ) {
             // 마커를 생성하고 지도에 표시합니다
             let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-                marker = addMarker(placePosition, i), 
+                marker = addMarker(placePosition, i, places[i].rating), 
                 itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
             
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -463,15 +463,15 @@ export default function MapPage(): JSX.Element{
         return el;
     }
 
-    const addMarker = (position: any, idx: number): any => {
-        let imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-            imageSize = new window.kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-            imgOptions = {
+    const addMarker = (position: any, idx: number, rating: number): any => {
+        let imageSrc = selectMarkerImgbyRating(rating); // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        let imageSize = new window.kakao.maps.Size(25, 57),  // 마커 이미지의 크기
+            /*imgOptions = {
                 spriteSize: new window.kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
                 spriteOrigin: new window.kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
                 offset: new window.kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-            },
-        markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+            },*/
+        markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, /*imgOptions*/),
         marker = new window.kakao.maps.Marker({
             position: position, // 마커의 위치
             image: markerImage
@@ -482,7 +482,19 @@ export default function MapPage(): JSX.Element{
         setMarkers(prevMarkers => [...prevMarkers, marker]);  // 배열에 생성된 마커를 추가합니다
     
         return marker;
-      };
+    };
+
+    const selectMarkerImgbyRating = (rating: number): string => {
+        if (rating >= 4.5 && rating <= 5.0) {
+            return '/bluesoju.png';
+        } else if (rating >= 3.5 && rating < 4.5) {
+            return '/orangesoju.png';
+        } else if (rating < 3.5){
+            return '/redsoju.png';
+        } else {
+            return '/greensoju.png';
+        }
+    };
 
     const removeMarker = (): any => {
         // 이전에 생성된 마커들 제거
@@ -521,12 +533,15 @@ export default function MapPage(): JSX.Element{
         }
     }
 
-    const displayInfowindow = (marker, title, click) => {
+    const displayInfowindow = (marker: any, title: string, click: boolean) => {
         let content = 
-            `<div style="padding:10px;z-index:1;font-size:15px;font-weight:bold">
-                ${title}
-             </div>`;
-        let newInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+            `<div style="padding: 10px; z-index: 1; font-size: 15px; font-weight: bold;">
+            ${title}
+            </div>`;
+        let newInfowindow = new kakao.maps.InfoWindow({ 
+            zIndex: 1,
+            removeable: true,
+        });
         newInfowindow?.setContent(content);
         newInfowindow?.open(map, marker);
     
