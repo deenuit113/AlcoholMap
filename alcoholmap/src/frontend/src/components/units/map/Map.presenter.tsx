@@ -59,7 +59,7 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                             <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
                             <S.InputRadius type="number" value={props.radius} onChange={props.onChangeRadius}></S.InputRadius>
                             <S.Label> m</S.Label>
-                            <S.SearchButton type="submit">검색</S.SearchButton>
+                            <S.SearchButton type="submit" onClick={props.onClickSearch}>검색</S.SearchButton>
                         </S.Form>
                         </S.SearchWrapper>
                         <hr />
@@ -71,6 +71,11 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     <input type="checkbox" defaultChecked={props.isDragSearch} onChange={props.onClickDragSearch} />
                     드래그 검색
                 </label>
+                <select value={props.sortOption} onChange={props.onChangeSelectOption}>
+                    <option value="1">거리순</option>
+                    <option value="2">별점순</option>
+                    <option value="3">리뷰순</option>
+                </select>
                 </S.MapWrapper>
                 {/* 햄버거 버튼 */}
                 <S.HamburgerWrapper onClick={isHBMenuOpen ? onclickHBMenuClose : onClickHBMenuOpen}>

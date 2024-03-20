@@ -9,6 +9,23 @@ import { Coordinates ,Options } from './Map.types';
 
 Modal.setAppElement('#__next');
 
+interface Place {
+    address_name: string;
+    category_group_code: string;
+    category_group_name: string;
+    category_name: string;
+    distance: string;
+    id: string;
+    phone: string;
+    place_name: string;
+    place_url: string;
+    road_address_name: string;
+    x: string;
+    y: string;
+    rating?: number; // 별점 속성 추가
+    reviewCount?: number; // 리뷰 갯수 속성 추가
+}
+
 export default function MapPage(): JSX.Element{
     const router = useRouter()
 
@@ -27,16 +44,16 @@ export default function MapPage(): JSX.Element{
     });
     const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [radius, setRadius] = useState(0);
+    const [radius, setRadius] = useState(500);
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isDragSearch, setIsDragSearch] = useState(false)
+    const [sortOption, setSortOption] = useState(1)
+    const [isSearchClick, setIsSearchClick] = useState(0)
     //const [testtoken, setToken] = useState(false);
     
     useEffect(() => {
         checkIsLoggedIn();
     }, []);
-
-
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -56,10 +73,23 @@ export default function MapPage(): JSX.Element{
         };
     }, [ps]);
 
+    useEffect(() => { // 정렬 기준이 바뀔 때 기준이 적용된 검색 결과 다시 표시
+        if (ps && map) {
+            const center = map.getCenter();
+            const latitude = center.getLat();
+            const longitude = center.getLng();
+            
+            ps.keywordSearch(keyword, placesSearchCB, {
+                location: new window.kakao.maps.LatLng(latitude, longitude),
+                radius: radius === 0 ? 500 : radius,
+                level: 5,
+            });
+        }
+    }, [sortOption]);
+
     useEffect(() => {
         const handleMapDragEnd = _debounce(async () => {
             try {
-                //console.log(isDragSearch)
                 if (ps && map){ // 맵의 중심 좌표를 가져와서 검색 수행
                     //@ts-ignore // kakao api 함수
                     const center = map.getCenter();
@@ -93,7 +123,7 @@ export default function MapPage(): JSX.Element{
                 window.kakao.maps.event.removeListener(map, 'dragend', handleMapDragEnd);
             }
         };
-    }, [map, isDragSearch]);
+    }, [map, isDragSearch, isSearchClick]);
 
     // ----------------------------------------------
 
@@ -193,21 +223,92 @@ export default function MapPage(): JSX.Element{
             //@ts-ignore // kakao api 함수
             ps?.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
-                radius: (radius===0? 500: radius), // 반경 설정 안 할 시 기본 1000m로
+                radius: (radius===0? 500: radius), // 반경 설정 안 할 시 기본 500m로
             });
         } catch (error) {
             console.error('Error searching places:', error);
         }
     };
+    // 서버 response 예시
+    const serverResponse: any[] = [
+        {
+            id: "1805535326",
+            rating: 4.5, // 반올림 후: 5
+            reviewCount: 120
+        },
+        {
+            id: "1714692366",
+            rating: 3.8, // 반올림 후: 4
+            reviewCount: 85
+        },
+        {
+            id: "596803138",
+            rating: 3.3, // 반올림 후: 3
+            reviewCount: 95
+        },
+        {
+            id: "1648050966",
+            rating: 2.6, // 반올림 후: 3
+            reviewCount: 110
+        },
+        {
+            id: "2075548768",
+            rating: 1.9, // 반올림 후: 2
+            reviewCount: 100
+        },
+        {
+            id: "695042590",
+            rating: 1.1, // 반올림 후: 1
+            reviewCount: 150
+        },
+        {
+            id: "782044578",
+            rating: 3.7, // 반올림 후: 4
+            reviewCount: 105
+        },
+        {
+            id: "1332590568",
+            rating: 4.4, // 반올림 후: 4
+            reviewCount: 130
+        },
+        {
+            id: "260149239",
+            rating: 2.2, // 반올림 후: 2
+            reviewCount: 160
+        },
+        {
+            id: "455859409",
+            rating: 1.5, // 반올림 후: 2
+            reviewCount: 90
+        },
+        {
+            id: "27305404",
+            rating: 4.8, // 반올림 후: 5
+            reviewCount: 170
+        },
+        {
+            id: "1985864891",
+            rating: 2.9, // 반올림 후: 3
+            reviewCount: 95
+        },
+        {
+            id: "1376591946",
+            rating: 4.5, // 반올림 후: 5
+            reviewCount: 125
+        },
+        {
+            id: "20373658",
+            rating: 3.7, // 반올림 후: 4
+            reviewCount: 80
+        }
+    ];
 
-    const placesSearchCB = (data: any, status: string, pagination: any): void => {
-        //console.log("data:", data);
-        //console.log("status:", status);
-        //console.log("pagination:", pagination);
+    const placesSearchCB = (data: any, status: string, pagination: any): void => {        
+        // 여기서 서버에서 받아와야함.
+        addRatingAndReviewCount(data,serverResponse);
+        const sortedData = selectSort(sortOption, data)
         if (status === kakao.maps.services.Status.OK) {
-            // 정상적으로 검색이 완료됐으면 검색 목록과 마커를 표출합니다
-            displayPlaces(data);
-            // 페이지 번호를 표출합니다
+            displayPlaces(sortedData);
             displayPagination(pagination);
             return;
         } 
@@ -220,6 +321,55 @@ export default function MapPage(): JSX.Element{
             return;
         }
     }
+    const selectSort = (option: number, data: Place[]): Place[] => {
+        switch (option) {
+            case 1: // 거리순
+                return sortByDistance(data);
+            case 2: // 별점순
+                return sortByStarRate(data);
+            case 3: // 리뷰순
+                return sortByReview(data);
+            default: // 기본은 거리순
+                return sortByDistance(data);
+        }
+    };
+
+    const sortByDistance = (data: Place[]): Place[] => { //거리순 정렬
+        return data.sort((a: Place, b: Place) => {
+            const distanceA = parseInt(a.distance);
+            const distanceB = parseInt(b.distance);
+            return distanceA - distanceB;
+        });
+    };
+
+    const sortByStarRate = (data: Place[]): Place[] => { // 별점순 정렬
+        return data.sort((a: Place, b: Place) => {
+            const ratingA = a.rating !== undefined ? a.rating : 0;
+            const ratingB = b.rating !== undefined ? b.rating : 0;
+            return ratingB - ratingA // 내림차순 정렬
+        });
+    };
+
+    const sortByReview = (data: Place[]): Place[] => { // 리뷰순 정렬
+        return data.sort((a: Place, b: Place) => {
+            const reviewCountA = a.reviewCount !== undefined ? a.reviewCount : 0;
+            const reviewCountB = b.reviewCount !== undefined ? b.reviewCount : 0; 
+    
+            return reviewCountB - reviewCountA; // 내림차순 정렬
+        });
+    };
+
+    // 서버로부터 받아온 별점과 리뷰개수 넣기.
+    const addRatingAndReviewCount = (places: Place[], serverResponse: { id: string; rating: number; reviewCount: number }[]): Place[] => {
+        return places.map(place => {
+            const data = serverResponse.find(item => item.id === place.id);
+            if (data) {
+                place.rating = data.rating;
+                place.reviewCount = data.reviewCount;
+            }
+            return place;
+        });
+    };
 
     const displayPlaces = (places: any): void => {
         let listEl = document.getElementById('placesList'),
@@ -302,9 +452,11 @@ export default function MapPage(): JSX.Element{
     }
 
     const getListItem = (index: number, places: any): any => {
+        const roundedRating = Math.round(places.rating);
         const el: HTMLElement = document.createElement('li');
-        let itemStr : string = (`<span style ="float:right"><img src ="/soju1.png"/></span>`).repeat(5);
+        let itemStr : string = (`<span style ="float:right"><img src ="/soju1.png"/></span>`).repeat(roundedRating);
         itemStr += `<div>${places.place_name}</div>`;
+        itemStr += `<span>리뷰(${places.reviewCount ? places.reviewCount : 0})<br/></span>`
     
         if (places.road_address_name) {
             itemStr += `<span>${places.road_address_name}</span><br/>`;
@@ -482,7 +634,6 @@ export default function MapPage(): JSX.Element{
     // -------------------------------------------------------
     const onClickDragSearch = () => {
         setIsDragSearch(prevIsDragSearch => !prevIsDragSearch);
-        //console.log(isDragSearch)
     };
 
     const onClickMoveToMypage = () => {
@@ -518,7 +669,13 @@ export default function MapPage(): JSX.Element{
             setKwError("")
         }
     }
-
+    const onChangeSelectOption = (event: ChangeEvent<HTMLSelectElement>): void => {
+        setSortOption(parseInt(event.target.value)); // 선택한 옵션의 값을 정수형으로 변환하여 state에 설정
+    };
+    
+    const onClickSearch = () => {
+        setIsSearchClick(prevIsSearchClick => prevIsSearchClick + 1);
+    }
     
     // 별점 평점 -------
 
@@ -545,8 +702,11 @@ export default function MapPage(): JSX.Element{
                 radius = {radius}
                 isLoggedIn = {isLoggedIn}
                 isDragSearch = {isDragSearch}
+                sortOption = {sortOption}
                 onClickRefreshLocation = {onClickRefreshLocation}
                 onClickDragSearch = {onClickDragSearch}
+                onChangeSelectOption = {onChangeSelectOption}
+                onClickSearch = {onClickSearch}
             />
         </>
         

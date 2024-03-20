@@ -29,6 +29,9 @@ export interface IMapUIProps {
     keyword: string;
     radius: number;
     isDragSearch: boolean;
+    sortOption: number;
     onClickRefreshLocation: () => void;
     onClickDragSearch: () => void;
+    onChangeSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void;
+    onClickSearch: () => void;
 }
