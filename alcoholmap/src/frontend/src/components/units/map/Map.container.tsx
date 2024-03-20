@@ -37,7 +37,6 @@ export default function MapPage(): JSX.Element{
     });
     const [map, setMap] = useState<any | null>(null);
     const [ps, setPs] = useState<any | null>(null);
-    const [infowindow, setInfowindow] = useState<any | null>(null);
     const [markers, setMarkers] = useState<any[]>([])
     const [userPosition,setUserPosition] = useState<Coordinates | null>({
         coords:{latitude: 0, longitude: 0},
@@ -387,12 +386,13 @@ export default function MapPage(): JSX.Element{
         
         // 마커 배열 초기화
         setMarkers([])
+
         for (let i=0; i<places.length; i++ ) {
             // 마커를 생성하고 지도에 표시합니다
             let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
                 marker = addMarker(placePosition, i), 
                 itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-    
+            
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
             // LatLngBounds 객체에 좌표를 추가합니다
             bounds.extend(placePosition);
@@ -400,39 +400,27 @@ export default function MapPage(): JSX.Element{
             // 마커와 검색결과 항목에 mouseover 했을때
             // 해당 장소에 인포윈도우에 장소명을 표시합니다
             // mouseout 했을 때는 인포윈도우를 닫습니다
-
+            
             (function (marker, title, place) {
                 kakao.maps.event.addListener(marker, 'click', function () {
-                    //displayInfowindow(marker, title, place);
+                    displayInfowindow(marker, title, true);
                     onMarkerClick(place);
                     
                 });
     
                 itemEl.onclick = function () {
-                    //displayInfowindow(marker, title, place);
+                    displayInfowindow(marker, title, true);
                     onMarkerClick(place);
                 };
             })(marker, places[i].place_name, places[i]);
             
             (function(marker, title) {
                 kakao.maps.event.addListener(marker, 'mouseover', function() {
-                    displayInfowindow(marker, title);
-                });
-                
-                kakao.maps.event.addListener(marker, 'mouseout', function() {
-                    if (infowindow) { //@ts-ignore // kakao api 함수
-                        infowindow.close();
-                    }
+                    displayInfowindow(marker, title, false);
                 });
     
                 itemEl.onmouseover =  function () {
-                    displayInfowindow(marker, title);
-                };
-    
-                itemEl.onmouseout =  function () {
-                    if (infowindow) { //@ts-ignore // kakao api 함수
-                        infowindow.close();
-                    }
+                    displayListInfowindow(marker, title, itemEl, false);
                 };
             })(marker, places[i].place_name);
     
@@ -533,15 +521,46 @@ export default function MapPage(): JSX.Element{
         }
     }
 
-    const displayInfowindow = (marker: any, title: string): void => {
-
-        let content = '<div style="padding:10px;z-index:1;font-size:15px;">' + title + '</div>';
+    const displayInfowindow = (marker, title, click) => {
+        let content = 
+            `<div style="padding:10px;z-index:1;font-size:15px;font-weight:bold">
+                ${title}
+             </div>`;
+        let newInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+        newInfowindow?.setContent(content);
+        newInfowindow?.open(map, marker);
     
-        if (infowindow) {
-            //@ts-ignore // kakao api 객체 
-            infowindow.setContent(content);
-            //@ts-ignore // kakao api 객체
-            infowindow.open(map, marker);
+        // 클릭 이벤트에 따라 인포윈도우를 닫는 동작을 설정
+        if (click) {
+            // 클릭 이벤트가 발생하면 5초 후에 인포윈도우를 닫음
+            setTimeout(() => {
+                newInfowindow.close();
+            }, 5000);
+        } else {
+            // 마우스가 마커에서 벗어났을 때 인포윈도우를 닫음
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                newInfowindow.close();
+            });
+        }
+    }
+    const displayListInfowindow = (marker: any, title: string, itemEl : any, click: boolean): void => {
+        let content = 
+            `<div style="padding:10px;z-index:1;font-size:15px;font-weight:bold">
+                ${title}
+             </div>`;
+        let newInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+        newInfowindow?.setContent(content);
+        newInfowindow?.open(map, marker);
+        if (click) {
+            // 클릭 이벤트가 발생하면 5초 후에 인포윈도우를 닫음
+            setTimeout(() => {
+                newInfowindow.close();
+            }, 5000);
+        } else {
+            // 마우스가 마커에서 벗어났을 때 인포윈도우를 닫음
+            itemEl.onmouseout =  function () { //@ts-ignore // kakao api 함수
+                newInfowindow?.close();
+            };
         }
     }
 
