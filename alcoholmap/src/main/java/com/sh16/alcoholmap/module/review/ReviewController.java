@@ -82,4 +82,23 @@ public class ReviewController {
 //        String userId = TokenUtils.getUserIdFromToken(token);
 //        return ReviewService.deletePlaceReviews(userId, review);
 //    }
-}
+
+    /**
+     * map 초기화면 주변 15개 술집의 정보 (구현중)
+     */
+    @RestController
+    @RequestMapping("/places/firstmap")
+    public class firstMapController {
+
+        private final ReviewService reviewService;
+
+        // 생성자 주입을 사용합니다. Lombok의 @RequiredArgsConstructor를 사용할 수도 있습니다.
+        public PlaceController(ReviewService reviewService) {
+            this.reviewService = reviewService;
+        }
+
+        @PostMapping("/ratings-reviews-count")
+        public ResponseEntity<List<PlaceRatingAndReviewCountDto>> getRatingsAndReviewCounts(@RequestBody List<Long> placeIds) {
+            List<PlaceRatingAndReviewCountDto> ratingsAndReviewCounts = reviewService;
+        }
+    }}
