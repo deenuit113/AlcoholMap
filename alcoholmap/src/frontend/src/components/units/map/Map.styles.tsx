@@ -291,7 +291,7 @@ export const InputKeyword = styled.input`
 `
 
 export const InputRadius = styled.input`
-    width: 10%;
+    width: 20%;
     height: 20px;
     font-size: 20px;
     margin-top: 0px;

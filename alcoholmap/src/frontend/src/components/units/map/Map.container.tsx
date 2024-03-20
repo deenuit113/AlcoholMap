@@ -6,6 +6,8 @@ import Modal from 'react-modal';
 import ModalContainer from './Modal.container';
 import modalStyles from './Modal.styles';
 import { Coordinates ,Options } from './Map.types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 Modal.setAppElement('#__next');
 
@@ -312,7 +314,12 @@ export default function MapPage(): JSX.Element{
             return;
         } 
         else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-            console.log('Zero result');
+            toast.configure();
+            toast.dismiss();
+            toast.warn('검색 결과가 없습니다.', {
+                position: toast.POSITION.TOP_RIGHT // 토스트 메시지를 중앙 하단에 배치
+            });
+            console.log("zero")
             return;
         }
         else if (status === kakao.maps.services.Status.ERROR) {
@@ -465,7 +472,7 @@ export default function MapPage(): JSX.Element{
 
     const addMarker = (position: any, idx: number, rating: number): any => {
         let imageSrc = selectMarkerImgbyRating(rating); // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        let imageSize = new window.kakao.maps.Size(25, 57),  // 마커 이미지의 크기
+        let imageSize = new window.kakao.maps.Size(20, 45),  // 마커 이미지의 크기
             /*imgOptions = {
                 spriteSize: new window.kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
                 spriteOrigin: new window.kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
