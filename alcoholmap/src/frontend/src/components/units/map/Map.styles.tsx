@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
     border: 1px solid gray;
     border-radius: 30px;
     box-shadow: 0px 0px 10px gray;
-    background-color: #f0fdef;
+    background-color: #fffffa;
     boxing: border-box;
 
     /* Style for the container that will hold the custom scrollbar */
@@ -237,6 +237,7 @@ export const ToggleButton2 = styled.button`
 export const SearchWrapper = styled.div`
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-contents: center;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -275,25 +276,24 @@ export const SearchButton = styled.button`
     background-color: #4caf50;
     color: white;
     border: none;
-    margin-right: 10px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    text-decoration: none; 
+    float: right; 
     cursor: pointer;
     border-radius: 4px;
 `
 
 export const InputKeyword = styled.input`
-    width: 30%;
+    width: 40%;
     height: 20px;
     margin-top: 0px;
     margin-left: 5px;
 `
 
-export const InputRadius = styled.input`
+export const SelectRadius = styled.select`
     width: 20%;
     height: 20px;
-    font-size: 20px;
+    font-size: 13px;
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 10px;
@@ -312,6 +312,23 @@ export const InputRadius = styled.input`
 export const Label = styled.span`
     width: 15%;
     font-size: 15px;
+`
+
+export const SearchFilterWrapper = styled.div`
+    display: inline-block;
+    padding-top: 12px;
+    padding-bottom: 10px;
+    border-bottom: 4px solid #47C83E;
+    border-top: 1px solid gray;
+
+`
+
+export const SortOption = styled.select`
+    float: right;
+    font-size: 14px;
+    option{
+
+    }
 `
 
 export const MapWrapper = styled.div`
@@ -334,14 +351,71 @@ export const MapMain = styled.main`
     position: relative;
     overflow: hidden;
     border: 20px solid #47C83E;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    .overlay{
+        background-color: #f0fdef;
+        color:black;
+        padding: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        border: 2px solid black;
+        border-radius: 10px;
+    }
     
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
         height: 100%;
-        border: 5px solid #47C83E;
+        margin-top: 10px;
+        border: 3px solid #47C83E;
+    }
+`
+
+export const MapAssistantWrapper = styled.div`
+    width: 60%;
+    margin-right: 10px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 90%;
+    }
+`
+export const DragSearchLabel = styled.label`
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 12px;
+    }
+`
+
+export const DragSearchSwitch = styled.input`
+    margin-left: 3px;
+`
+
+export const RefreshUserLocButton = styled.button`
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #47C83E;
+    border-radius: 4px;
+    pointer: cursor;
+    font-size: 18px;
+    padding: 7px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 12px;
+        padding: 3px;
     }
 `
 
@@ -355,8 +429,8 @@ export const MenuWrap = styled.div`
     width: 20%;
     margin: 10px 0 10px 20px;
     padding: 5px;
-    padding-right: 30px;
-    padding-left: 30px;
+    padding-right: 10px;
+    padding-left: 10px;
     overflow-y: auto;
     overflow-x: hidden;
     background: rgba(255, 255, 255, 0.7);
@@ -436,7 +510,10 @@ export const Option = styled.div`
 
 export const Form = styled.form`
     display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
 `;
 
 export const PlacesList = styled.ul`

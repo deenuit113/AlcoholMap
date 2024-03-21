@@ -86,7 +86,7 @@ export default function MapPage(): JSX.Element{
                 level: 5,
             });
         }
-    }, [sortOption]);
+    }, [sortOption, radius]);
 
     useEffect(() => {
         const handleMapDragEnd = _debounce(async () => {
@@ -330,12 +330,16 @@ export default function MapPage(): JSX.Element{
     const selectSort = (option: number, data: Place[]): Place[] => {
         switch (option) {
             case 1: // 거리순
+                setSortOption(1);
                 return sortByDistance(data);
             case 2: // 별점순
+                setSortOption(2);
                 return sortByStarRate(data);
             case 3: // 리뷰순
+                setSortOption(3);
                 return sortByReview(data);
             default: // 기본은 거리순
+                setSortOption(1);
                 return sortByDistance(data);
         }
     };
@@ -542,46 +546,53 @@ export default function MapPage(): JSX.Element{
 
     const displayInfowindow = (marker: any, title: string, click: boolean) => {
         let content = 
-            `<div style="padding: 10px; z-index: 1; font-size: 15px; font-weight: bold;">
+            `<div class="overlay">
             ${title}
             </div>`;
-        let newInfowindow = new kakao.maps.InfoWindow({ 
-            zIndex: 1,
-            removeable: true,
+        let lat = marker.getPosition().getLat();
+        let lng = marker.getPosition().getLng(); 
+        let position = new kakao.maps.LatLng(lat, lng);
+        let newInfowindow = new kakao.maps.CustomOverlay({ 
+            position: position,
+            content: content,
+            zIndex: 9999,
         });
-        newInfowindow?.setContent(content);
-        newInfowindow?.open(map, marker);
-    
-        // 클릭 이벤트에 따라 인포윈도우를 닫는 동작을 설정
+        newInfowindow.setMap(map);
         if (click) {
             // 클릭 이벤트가 발생하면 5초 후에 인포윈도우를 닫음
             setTimeout(() => {
-                newInfowindow.close();
+                newInfowindow.setMap(null);
             }, 5000);
         } else {
-            // 마우스가 마커에서 벗어났을 때 인포윈도우를 닫음
             kakao.maps.event.addListener(marker, 'mouseout', function() {
-                newInfowindow.close();
+                newInfowindow.setMap(null);
             });
         }
-    }
+    };
+
     const displayListInfowindow = (marker: any, title: string, itemEl : any, click: boolean): void => {
         let content = 
-            `<div style="padding:10px;z-index:1;font-size:15px;font-weight:bold">
-                ${title}
-             </div>`;
-        let newInfowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-        newInfowindow?.setContent(content);
-        newInfowindow?.open(map, marker);
+            `<div class="overlay">
+            ${title}
+            </div>`;
+        let lat = marker.getPosition().getLat();
+        let lng = marker.getPosition().getLng(); 
+        let position = new kakao.maps.LatLng(lat, lng);
+        let newInfowindow = new kakao.maps.CustomOverlay({ 
+            position: position,
+            content: content,
+            zIndex: 9999,
+        });
+        newInfowindow.setMap(map);
         if (click) {
             // 클릭 이벤트가 발생하면 5초 후에 인포윈도우를 닫음
             setTimeout(() => {
-                newInfowindow.close();
+                newInfowindow.setMap(null);
             }, 5000);
         } else {
             // 마우스가 마커에서 벗어났을 때 인포윈도우를 닫음
             itemEl.onmouseout =  function () { //@ts-ignore // kakao api 함수
-                newInfowindow?.close();
+                newInfowindow.setMap(null);
             };
         }
     }
@@ -704,14 +715,11 @@ export default function MapPage(): JSX.Element{
             setKwError("")
         }
     }
-    const onChangeRadius = (event: ChangeEvent<HTMLInputElement>) => {
+    const onChangeRadius = (event: ChangeEvent<HTMLSelectElement>): void => {
         setRadius(+event.target.value)
-        if(event.target.value !== ""){
-            setKwError("")
-        }
     }
     const onChangeSelectOption = (event: ChangeEvent<HTMLSelectElement>): void => {
-        setSortOption(parseInt(event.target.value)); // 선택한 옵션의 값을 정수형으로 변환하여 state에 설정
+        setSortOption(+event.target.value);
     };
     
     const onClickSearch = () => {
