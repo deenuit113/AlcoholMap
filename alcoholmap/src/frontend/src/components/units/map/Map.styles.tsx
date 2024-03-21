@@ -73,7 +73,7 @@ export const Wrapper = styled.div`
         padding-top: 10px;
         padding-left: 0px;
         padding-right: 0px;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         overflow: auto;
         overflow-x: hidden;
         overflow-y: hidden;
@@ -85,8 +85,7 @@ export const Wrapper = styled.div`
 export const GBHeader = styled.header`
     @media all and (min-width: 359px) and (max-width: 799px) {
         width: 60%;
-        height: 100px;
-
+        height: 10%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -342,17 +341,17 @@ export const MapWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
-        height: 100%;
+        height: 90%;
     }
 `
 
 export const MapMain = styled.main`
-    width: 60%;
+    width: 65%;
     height: 100%;
     position: relative;
     overflow: hidden;
-    border: 20px solid #47C83E;
-    border-radius: 5px;
+    border: 5px solid #47C83E;
+    border-radius: 10px;
     margin-bottom: 10px;
 
     .overlay{
@@ -371,6 +370,7 @@ export const MapMain = styled.main`
         height: 90%;
         margin-top: 10px;
         border: 3px solid #47C83E;
+        border-radius: 5px;
     }
 `
 
