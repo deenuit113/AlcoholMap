@@ -11,6 +11,27 @@ export const HelpButton = styled.button`
     border: none;
     border-radius: 50px;
     cursor: pointer;
+    z-index: 10;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        top: 19px;
+        right: 17px;
+    }
+`
+
+export const HelpButtonFake = styled.button`
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    font-size: 30px;
+    background-color: #47C83E;
+    color: white;
+    padding: 5px 12px 5px 12px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 10;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
