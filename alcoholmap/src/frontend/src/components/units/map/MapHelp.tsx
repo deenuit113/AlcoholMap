@@ -1,17 +1,33 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import * as S from './MapHelp.styles'
 
 export default function MapHelp (): JSX.Element {
     
     const [isHelpVisible, setIsHelpVisible] = useState(false);
+    const helpRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        document.addEventListener('mousedown', onClickCloseHelp as EventListener);
+        return () => {
+            document.removeEventListener('mousedown', onClickCloseHelp as EventListener);
+        }
+    },[]);
+
     const onClickHelpToggle = () :void =>{
         setIsHelpVisible(prevIsHelpVisible =>!prevIsHelpVisible);
     }
+
+    const onClickCloseHelp = (event: CustomEvent<MouseEvent>): void => {
+        const targetNode = event.target as Node;
+        if (!helpRef.current?.contains(targetNode) && targetNode !== helpRef.current) {
+            setIsHelpVisible(false);
+        }
+    };
     return(
         <>
             <S.HelpButton onClick={onClickHelpToggle}> ? </S.HelpButton>
                 {isHelpVisible && (
-                    <S.HelpWrapper>
+                    <S.HelpWrapper ref={helpRef}>
                         <S.HelpTitle>
                             도움말
                         </S.HelpTitle>
