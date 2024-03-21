@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const ReviewDataWrapper = styled.div`
     width: 100%;
-    height: 100%;
+    height: 90%;
     overflow-y: auto;
     padding-left: 15px;
     border: 10px solid #b7f0b1;
