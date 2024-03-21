@@ -6,6 +6,7 @@ import com.sh16.alcoholmap.common.config.AuthConst;
 import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 
 import com.sh16.alcoholmap.module.member.Response;
+import com.sh16.alcoholmap.module.place.FirstMapPlaceDto;
 import com.sh16.alcoholmap.module.place.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -92,8 +93,8 @@ public class ReviewController {
      */
 
     @PostMapping("/places/firstmap")
-    public ResponseEntity<List<PlaceService.PlaceRatingInfo>> getPlaceRatings(@RequestBody List<Long> placeIds) {
-        List<PlaceService.PlaceRatingInfo> ratings = placeService.getRatingsByPlaceIds(placeIds);
+    public ResponseEntity<List<FirstMapPlaceDto>> getFirstMapPlaceReviews(@RequestBody List<Long> placeIds) {
+        List<FirstMapPlaceDto> ratings = placeService.getRatingsByPlaceIds(placeIds);
         return ResponseEntity.ok(ratings);
     }
 }

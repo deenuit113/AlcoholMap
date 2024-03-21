@@ -6,7 +6,7 @@ public class FirstMapPlaceDto {
     private Double averageStarRate;
     private Long reviewCount;
 
-    public PlaceRatingInfo(Long placeId, Double averageStarRate, Long reviewCount) {
+    public FirstMapPlaceDto(Long placeId, Double averageStarRate, Long reviewCount) {
         this.placeId = placeId;
         this.averageStarRate = averageStarRate;
         this.reviewCount = reviewCount;
