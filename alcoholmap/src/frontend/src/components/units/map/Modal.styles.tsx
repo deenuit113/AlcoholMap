@@ -22,8 +22,7 @@ export const ModalContainer = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #f2f2f2;
-    padding: 20px;
-    padding-left: 30px;
+    padding: 20px 20px 10px 30px;
     border: 5px solid #47C83E;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -165,14 +164,16 @@ export const rvinputWrapper = styled.div`
 
 export const reviewerWrapper = styled.div`
     border-radius: 8px;
-    padding: 5px;
     width: 100%;
-    height: 95%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
-    margin-bottom: 10px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        height: 100%;
+    }
 `
 export const CenterWrapper = styled.div`
     display: flex;

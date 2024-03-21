@@ -2,10 +2,11 @@ import styled from "@emotion/styled";
 
 export const ReviewDataWrapper = styled.div`
     width: 100%;
-    height: 90%;
+    height: 80%;
     overflow-y: auto;
     padding-left: 15px;
-    border: 10px solid #b7f0b1;
+    margin-top: 10px;
+    border: 5px solid #b7f0b1;
     border-radius: 10px;
     overflow-x: hidden;
 
@@ -32,6 +33,11 @@ export const ReviewDataWrapper = styled.div`
         &::-webkit-scrollbar {
             width: 12px;
         }
+    }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        height: 95%;
     }
 `
 

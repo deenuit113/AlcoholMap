@@ -105,3 +105,17 @@ export const HelpContent = styled.div`
     margin-top: 5px;
     margin-bottom: 10px;
 `
+
+export const MarkerHelpContent = styled.div`
+    font-family: Arial, Helvetica, sans-serif;
+    height: 5%;
+    max-height: 20%;
+    font-size: 12px;
+    font-weight: bolder;
+    color: black;;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 5px;
+    margin-bottom: 20px;
+`

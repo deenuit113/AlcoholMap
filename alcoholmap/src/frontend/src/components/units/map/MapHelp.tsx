@@ -48,18 +48,18 @@ export default function MapHelp (): JSX.Element {
                     <S.HelpContent>
                         <span> ▸ 지도에 표시되는 장소의 평점에 따라 소주병의 뚜껑과 띠의 색이 다르게 표시됩니다.</span>
                     </S.HelpContent>
-                    <S.HelpContent>
+                    <S.MarkerHelpContent>
                     <img src='/bluesoju.png' alt='bluesoju'/> 파란색 뚜껑의 소주병은 평점 4.5점 이상인 식당을 의미합니다.
-                    </S.HelpContent>
-                    <S.HelpContent>
+                    </S.MarkerHelpContent>
+                    <S.MarkerHelpContent>
                     <img src='/orangesoju.png' alt='orangesoju'/> 주황색 뚜껑의 소주병은 평점 3.5점 이상, 4.5점 미만인 식당을 의미합니다.
-                    </S.HelpContent>
-                    <S.HelpContent>
+                    </S.MarkerHelpContent>
+                    <S.MarkerHelpContent>
                     <img src='/redsoju.png' alt='redsoju'/> 빨간색 뚜껑의 소주병은 평점 3.5점 미만인 식당을 의미합니다.
-                    </S.HelpContent>
-                    <S.HelpContent>
+                    </S.MarkerHelpContent>
+                    <S.MarkerHelpContent>
                     <img src='/greensoju.png' alt='greensoju'/> 초록색 뚜껑의 소주병은 아직 리뷰가 작성되지 않은 식당을 의미합니다.
-                    </S.HelpContent>
+                    </S.MarkerHelpContent>
                 </S.HelpWrapper>
                 )}
         </>
