@@ -20,6 +20,8 @@ public class ReviewController {
     private final JwtTokenProvider jwtTokenProvider;
     private final ReviewService ReviewService;
 
+    private final PlaceService placeService;
+
     /**
      * 식당 리뷰 가져오기
      * @param placeId
@@ -86,19 +88,10 @@ public class ReviewController {
     /**
      * map 초기화면 주변 15개 술집의 정보 (구현중)
      */
-    @RestController
-    @RequestMapping("/places/firstmap")
-    public class firstMapController {
 
-        private final ReviewService reviewService;
-
-        // 생성자 주입을 사용합니다. Lombok의 @RequiredArgsConstructor를 사용할 수도 있습니다.
-        public PlaceController(ReviewService reviewService) {
-            this.reviewService = reviewService;
-        }
-
-        @PostMapping("/ratings-reviews-count")
-        public ResponseEntity<List<PlaceRatingAndReviewCountDto>> getRatingsAndReviewCounts(@RequestBody List<Long> placeIds) {
-            List<PlaceRatingAndReviewCountDto> ratingsAndReviewCounts = reviewService;
-        }
-    }}
+    @PostMapping("/places/firstmap")
+    public ResponseEntity<List<PlaceService.PlaceRatingInfo>> getPlaceRatings(@RequestBody List<Long> placeIds) {
+        List<PlaceService.PlaceRatingInfo> ratings = placeService.getRatingsByPlaceIds(placeIds);
+        return ResponseEntity.ok(ratings);
+    }
+}
