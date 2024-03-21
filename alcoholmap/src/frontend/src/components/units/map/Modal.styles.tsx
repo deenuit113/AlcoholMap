@@ -38,7 +38,7 @@ export const ModalContainer = styled.div`
 export const ModalContent = styled.div`
     position: relative;
     width: 95%;
-    height: 95%;
+    height: 100%;
     display: flex;
     flex-direction: column;
 `
@@ -169,7 +169,7 @@ export const reviewerWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 `
 export const CenterWrapper = styled.div`
     display: flex;
