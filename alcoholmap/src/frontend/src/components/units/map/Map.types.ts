@@ -14,6 +14,23 @@ export interface Options {
     level: number;
 }
 
+export interface PlaceInfo {
+    address_name: string;
+    category_group_code: string;
+    category_group_name: string;
+    category_name: string;
+    distance: string;
+    id: string;
+    phone: string;
+    place_name: string;
+    place_url: string;
+    road_address_name: string;
+    x: string;
+    y: string;
+    rating?: number; // 별점 속성 추가
+    reviewCount?: number; // 리뷰 갯수 속성 추가
+}
+
 // Map presenter interface
 
 export interface IMapUIProps {

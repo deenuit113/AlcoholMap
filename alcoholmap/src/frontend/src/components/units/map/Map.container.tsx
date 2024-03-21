@@ -5,28 +5,12 @@ import _debounce from 'lodash/debounce'
 import Modal from 'react-modal';
 import ModalContainer from './Modal.container';
 import modalStyles from './Modal.styles';
-import { Coordinates ,Options } from './Map.types';
+import { Coordinates, Options, PlaceInfo } from './Map.types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { KeyObject } from 'crypto';
 
 Modal.setAppElement('#__next');
-
-interface Place {
-    address_name: string;
-    category_group_code: string;
-    category_group_name: string;
-    category_name: string;
-    distance: string;
-    id: string;
-    phone: string;
-    place_name: string;
-    place_url: string;
-    road_address_name: string;
-    x: string;
-    y: string;
-    rating?: number; // 별점 속성 추가
-    reviewCount?: number; // 리뷰 갯수 속성 추가
-}
 
 export default function MapPage(): JSX.Element{
     const router = useRouter()
@@ -50,6 +34,8 @@ export default function MapPage(): JSX.Element{
     const [isDragSearch, setIsDragSearch] = useState(false)
     const [sortOption, setSortOption] = useState(1)
     const [isSearchClick, setIsSearchClick] = useState(0)
+    const [placeData, setPlaceData] = useState<PlaceInfo[] | null>(null)
+    const [pagination, setPagination] = useState<any[] | null>(null)
     //const [testtoken, setToken] = useState(false);
     
     useEffect(() => {
@@ -76,22 +62,44 @@ export default function MapPage(): JSX.Element{
 
     useEffect(() => { // 정렬 기준이 바뀔 때 기준이 적용된 검색 결과 다시 표시
         if (ps && map) {
+            if(keyword === "") {
+                toast.configure();
+                toast.dismiss();
+                toast.warn("키워드를 입력해주세요.");
+                return;
+            }
             const center = map.getCenter();
             const latitude = center.getLat();
             const longitude = center.getLng();
-            
             ps.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
                 radius: radius === 0 ? 500 : radius,
+                category_group_code: "FD6",
                 level: 5,
             });
         }
-    }, [sortOption, radius]);
+    }, [radius]);
+
+    useEffect(() => {
+        if(placeData){
+            const sortedData = selectSort(sortOption, placeData);
+            displayPlaces(sortedData);
+            displayPagination(pagination);
+                return;
+            } 
+    }, [sortOption]);
 
     useEffect(() => {
         const handleMapDragEnd = _debounce(async () => {
             try {
                 if (ps && map){ // 맵의 중심 좌표를 가져와서 검색 수행
+                    const keyword = (document.getElementById('keyword') as HTMLInputElement).value || '';
+                    if(keyword === "") {
+                        toast.configure();
+                        toast.dismiss();
+                        toast.warn("키워드를 입력해주세요.");
+                        return;
+                    }
                     //@ts-ignore // kakao api 함수
                     const center = map.getCenter();
                     const latitude = center.getLat();
@@ -103,6 +111,7 @@ export default function MapPage(): JSX.Element{
                     const result = await ps.keywordSearch(keyword, placesSearchCB, {
                         location: new window.kakao.maps.LatLng(latitude, longitude),
                         radius: (radius===0? 500: radius),
+                        category_group_code: "FD6",
                         level: 5,
                         //level = level,
                     });
@@ -189,6 +198,7 @@ export default function MapPage(): JSX.Element{
             await ps?.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
                 radius: (radius===0? 500: radius),
+                category_group_code: "FD6",
                 level: 5,
             });
             
@@ -213,7 +223,9 @@ export default function MapPage(): JSX.Element{
             // 사용자의 위치를 기반으로 검색 수행
             const keyword = (document.getElementById('keyword') as HTMLInputElement).value || '';
             if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                alert('키워드를 입력해주세요!');
+                toast.configure();
+                toast.dismiss();
+                toast.warn('키워드를 입력해주세요!');
                 return false;
             }
 
@@ -224,7 +236,8 @@ export default function MapPage(): JSX.Element{
             //@ts-ignore // kakao api 함수
             ps?.keywordSearch(keyword, placesSearchCB, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
-                radius: (radius===0? 500: radius), // 반경 설정 안 할 시 기본 500m로
+                radius: (radius===0? 500: radius),// 반경 설정 안 할 시 기본 500m로
+                category_group_code: "FD6", 
             });
         } catch (error) {
             console.error('Error searching places:', error);
@@ -307,7 +320,9 @@ export default function MapPage(): JSX.Element{
     const placesSearchCB = (data: any, status: string, pagination: any): void => {        
         // 여기서 서버에서 받아와야함.
         addRatingAndReviewCount(data,serverResponse);
-        const sortedData = selectSort(sortOption, data)
+        setPagination(pagination);
+        setPlaceData(data);
+        const sortedData = selectSort(sortOption, data);
         if (status === kakao.maps.services.Status.OK) {
             displayPlaces(sortedData);
             displayPagination(pagination);
@@ -327,7 +342,7 @@ export default function MapPage(): JSX.Element{
             return;
         }
     }
-    const selectSort = (option: number, data: Place[]): Place[] => {
+    const selectSort = (option: number, data: PlaceInfo[]): PlaceInfo[] => {
         switch (option) {
             case 1: // 거리순
                 setSortOption(1);
@@ -344,24 +359,24 @@ export default function MapPage(): JSX.Element{
         }
     };
 
-    const sortByDistance = (data: Place[]): Place[] => { //거리순 정렬
-        return data.sort((a: Place, b: Place) => {
+    const sortByDistance = (data: PlaceInfo[]): PlaceInfo[] => { //거리순 정렬
+        return data.sort((a: PlaceInfo, b: PlaceInfo) => {
             const distanceA = parseInt(a.distance);
             const distanceB = parseInt(b.distance);
             return distanceA - distanceB;
         });
     };
 
-    const sortByStarRate = (data: Place[]): Place[] => { // 별점순 정렬
-        return data.sort((a: Place, b: Place) => {
+    const sortByStarRate = (data: PlaceInfo[]): PlaceInfo[] => { // 별점순 정렬
+        return data.sort((a: PlaceInfo, b: PlaceInfo) => {
             const ratingA = a.rating !== undefined ? a.rating : 0;
             const ratingB = b.rating !== undefined ? b.rating : 0;
             return ratingB - ratingA // 내림차순 정렬
         });
     };
 
-    const sortByReview = (data: Place[]): Place[] => { // 리뷰순 정렬
-        return data.sort((a: Place, b: Place) => {
+    const sortByReview = (data: PlaceInfo[]): PlaceInfo[] => { // 리뷰순 정렬
+        return data.sort((a: PlaceInfo, b: PlaceInfo) => {
             const reviewCountA = a.reviewCount !== undefined ? a.reviewCount : 0;
             const reviewCountB = b.reviewCount !== undefined ? b.reviewCount : 0; 
     
@@ -370,8 +385,8 @@ export default function MapPage(): JSX.Element{
     };
 
     // 서버로부터 받아온 별점과 리뷰개수 넣기.
-    const addRatingAndReviewCount = (places: Place[], serverResponse: { id: string; rating: number; reviewCount: number }[]): Place[] => {
-        return places.map(place => {
+    const addRatingAndReviewCount = (places: PlaceInfo[], serverResponse: { id: string; rating: number; reviewCount: number }[]): PlaceInfo[] => {
+        return places?.map(place => {
             const data = serverResponse.find(item => item.id === place.id);
             if (data) {
                 place.rating = data.rating;

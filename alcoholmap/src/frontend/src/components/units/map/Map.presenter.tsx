@@ -63,7 +63,7 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     <S.MenuWrap id="menu_wrap" className={`bg_white ${isMenuOpen ? '' : 'closed'}`}>
                         <S.SearchWrapper>
                             <S.Form onSubmit={props.searchPlaces}>
-                                <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
+                                <S.InputKeyword type="text" placeholder="키워드 입력" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
                                 <S.SelectRadius value={props.radius} onChange={props.onChangeRadius}>
                                     <option value="500">500</option>
                                     <option value="1000">1000</option>
