@@ -2,6 +2,7 @@ import * as S from "./Map.styles";
 import { IMapUIProps } from "./Map.types";
 import { useState } from "react";
 import MapHBMenu from "./MapHBMenu";
+import MapHelp from "./MapHelp";
 
 export default function MapUI(props: IMapUIProps): JSX.Element{
     const [isMenuOpen, setIsPlaceListOpen] = useState(true);
@@ -101,6 +102,7 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     onClickMoveToSignup={props.onClickMoveToSignup}
                     onClickMoveToMypage={props.onClickMoveToMypage}
                 />
+                <MapHelp/>
 
             </S.Wrapper>
         </>
