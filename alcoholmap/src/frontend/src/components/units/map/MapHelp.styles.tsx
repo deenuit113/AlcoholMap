@@ -80,7 +80,7 @@ export const HelpContent = styled.div`
     color: black;;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 5px;
     margin-bottom: 10px;
 `
