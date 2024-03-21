@@ -61,7 +61,8 @@ export const placeLink = styled.a`
 `
 
 export const reviewInput = styled.textarea`
-    font-size: 17px;
+    font-family: sans-serif;
+    font-size: 15px;
     height: 40px;
     width: 50%;
     margin: 3px;
@@ -160,14 +161,15 @@ export const rvinputWrapper = styled.div`
 `
 
 export const reviewerWrapper = styled.div`
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 5px;
-    width: 90%;
+    width: 100%;
     height: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    margin-bottom: 10px;
 `
 export const CenterWrapper = styled.div`
     display: flex;

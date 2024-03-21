@@ -23,7 +23,7 @@ export interface IMapUIProps {
     onClickLogout: () => void;
     onClickReload: () => void;
     onChangeKeyword: (event: ChangeEvent<HTMLInputElement>) => void;
-    onChangeRadius: (event: ChangeEvent<HTMLInputElement>) => void;
+    onChangeRadius: (event: ChangeEvent<HTMLSelectElement>) => void;
     searchPlaces: (event: ChangeEvent<HTMLFormElement>) => void;
     isLoggedIn: boolean;
     keyword: string;

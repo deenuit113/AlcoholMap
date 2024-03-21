@@ -46,6 +46,13 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                 </S.MapNav>
                 <S.MapWrapper>
                     <S.MapMain id="map"></S.MapMain>
+                    <S.MapAssistantWrapper>
+                        <S.DragSearchLabel>
+                            드래그 검색 
+                            <S.DragSearchSwitch type="checkbox" defaultChecked={props.isDragSearch} onChange={props.onClickDragSearch} />
+                        </S.DragSearchLabel>
+                        <S.RefreshUserLocButton onClick={props.onClickRefreshLocation}>내 위치</S.RefreshUserLocButton>
+                    </S.MapAssistantWrapper>
                     <S.ToggleButton1 onClick={isMenuOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
                         {isMenuOpen ? '▲' : '▼'}
                     </S.ToggleButton1>
@@ -54,28 +61,31 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     </S.ToggleButton2>
                     <S.MenuWrap id="menu_wrap" className={`bg_white ${isMenuOpen ? '' : 'closed'}`}>
                         <S.SearchWrapper>
-                        <S.Form onSubmit={props.searchPlaces}>
-                            <S.Label>키워드</S.Label> 
-                            <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
-                            <S.InputRadius type="number" value={props.radius} onChange={props.onChangeRadius}></S.InputRadius>
-                            <S.Label> m</S.Label>
-                            <S.SearchButton type="submit" onClick={props.onClickSearch}>검색</S.SearchButton>
-                        </S.Form>
+                            <S.Form onSubmit={props.searchPlaces}>
+                                <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
+                                <S.SelectRadius value={props.radius} onChange={props.onChangeRadius}>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
+                                    <option value="2000">2000</option>
+                                    <option value="3000">3000</option>
+                                    <option value="3000">4000</option>
+                                    <option value="3000">5000</option>
+                                </S.SelectRadius>
+                                <S.Label> m</S.Label>
+                                <S.SearchButton type="submit" onClick={props.onClickSearch}>검색</S.SearchButton>
+                            </S.Form>
+                            <S.SearchFilterWrapper>
+                                <S.SortOption value={props.sortOption} onChange={props.onChangeSelectOption}>
+                                    <option value="1">거리순</option>
+                                    <option value="2">별점순</option>
+                                    <option value="3">리뷰순</option>
+                                </S.SortOption>
+                            </S.SearchFilterWrapper>
                         </S.SearchWrapper>
                         <hr />
                         <S.PlacesList id="placesList"></S.PlacesList>
                         <S.Pagination id="pagination"></S.Pagination>
                     </S.MenuWrap>
-                <button onClick={props.onClickRefreshLocation}>내 위치 새로고침</button>
-                <label>
-                    <input type="checkbox" defaultChecked={props.isDragSearch} onChange={props.onClickDragSearch} />
-                    드래그 검색
-                </label>
-                <select value={props.sortOption} onChange={props.onChangeSelectOption}>
-                    <option value="1">거리순</option>
-                    <option value="2">별점순</option>
-                    <option value="3">리뷰순</option>
-                </select>
                 </S.MapWrapper>
                 {/* 햄버거 버튼 */}
                 <S.HamburgerWrapper onClick={isHBMenuOpen ? onclickHBMenuClose : onClickHBMenuOpen}>
