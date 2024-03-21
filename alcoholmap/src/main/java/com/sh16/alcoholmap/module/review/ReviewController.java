@@ -6,11 +6,14 @@ import com.sh16.alcoholmap.common.config.AuthConst;
 import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 
 import com.sh16.alcoholmap.module.member.Response;
+import com.sh16.alcoholmap.module.place.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +22,6 @@ public class ReviewController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ReviewService ReviewService;
-
     private final PlaceService placeService;
 
     /**
