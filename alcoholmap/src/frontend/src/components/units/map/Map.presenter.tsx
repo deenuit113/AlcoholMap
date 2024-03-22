@@ -1,12 +1,15 @@
 import * as S from "./Map.styles";
 import { IMapUIProps } from "./Map.types";
-import { useState, useEffect } from "react";
+import { useState, useRef} from "react";
 import MapHBMenu from "./MapHBMenu";
 import MapHelp from "./MapHelp";
 
 export default function MapUI(props: IMapUIProps): JSX.Element{
-    const [isPlaceListOpen, setIsPlaceListOpen] = useState(false);
+    const [isPlaceListOpen, setIsPlaceListOpen] = useState(true);
     const [isHBMenuOpen, setIsHBMenuOpen] = useState(false);
+    const menuWrapRef = useRef<HTMLDivElement>(null); // Ref 생성
+    const [isMenuVisible, setIsMenuVisible] = useState(true);
+    const menuWrapWidthThreshold = 100; 
     
     const onClickPlaceListOpen = () => {
         setIsPlaceListOpen(true);
@@ -26,6 +29,35 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
         setIsHBMenuOpen(false);
     };
 
+    let startX = 0;
+    let startWidth = 0;
+    let isDragging = false;
+
+    const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+        startX = event.clientX;
+        startWidth = menuWrapRef.current ? menuWrapRef.current.offsetWidth : 0;
+        isDragging = true;
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    };
+
+    const onMouseMove = (event: MouseEvent) => {
+        if (isDragging && menuWrapRef.current) {
+            const diffX = event.clientX - startX;
+            const newWidth = startWidth + diffX;
+            if (newWidth < menuWrapWidthThreshold) {
+                setIsPlaceListOpen(false); // 드래그로 메뉴가 숨겨졌을 때 isPlaceListOpen 값을 false로 설정
+            } else {
+                menuWrapRef.current.style.width = newWidth + 'px';
+            }
+        }
+    };
+
+    const onMouseUp = () => {
+        isDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    };
     return(
         <>
             <S.Wrapper>
@@ -57,7 +89,11 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     <S.ToggleButton onClick={isPlaceListOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
                         {isPlaceListOpen ? '◀' : '▶'}
                     </S.ToggleButton>
-                    <S.MenuWrap id="menu_wrap" className={`${isPlaceListOpen ? 'open' : 'close'}`}>
+                    <S.MenuWrap 
+                        id="menu_wrap" 
+                        className={`${isPlaceListOpen ? 'open' : 'close'}`} 
+                        onMouseDown={onMouseDown} 
+                        ref={menuWrapRef}>
                         <S.SearchWrapper>
                             <S.Form onSubmit={props.searchPlaces}>
                                 <S.InputKeyword type="text" placeholder="키워드 입력" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
