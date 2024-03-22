@@ -439,9 +439,16 @@ export const MenuWrap = styled.div`
     font-size: 18px;
     border: 5px solid #b7f0b1;
     border-radius: 10px;
+    resize: horizontal; /* 수평 리사이즈만 허용 */
+    min-width: 200px; /* 최소 너비 설정 */
+
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 
     div {
-        font-size: 18px;
+        font-size: 18px; 
         font-weight: bold;
         margin-bottom: 10px;
     }
