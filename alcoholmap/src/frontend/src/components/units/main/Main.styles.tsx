@@ -262,11 +262,30 @@ export const CarouselImgWrapper = styled.div<{ isTransitioning: boolean }>`
     opacity: ${(props) => (props.isTransitioning ? 0.3 : 1)}; /* 트랜지션 중일 때 투명도 설정 */
     transition: opacity 0.8s ease; /* opacity 속성에 대한 트랜지션 효과 추가 */
 `;
-export const CarouselImg = styled.img`
+export const MobCarouselImg = styled.img`
     width: 85%;
     height: 100%;
     object-fit: contain;
     border-radius: 20px;
+    display: none;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        display: block;
+        width: 85%;
+    }
+
+`
+
+export const WebCarouselImg = styled.img`
+    width: 66%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        display: none;
+    }
+
 `
 
 export const CarouselButtonWrapper = styled.div`
@@ -280,7 +299,7 @@ export const CarouselButtonWrapper = styled.div`
 `
 
 export const CarouselPrevButton = styled.button`
-    background-color: #008CBA;
+    background-color: #4caf50;
     color: white;
     border: none;
     padding: 10px 10px 10px 10px;
@@ -293,7 +312,7 @@ export const CarouselPrevButton = styled.button`
 `
 
 export const CarouselNextButton = styled.button`
-    background-color: #008CBA;
+    background-color: #4caf50;
     color: white;
     border: none;
     padding: 10px 10px 10px 10px;
