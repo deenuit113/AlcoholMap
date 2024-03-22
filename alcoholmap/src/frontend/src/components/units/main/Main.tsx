@@ -9,15 +9,28 @@ export default function MainPage(): JSX.Element {
     const [isFlashing, setIsFlashing] = useState(false);
 
 
-    const images = [
-        '/greenbottleindex0.png',
-        '/dragsearch.png',
-        '/setradius.png',
-        '/sortopt.png',
-        '/myloc.png',
-        '/help.png',
-        '/review.png',
-        '/start.png',
+    const mobimages = [
+        '/mobgreenbottleindex0.png',
+        '/mobdragsearch.png',
+        '/mobsetradius.png',
+        '/mobsortopt.png',
+        '/mobmyloc.png',
+        '/mobhelp.png',
+        '/mobmodal.png',
+        '/mobreview.png',
+        '/mobstart.png',
+    ];
+
+    const webimages = [
+        '/webgreenbottleindex0.png',
+        '/webdragsearch.png',
+        '/websetradius.png',
+        '/websortopt.png',
+        '/webmyloc.png',
+        '/webhelp.png',
+        '/webmodal.png',
+        '/webreview.png',
+        '/webstart.png',
     ];
 
     const onClickMoveToLogin = () => {
@@ -35,7 +48,7 @@ export default function MainPage(): JSX.Element {
     const nextSlide = () => {
         setIsTransitioning(true); // 트랜지션 시작
         setTimeout(() => {
-            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % mobimages.length);
             setIsTransitioning(false); // 트랜지션 종료
         }, 500); // 이미지 전환 후 트랜지션 종료
     };
@@ -44,14 +57,14 @@ export default function MainPage(): JSX.Element {
         setIsTransitioning(true); // 트랜지션 시작
         setTimeout(() => {
             if (currentImageIndex !== 0) {
-                setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+                setCurrentImageIndex((prevIndex) => (prevIndex - 1 + mobimages.length) % mobimages.length);
             }
             setIsTransitioning(false); // 트랜지션 종료
         }, 500); // 이미지 전환 후 트랜지션 종료
     };
 
     useEffect(() => {
-        if (currentImageIndex === images.length - 1) {
+        if (currentImageIndex === mobimages.length - 1) {
             setIsFlashing(true);
             const flashingInterval = setInterval(() => {
                 setIsFlashing((prevFlashing) => !prevFlashing);
@@ -73,7 +86,8 @@ export default function MainPage(): JSX.Element {
                 </S.MainWebNav>
                 <S.CarouselWrapper>
                     <S.CarouselImgWrapper isTransitioning={isTransitioning}>
-                        <S.CarouselImg src={images[currentImageIndex]} alt={`Image ${currentImageIndex + 1}`}/>
+                        <S.MobCarouselImg src={mobimages[currentImageIndex]} alt={`Image ${currentImageIndex + 1}`}/>
+                        <S.WebCarouselImg src={webimages[currentImageIndex]} alt={`Image ${currentImageIndex + 1}`}/>
                     </S.CarouselImgWrapper>
                     <S.CarouselButtonWrapper>
                         <S.CarouselPrevButton onClick={prevSlide}>◀</S.CarouselPrevButton>
