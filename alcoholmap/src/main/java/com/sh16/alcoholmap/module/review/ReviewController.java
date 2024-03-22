@@ -6,11 +6,15 @@ import com.sh16.alcoholmap.common.config.AuthConst;
 import com.sh16.alcoholmap.module.jwt.JwtTokenProvider;
 
 import com.sh16.alcoholmap.module.member.Response;
+import com.sh16.alcoholmap.module.place.FirstMapPlaceDto;
+import com.sh16.alcoholmap.module.place.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ public class ReviewController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ReviewService ReviewService;
+    private final PlaceService placeService;
 
     /**
      * 식당 리뷰 가져오기
@@ -82,4 +87,14 @@ public class ReviewController {
 //        String userId = TokenUtils.getUserIdFromToken(token);
 //        return ReviewService.deletePlaceReviews(userId, review);
 //    }
+
+    /**
+     * map 초기화면 주변 15개 술집의 정보 (구현중)
+     */
+
+    @PostMapping("/places/firstmap")
+    public ResponseEntity<List<FirstMapPlaceDto>> getFirstMapPlaceReviews(@RequestBody List<Long> placeIds) {
+        List<FirstMapPlaceDto> ratings = placeService.getRatingsByPlaceIds(placeIds);
+        return ResponseEntity.ok(ratings);
+    }
 }
