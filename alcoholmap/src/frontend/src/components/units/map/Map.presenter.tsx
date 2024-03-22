@@ -1,10 +1,11 @@
 import * as S from "./Map.styles";
 import { IMapUIProps } from "./Map.types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MapHBMenu from "./MapHBMenu";
+import MapHelp from "./MapHelp";
 
 export default function MapUI(props: IMapUIProps): JSX.Element{
-    const [isMenuOpen, setIsPlaceListOpen] = useState(true);
+    const [isPlaceListOpen, setIsPlaceListOpen] = useState(false);
     const [isHBMenuOpen, setIsHBMenuOpen] = useState(false);
     
     const onClickPlaceListOpen = () => {
@@ -53,16 +54,13 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                         </S.DragSearchLabel>
                         <S.RefreshUserLocButton onClick={props.onClickRefreshLocation}>내 위치</S.RefreshUserLocButton>
                     </S.MapAssistantWrapper>
-                    <S.ToggleButton1 onClick={isMenuOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
-                        {isMenuOpen ? '▲' : '▼'}
-                    </S.ToggleButton1>
-                    <S.ToggleButton2 onClick={isMenuOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
-                        {isMenuOpen ? '◀' : '▶'}
-                    </S.ToggleButton2>
-                    <S.MenuWrap id="menu_wrap" className={`bg_white ${isMenuOpen ? '' : 'closed'}`}>
+                    <S.ToggleButton onClick={isPlaceListOpen ? onClickPlaceListClose : onClickPlaceListOpen}>
+                        {isPlaceListOpen ? '◀' : '▶'}
+                    </S.ToggleButton>
+                    <S.MenuWrap id="menu_wrap" className={`${isPlaceListOpen ? 'open' : 'close'}`}>
                         <S.SearchWrapper>
                             <S.Form onSubmit={props.searchPlaces}>
-                                <S.InputKeyword type="text" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
+                                <S.InputKeyword type="text" placeholder="키워드 입력" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
                                 <S.SelectRadius value={props.radius} onChange={props.onChangeRadius}>
                                     <option value="500">500</option>
                                     <option value="1000">1000</option>
@@ -101,6 +99,7 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     onClickMoveToSignup={props.onClickMoveToSignup}
                     onClickMoveToMypage={props.onClickMoveToMypage}
                 />
+                <MapHelp/>
 
             </S.Wrapper>
         </>

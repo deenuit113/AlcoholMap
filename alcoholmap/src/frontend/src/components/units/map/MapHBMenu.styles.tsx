@@ -19,6 +19,7 @@ export const HBMenuWrapper = styled.div`
     border: 5px solid #b7f0b1;
     border-left: none;
     border-radius: 10px;
+    box-shadow: 0px 0px 10px gray;
 
     &.closed {
         display: none;

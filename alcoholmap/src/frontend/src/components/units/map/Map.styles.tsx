@@ -73,9 +73,10 @@ export const Wrapper = styled.div`
         padding-top: 10px;
         padding-left: 0px;
         padding-right: 0px;
-        padding-bottom: 50px;
+        padding-bottom: 10px;
         overflow: auto;
         overflow-x: hidden;
+        overflow-y: hidden;
         border: none;
         border-radius: 0px;
     }
@@ -84,8 +85,7 @@ export const Wrapper = styled.div`
 export const GBHeader = styled.header`
     @media all and (min-width: 359px) and (max-width: 799px) {
         width: 60%;
-        height: 100px;
-
+        height: 10%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -198,8 +198,8 @@ export const MypageButton = styled.button`
     }
 `
 
-export const ToggleButton1 = styled.button`
-    font-size: 100%;
+/*export const ToggleButton1 = styled.button`
+    font-size: 90%;
     background-color: #4caf50;
     color: white;
     cursor: pointer;
@@ -215,9 +215,9 @@ export const ToggleButton1 = styled.button`
         height: 20px;
         visibility: visible;
     }
-`;
+`;*/
 
-export const ToggleButton2 = styled.button`
+export const ToggleButton = styled.button`
     position: fixed;
     height: 33%;
     top: 33%;
@@ -341,17 +341,17 @@ export const MapWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
-        height: 100%;
+        height: 90%;
     }
 `
 
 export const MapMain = styled.main`
-    width: 60%;
+    width: 65%;
     height: 100%;
     position: relative;
     overflow: hidden;
-    border: 20px solid #47C83E;
-    border-radius: 5px;
+    border: 5px solid #47C83E;
+    border-radius: 10px;
     margin-bottom: 10px;
 
     .overlay{
@@ -367,9 +367,10 @@ export const MapMain = styled.main`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
-        height: 100%;
+        height: 90%;
         margin-top: 10px;
         border: 3px solid #47C83E;
+        border-radius: 5px;
     }
 `
 
@@ -449,15 +450,11 @@ export const MenuWrap = styled.div`
         font-size: 12px;
     }
 
-    .bg_white{
-        background: #fff;
-    }
-
     .option{
         text-align: center;
     }
 
-    &.closed {
+    &.close {
         display: none;
     }
 
@@ -492,6 +489,7 @@ export const MenuWrap = styled.div`
         width: 95%;
         height: 70%;
         margin: 10px 10px 10px 10px;
+        max-height: 80vh; /* 최대 높이 설정 */
         div {
             font-size: 14px;
             font-weight: bold;
@@ -500,6 +498,10 @@ export const MenuWrap = styled.div`
         
         span{
             font-size: 11px;
+        }
+
+        &.close {
+            display: block;
         }
     }
 `;
