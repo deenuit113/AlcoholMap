@@ -1,13 +1,5 @@
-import styles from '../styles/Home.module.css'
+import MainPage from "../src/components/units/main/Main"
 
-export default function Home() {
-  return (
-    <>
-      <main className={styles.main}>
-          <p>
-            안녕하세요, 알콜맵입니다.
-          </p>
-      </main>
-    </>
-  )
+export default function Home():JSX.Element{
+    return <MainPage/>
 }
