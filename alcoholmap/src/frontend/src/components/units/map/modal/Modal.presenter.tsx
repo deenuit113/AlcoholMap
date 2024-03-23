@@ -1,6 +1,6 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
 import * as S from './Modal.styles'
-import ModalReview from './ModalReview.container';
+import ModalReview from '../modalreview/ModalReview.container';
 import { IModalUIProps } from './Modal.types';
 
 const ModalPresenter = (props: IModalUIProps): JSX.Element => {

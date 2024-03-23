@@ -1,7 +1,7 @@
-import { IHBMenu } from "./MapHBMenu.types"
+import { IHBMenuProps } from "./MapHBMenu.types"
 import * as S from "./MapHBMenu.styles";
 
-export default function MapHBMenu (props: IHBMenu): JSX.Element {
+export default function MapHBMenu (props: IHBMenuProps): JSX.Element {
     return(
         <>
             {props.isHBMenuOpen && (

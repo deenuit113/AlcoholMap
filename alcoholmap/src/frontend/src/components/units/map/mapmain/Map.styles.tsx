@@ -326,9 +326,6 @@ export const SearchFilterWrapper = styled.div`
 export const SortOption = styled.select`
     float: right;
     font-size: 14px;
-    option{
-
-    }
 `
 
 export const MapWrapper = styled.div`

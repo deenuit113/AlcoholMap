@@ -1,39 +1,17 @@
-import { useState, useRef, useEffect } from 'react'
-import * as S from './MapHelp.styles'
+import * as S from "./MapHelp.styles";
+import { IMapHelpUIProps } from "./Maphelp.types";
 
-export default function MapHelp (): JSX.Element {
-    
-    const [isHelpVisible, setIsHelpVisible] = useState(false);
-    const helpRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', onClickCloseHelp as EventListener);
-        return () => {
-            document.removeEventListener('mousedown', onClickCloseHelp as EventListener);
-        }
-    },[]);
-
-    const onClickHelpToggleOpen = () :void =>{
-        setIsHelpVisible(true);
-    }
-
-
-    const onClickCloseHelp = (event: CustomEvent<MouseEvent>): void => {
-        const targetNode = event.target as Node;
-        if (!helpRef.current?.contains(targetNode) && targetNode !== helpRef.current) {
-            setIsHelpVisible(false);
-        }
-    };
-    return(
+export default function MapHelpUI( props: IMapHelpUIProps ): JSX.Element {
+    return (
         <>
-            {!isHelpVisible && (
-                <S.HelpButton onClick={onClickHelpToggleOpen}> ? </S.HelpButton>
+            {!props.isHelpVisible && (
+                <S.HelpButton onClick={props.onClickHelpToggleOpen}> ? </S.HelpButton>
             )}
-            {isHelpVisible && (
+            {props.isHelpVisible && (
                 <S.HelpButtonFake> ? </S.HelpButtonFake>
             )}
-            {isHelpVisible && (
-                <S.HelpWrapper ref={helpRef}>
+            {props.isHelpVisible && (
+                <S.HelpWrapper ref={props.helpRef}>
                     <S.HelpTitle>
                         도움말
                     </S.HelpTitle>
