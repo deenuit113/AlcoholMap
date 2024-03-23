@@ -1,4 +1,4 @@
-export interface IHBMenu {
+export interface IHBMenuProps {
     isHBMenuOpen: boolean;
     isLoggedIn: boolean;
     onClickMoveToMypage: () => void;

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { LoginForm } from '../../../components/units/login/Login.types';
+import { LoginForm } from '../../components/units/login/Login.types';
 
 const useLogin = () => {
   const router = useRouter();

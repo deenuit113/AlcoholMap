@@ -7,23 +7,28 @@ import { IModalProps, ReviewForm } from './Modal.types';
 const apiUrl = '/users/place/review';
 
 const ModalContainer = (props: IModalProps): JSX.Element => {
+    const modalRef = useRef<HTMLDivElement>(null);
+
     const stars = Array.from({ length: 5 }, (_, index) => index + 1);
     const [rvError, setRvError] = useState("");
     const [starError, setStarError] = useState("");
     const [isReviewed, setIsReviewed] = useState(false)
-    const [reviewForm, setReviewForm] = useState({
+    const [reviewForm, setReviewForm] = useState<ReviewForm>({
         placeId: 0,
         content: "",
         starRate: 0,
     });
-    const modalRef = useRef<HTMLDivElement>(null);
 
+    // 리뷰 제출 후 빈 form 위한 리렌더링
     useEffect(() => {
-        
+        setReviewForm({
+            placeId: 0,
+            content: "",
+            starRate: 0,
+        });
     },[isReviewed]);
-
+    // 초기 설정
     useEffect(() => {
-        console.log(props.selectedPlace)
         setReviewForm({
             ...reviewForm,
             placeId: +props.selectedPlace.id,
@@ -33,27 +38,14 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
             document.removeEventListener('mousedown', onClickCloseModal as EventListener);
         }
     },[]);
-
-    /*const extractEmailfromToken = (): void => {
-        const token = localStorage.getItem('jwtToken');
-        const decodedToken = jwt.decode(token);
-
-        // decode된 토큰에서 사용자 이메일 추출
-        const userEmail = decodedToken.email;
-        return userEmail;
-    }*/
-
+    // 리뷰 폼 채우기 함수
     const onChangeReviewForm = (event: ChangeEvent<HTMLTextAreaElement>): void => {
         const { name, value } = event.target as HTMLTextAreaElement;
-    
-        // value를 number로 변환
         const numValue = name === 'starRate' ? +value : value;
-    
-        setReviewForm({
-            ...reviewForm,
+        setReviewForm((prevReviewForm) => ({
+            ...prevReviewForm,
             [name]: numValue,
-        });
-    
+        }));
         if (name === "content" && value !== "") {
             setRvError("");
         }
@@ -61,39 +53,25 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
             setStarError("");
         }
     };
-
+    // 리뷰 폼 확인 함수
     const onClickReviewFormCheck = (): void => {
         let errorcode = 0;
         if(!reviewForm.content) {
             setRvError("리뷰를 입력해주세요.")
             errorcode = 1
         }
-
         if(reviewForm.starRate === 0) {
             setStarError("술점을 매겨주세요.")
             errorcode = 1
         }
-        
         if(errorcode === 0){
             submitReviewForm(reviewForm)
         }
-        
     };
-
-    const onClickWishList = (): void => {
-        alert("찜했슴다!")
-    }
-
-    const onClickCloseModal = (event: CustomEvent<MouseEvent>): void => {
-        const targetNode = event.target as Node;
-        if (!modalRef.current?.contains(targetNode) && targetNode !== modalRef.current) {
-            props.closeModal();
-        }
-    };
-
-    const submitReviewForm = async (reviewForm: ReviewForm) => {
+    // 리뷰 폼 제출 함수
+    const submitReviewForm = async (reviewFormData: ReviewForm) => {
         const token = localStorage.getItem('jwtToken');
-        const jsonformData = JSON.stringify(reviewForm);
+        const jsonformData = JSON.stringify(reviewFormData);
         console.log(jsonformData)
         try {
             const response = await axios.post(apiUrl, jsonformData, {
@@ -104,16 +82,20 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
             });
             console.log('Response from server:', response.data);
             alert("리뷰가 등록되었습니다.")
-
-            setReviewForm({
-                placeId: 0,
-                content: "",
-                starRate: 0,
-            });
             setIsReviewed(true);
-
         } catch (error){
             console.error('error submitting data:', error);
+        }
+    };
+
+    const onClickWishList = (): void => {
+        alert("찜했슴다!")
+    }
+
+    const onClickCloseModal = (event: CustomEvent<MouseEvent>): void => {
+        const targetNode = event.target as Node;
+        if (!modalRef.current?.contains(targetNode) && targetNode !== modalRef.current) {
+            props.closeModal();
         }
     };
 
