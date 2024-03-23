@@ -1,4 +1,4 @@
-# [GreenBottle](https://greenbottle.site)
+# [GreenBottle](https://greenbottle.site)v1.0.0-beta
 > 애주가들을 위한 주점 가이드 웹 서비스
 
 ## 기획의도
