@@ -61,7 +61,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
     const fetchData = async () => {
         setisLoading(true);
         const token = localStorage.getItem('jwtToken');
-        const apiUrlPlaceId = `/place/review/${props.selectedPlace.id}`;
+        const apiUrlPlaceId = `${apiUrl}/${props.selectedPlace.id}`;
         const pageSize = 10;
         try {
             const response = await axios.get(apiUrlPlaceId, {
