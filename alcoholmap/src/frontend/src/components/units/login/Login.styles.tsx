@@ -46,9 +46,6 @@ export const Logo = styled.img`
 `
 // ------------공통---------------
 
-
-
-
 export const Label = styled.div`
     padding-bottom: 8px;
     font-size: 16px;

@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import MapUI from './Map.presenter';
 import _debounce from 'lodash/debounce'
 import Modal from 'react-modal';
-import ModalContainer from './Modal.container';
-import modalStyles from './Modal.styles';
+import ModalContainer from '../modal/Modal.container';
+import modalStyles from '../modal/Modal.styles';
 import { Coordinates, Options, PlaceInfo } from './Map.types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

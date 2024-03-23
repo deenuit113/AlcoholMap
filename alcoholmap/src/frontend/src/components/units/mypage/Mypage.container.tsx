@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import { userData } from './Mypage.types'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { mypageEditSchema } from "../../../commons/yupSchemas";
+import { mypageEditSchema } from "../../../commons/util/yupSchemas";
 
 /*  수정 버튼 누를 시에 수정페이지로 이동
     수정 내용 비밀번호?
