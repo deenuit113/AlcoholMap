@@ -2,7 +2,7 @@ import * as S from "./Map.styles";
 import { IMapUIProps } from "./Map.types";
 import { useState, useRef} from "react";
 import MapHBMenu from "../maphbmenu/MapHBMenu";
-import MapHelp from "../maphelp/MapHelp";
+import MapHelp from "../maphelp/MapHelp.container";
 
 export default function MapUI(props: IMapUIProps): JSX.Element{
     const [isPlaceListOpen, setIsPlaceListOpen] = useState(true);
