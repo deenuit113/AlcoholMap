@@ -42,7 +42,7 @@ public class User implements UserDetails {
     @Column(name = "roles")
     private String roles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userId")
     private List<Review> reviews = new ArrayList<>();
 
     @Builder

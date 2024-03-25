@@ -4,6 +4,7 @@ import com.sh16.alcoholmap.module.member.Response;
 import com.sh16.alcoholmap.module.member.User;
 import com.sh16.alcoholmap.module.member.UserRepository;
 import com.sh16.alcoholmap.module.place.Place;
+import com.sh16.alcoholmap.module.place.PlaceRepository;
 import com.sh16.alcoholmap.module.place.PlaceReviewAndUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final PlaceRepository placeRepository;
 
     /**
      * 식당 리뷰 추가(저장)
@@ -35,7 +37,7 @@ public class ReviewService {
         Review newReview = Review.builder()
                 .starRate(review.getStarRate())
                 .content(review.getContent())
-                .placeId(review.getPlaceId())
+                .place(review.getPlaceId())
                 .email(user.get().getEmail())
                 .build();
         reviewRepository.save(newReview);
@@ -51,10 +53,12 @@ public class ReviewService {
      * @return
      */
     public ResponseEntity<Response> getPlaceAllReviewsByPlaceId(Long placeId, int page, int pageSize) {
-        Optional<Place> place = reviewRepository.findPlacesById(placeId);
+        // Place 엔티티의 존재 여부 확인
+        Optional<Place> place = placeRepository.findPlaceById(placeId);
         if (!place.isPresent()) {
             return Response.newResult(HttpStatus.BAD_REQUEST, placeId + "는 존재하지 않는 맛집입니다.", null);
         }
+        // 리뷰 개수 조회
         int totalPageItemCnt = reviewRepository.getPlaceReviewsNumByPlaceId(placeId);
 
         HashMap<String, Object> hashMap = new LinkedHashMap<>();
@@ -63,15 +67,18 @@ public class ReviewService {
         hashMap.put("nowPage", page);
         hashMap.put("nowPageSize", pageSize);
 
-        Optional<Float> totalStarRate = reviewRepository.getPlaceReviewsAVGByPlaceId(placeId);
+        //평균 별점 조회
+        Optional<Float> totalStarRate = reviewRepository.findAverageStarRateByPlaceId(placeId);
         if (totalStarRate.isPresent()) {
             hashMap.put("totalStarRate", totalStarRate.get());
         } else {
             hashMap.put("totalStarRate", null);
         }
 
+        // 리뷰 목록 조회
         PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
-        List<Object[]> items = reviewRepository.getPlaceReviewsByPlaceId(placeId, pageRequest);
+        List<Object[]> items = reviewRepository.getPlaceReviewsByPlaceId(placeId);
+
         ArrayList<PlaceReviewAndUserDto> arr = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
 
