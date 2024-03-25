@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.review;
 
+import com.sh16.alcoholmap.module.place.Place;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class ReviewDto {
         /**
          * 맛집 아이디
          */
-        private int placeId;
+        private Place placeId;
     }
 
     @Data

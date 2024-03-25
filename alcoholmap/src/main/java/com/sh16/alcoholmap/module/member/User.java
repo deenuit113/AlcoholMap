@@ -1,6 +1,7 @@
 package com.sh16.alcoholmap.module.member;
 
 import com.sh16.alcoholmap.common.StringListConverter;
+import com.sh16.alcoholmap.module.review.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +42,9 @@ public class User implements UserDetails {
     @Column(name = "roles")
     private String roles;
 
+    @OneToMany(mappedBy = "userId")
+    private List<Review> reviews = new ArrayList<>();
+
     @Builder
     public User(String email, String password, int capaSoju, String roles, String nickname){
         this.email = email;
@@ -51,7 +55,7 @@ public class User implements UserDetails {
 
     }
 
-    //회원 수정용 메서드
+    //회원 수정용
     public void updateInfo(String nickname, int capaSoju) {
         this.nickname = nickname;
         this.capaSoju = capaSoju;

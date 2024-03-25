@@ -1,10 +1,14 @@
 package com.sh16.alcoholmap.module.place;
 
+import com.sh16.alcoholmap.module.review.Review;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,4 +36,7 @@ public class Place {
     private String operationHours;
 
     private int categoryId;
+
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 }
