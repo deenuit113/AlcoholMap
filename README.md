@@ -14,7 +14,8 @@
 |5|주점 추천|주변의 주점 추천, 지역별 Top N주점 표시 [추후 기능 추가]||
 ---
 ## ERD 설계 (ver1.0.0-beta)
-![image](https://github.com/deenuit113/GreenBottle/assets/125295095/77a35378-d3ba-42ea-af30-6687f1026480)
+![image](https://github.com/deenuit113/GreenBottle/assets/125295095/a126effd-af6d-4a6a-8401-0fbf8f5c4a2c)
+
 
 ---
 ## 사용 예시 Mobile Ver.
