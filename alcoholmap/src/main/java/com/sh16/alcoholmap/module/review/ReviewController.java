@@ -89,7 +89,7 @@ public class ReviewController {
 //    }
 
     /**
-     * map 초기화면 주변 15개 술집의 정보 (구현중)
+     * map 초기화면 주변 15개 술집의 정보 가져오기 - Body에 배열로만 요청
      */
 
     @PostMapping("/places/firstmap")

@@ -100,7 +100,7 @@ public class ReviewService {
                     .build());
         }
         hashMap.put("reviews", arr);
-        return Response.newResult(HttpStatus.OK, placeId + "의 모든 리뷰 목록 조회에 성공했습니다.", arr);
+        return Response.newResult(HttpStatus.OK, placeId + "의 모든 리뷰 목록 조회에 성공했습니다.", hashMap);
         /**
          * 추후 front-end 단 수정 완료 되면 arr 대신 hashMap 리턴
          */
