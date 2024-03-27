@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 public class ReviewLike {
     @Id
     @Column(name = "post_id", nullable = false)
-    private int reviewId;
+    private Long reviewId;
 
     @Id
     @Column(name = "user_id", nullable = false)
-    private String userId;
+    private Long userId;
 
     @Builder
-    public ReviewLike(int reviewId, String userId) {
+    public ReviewLike(Long reviewId, Long userId) {
         this.reviewId = reviewId;
         this.userId = userId;
     }

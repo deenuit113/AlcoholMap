@@ -12,6 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class ReviewLikePK implements Serializable {
-    private Long review; // Review 엔티티의 ID 필드 타입에 맞게 수정해야 합니다.
-    private Long user;   // User 엔티티의 ID 필드 타입에 맞게 수정해야 합니다.
+    private Long reviewId;
+    private Long userId;
 }

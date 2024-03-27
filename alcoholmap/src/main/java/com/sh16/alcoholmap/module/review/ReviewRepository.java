@@ -25,7 +25,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Optional<Float> findAverageStarRateByPlaceId(@Param("placeId") Long placeId);
 
     // 특정 장소의 리뷰 조회 (페이징 처리)
-    @Query("SELECT r FROM Review r WHERE r.place.id = :placeId")
+    @Query("SELECT r.id, r.starRate, r.content FROM Review r WHERE r.place.id = :placeId")
     List<Object[]> getPlaceReviewsByPlaceId(@Param("placeId") Long placeId);
 
     // 여러 장소에 대한 평균 별점과 리뷰 개수 조회
