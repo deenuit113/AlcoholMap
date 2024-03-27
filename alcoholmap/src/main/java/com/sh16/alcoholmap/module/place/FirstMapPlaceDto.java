@@ -1,5 +1,10 @@
 package com.sh16.alcoholmap.module.place;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class FirstMapPlaceDto {
 
     private Long placeId;

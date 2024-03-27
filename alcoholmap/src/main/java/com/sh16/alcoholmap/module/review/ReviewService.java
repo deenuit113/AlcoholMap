@@ -81,20 +81,26 @@ public class ReviewService {
 
         ArrayList<PlaceReviewAndUserDto> arr = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+        if (!items.isEmpty()) {
+            Object[] firstItem = items.get(0);
+            for (int i = 0; i < firstItem.length; i++) {
+                System.out.println("Item " + i + ": " + firstItem[i]);
+            }
+        }
 
         for (Object[] item : items) {
-            String format = formatter.format(item[4]);
+            //String format = formatter.format(item[4]);
             arr.add(PlaceReviewAndUserDto.builder()
-                    .reviewId((int) item[0])
+                    .reviewId((Long) item[0])
                     .starRate((float) item[1])
                     .content((String) item[2])
-                    .userId((String) item[3])
-                    .craeteDate(format)
-                    .userNickname((String) item[5])
+                    //.userId((String) item[3])
+                    //.craeteDate(format)
+                    //.userNickname((String) item[5])
                     .build());
         }
         hashMap.put("reviews", arr);
-        return Response.newResult(HttpStatus.OK, placeId + "의 모든 리뷰 목록 조회에 성공했습니다.", arr);
+        return Response.newResult(HttpStatus.OK, placeId + "의 모든 리뷰 목록 조회에 성공했습니다.", hashMap);
         /**
          * 추후 front-end 단 수정 완료 되면 arr 대신 hashMap 리턴
          */
