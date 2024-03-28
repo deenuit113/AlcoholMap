@@ -44,7 +44,6 @@ public class ReviewService {
         return Response.newResult(HttpStatus.OK, "리뷰 추가에 성공하였습니다.", null);
     }
 
-
     /**
      * 리뷰 조회 (술집 별 조회)
      * @param placeId
@@ -104,5 +103,59 @@ public class ReviewService {
         /**
          * 추후 front-end 단 수정 완료 되면 arr 대신 hashMap 리턴
          */
+    }
+
+
+
+    /**
+     * 리뷰 수정
+     * @param userId
+     * @param review
+     * @return
+     */
+    public ResponseEntity<Response> editPlaceReviews(String userId, ReviewDto.ReviewEditRequest review) {
+        Optional<Review> findReview = reviewRepository.findById(review.getId());
+        Optional<User> user = userRepository.findUserById(userId);
+
+        if (!findReview.isPresent()) {
+            return Response.newResult(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않습니다.", null);
+        }
+        if (!user.isPresent()) {
+            return Response.newResult(HttpStatus.UNAUTHORIZED, "로그인 후 사용해주세요", null);
+        }
+        if (!findReview.get().getUserId().equals(userId)) {
+            return Response.newResult(HttpStatus.FORBIDDEN, "자신의 리뷰만 수정 가능합니다.", null);
+        }
+        if (findReview.get().getPlaceId() != review.getPlaceId()) {
+            return Response.newResult(HttpStatus.BAD_REQUEST, "맛집 장소가 일치하지 않습니다.", null);
+        }
+        findReview.get().editReview(review);
+        reviewRepository.save(findReview.get());
+        return Response.newResult(HttpStatus.OK, "리뷰 수정에 성공했습니다.", null);
+    }
+
+
+
+    /**
+     * 리뷰 삭제
+     * @param userId
+     * @param review
+     * @return
+     */
+    public ResponseEntity<Response> deletePlaceReviews(String userId, ReviewDto.ReviewDeleteRequest review) {
+        Optional<Review> findReview = reviewRepository.findById(review.getId());
+        Optional<User> user = userRepository.findUserById(userId);
+
+        if (!findReview.isPresent()) {
+            return Response.newResult(HttpStatus.BAD_REQUEST, "리뷰가 존재하지 않습니다.", null);
+        }
+        if (!user.isPresent()) {
+            return Response.newResult(HttpStatus.UNAUTHORIZED, "로그인 후 사용해주세요", null);
+        }
+        if (!findReview.get().getUserId().equals(userId)) {
+            return Response.newResult(HttpStatus.FORBIDDEN, "자신의 리뷰만 삭제 가능합니다.", null);
+        }
+        reviewRepository.delete(findReview.get());
+        return Response.newResult(HttpStatus.OK, "리뷰 삭제에 성공했습니다.", null);
     }
 }

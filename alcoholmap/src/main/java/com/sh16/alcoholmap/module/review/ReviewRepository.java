@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    // Place 엔티티로 리뷰를 검색하는 메서드는 ReviewRepository에서 제거하거나 수정합니다.
-    // Review 엔티티의 직접적인 조회와 관련이 없으므로, 필요하다면 PlaceRepository에 정의하는 것이 적합합니다.
+
 
     // 특정 장소에 대한 리뷰 개수 조회
     @Query("SELECT COUNT(r) FROM Review r WHERE r.place.id = :placeId")

@@ -68,12 +68,10 @@ public class ReviewController {
      * @param review
      * @return
      */
-//    @PutMapping("/place/review")
-//    public ResponseEntity<Response> editPlaceReviews(@RequestHeader(AuthConst.AUTH_HEADER) String myToken, @RequestBody ReviewDto.ReviewEditRequest review) {
-//        String token = TokenUtils.getTokenFromHeader(myToken);
-//        String userId = TokenUtils.getUserIdFromToken(token);
-//        return ReviewService.editPlaceReviews(userId, review);
-//    }
+    @PutMapping("/place/review")
+    public ResponseEntity<Response> editPlaceReviews(@RequestBody ReviewDto.ReviewEditRequest review) {
+        return ReviewService.editPlaceReviews(userId, review);
+    }
 
     /**
      * 식당 리뷰 삭제
@@ -81,12 +79,10 @@ public class ReviewController {
      * @param review
      * @return
      */
-//    @DeleteMapping("/place/review")
-//    public ResponseEntity<Response> deletePlaceReviews(@RequestHeader(AuthConst.AUTH_HEADER) String myToken, @RequestBody ReviewDto.ReviewDeleteRequest review) {
-//        String token = TokenUtils.getTokenFromHeader(myToken);
-//        String userId = TokenUtils.getUserIdFromToken(token);
-//        return ReviewService.deletePlaceReviews(userId, review);
-//    }
+    @DeleteMapping("/place/review")
+    public ResponseEntity<Response> deletePlaceReviews(@RequestBody ReviewDto.ReviewDeleteRequest review) {
+        return ReviewService.deletePlaceReviews(userId, review);
+    }
 
     /**
      * map 초기화면 주변 15개 술집의 정보 가져오기 - Body에 배열로만 요청
