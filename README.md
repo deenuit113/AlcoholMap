@@ -13,7 +13,7 @@
 |4|SNS 기능|좋아요/팔로우 기능, 업적 달성하여 뱃지 획득 기능 [추후 기능 추가]||
 |5|주점 추천|주변의 주점 추천, 지역별 Top N주점 표시 [추후 기능 추가]||
 ---
-## ERD 설계 (ver1.0.0-beta)
+## ERD 설계 (v1.0.0)
 ![image](https://github.com/deenuit113/GreenBottle/assets/125295095/a126effd-af6d-4a6a-8401-0fbf8f5c4a2c)
 
 
