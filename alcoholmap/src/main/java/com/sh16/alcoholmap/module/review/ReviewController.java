@@ -64,7 +64,6 @@ public class ReviewController {
 
     /**
      * 식당 리뷰 수정
-     * @param myToken
      * @param review
      * @return
      */
@@ -75,7 +74,6 @@ public class ReviewController {
 
     /**
      * 식당 리뷰 삭제
-     * @param myToken
      * @param review
      * @return
      */
