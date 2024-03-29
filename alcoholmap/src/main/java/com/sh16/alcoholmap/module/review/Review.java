@@ -46,5 +46,12 @@ public class Review {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewComment> comments = new ArrayList<>();;
 
+    public void editReview(ReviewDto.ReviewEditRequest reviewEditRequest) {
+        this.starRate = reviewEditRequest.getStarRate();
+        this.content = reviewEditRequest.getContent();
+        this.createDate = new Date();
+    }
+
+
 
 }

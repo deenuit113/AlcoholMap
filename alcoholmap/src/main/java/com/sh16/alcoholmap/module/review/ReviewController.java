@@ -68,8 +68,8 @@ public class ReviewController {
      * @param review
      * @return
      */
-    @PutMapping("/place/review")
-    public ResponseEntity<Response> editPlaceReviews(@RequestBody ReviewDto.ReviewEditRequest review) {
+    @PutMapping("/place/review/{userId}")
+    public ResponseEntity<Response> editPlaceReviews(@PathVariable Long userId, @RequestBody ReviewDto.ReviewEditRequest review) {
         return ReviewService.editPlaceReviews(userId, review);
     }
 
@@ -79,8 +79,8 @@ public class ReviewController {
      * @param review
      * @return
      */
-    @DeleteMapping("/place/review")
-    public ResponseEntity<Response> deletePlaceReviews(@RequestBody ReviewDto.ReviewDeleteRequest review) {
+    @DeleteMapping("/place/review/{userId}")
+    public ResponseEntity<Response> deletePlaceReviews(@PathVariable Long userId, @RequestBody ReviewDto.ReviewDeleteRequest review) {
         return ReviewService.deletePlaceReviews(userId, review);
     }
 

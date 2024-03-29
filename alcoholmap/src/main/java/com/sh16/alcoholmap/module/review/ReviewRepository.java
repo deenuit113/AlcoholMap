@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.review;
 
+import com.sh16.alcoholmap.module.member.User;
 import com.sh16.alcoholmap.module.place.Place;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,4 +32,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT r.place.id as placeId, AVG(r.starRate) as averageStarRate, COUNT(r) as reviewCount " +
             "FROM Review r WHERE r.place.id IN :placeIds GROUP BY r.place.id")
     List<Object[]> findAverageStarRateAndReviewCountByPlaceIds(@Param("placeIds") List<Long> placeIds);
+
+    Optional<Review> findById(Long id);
 }

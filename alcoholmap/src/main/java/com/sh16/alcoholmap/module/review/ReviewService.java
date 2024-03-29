@@ -113,7 +113,7 @@ public class ReviewService {
      * @param review
      * @return
      */
-    public ResponseEntity<Response> editPlaceReviews(String userId, ReviewDto.ReviewEditRequest review) {
+    public ResponseEntity<Response> editPlaceReviews(Long userId, ReviewDto.ReviewEditRequest review) {
         Optional<Review> findReview = reviewRepository.findById(review.getId());
         Optional<User> user = userRepository.findUserById(userId);
 
@@ -126,7 +126,7 @@ public class ReviewService {
         if (!findReview.get().getUserId().equals(userId)) {
             return Response.newResult(HttpStatus.FORBIDDEN, "자신의 리뷰만 수정 가능합니다.", null);
         }
-        if (findReview.get().getPlaceId() != review.getPlaceId()) {
+        if (findReview.get().getPlace().getId() != review.getPlaceId()) {
             return Response.newResult(HttpStatus.BAD_REQUEST, "맛집 장소가 일치하지 않습니다.", null);
         }
         findReview.get().editReview(review);
@@ -142,7 +142,7 @@ public class ReviewService {
      * @param review
      * @return
      */
-    public ResponseEntity<Response> deletePlaceReviews(String userId, ReviewDto.ReviewDeleteRequest review) {
+    public ResponseEntity<Response> deletePlaceReviews(Long userId, ReviewDto.ReviewDeleteRequest review) {
         Optional<Review> findReview = reviewRepository.findById(review.getId());
         Optional<User> user = userRepository.findUserById(userId);
 
