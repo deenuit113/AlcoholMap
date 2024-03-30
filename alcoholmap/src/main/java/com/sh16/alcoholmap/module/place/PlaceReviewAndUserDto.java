@@ -13,7 +13,7 @@ public class PlaceReviewAndUserDto {
     private float starRate;
     private String content;
     private String userId;
-    private String craeteDate;
+    private String createDate;
     private String userNickname;
     private String userProfileImage;
 }
