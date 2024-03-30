@@ -64,3 +64,7 @@ export const StarRateWrapper = styled.div`
 export const StarRate = styled.div`
     float: right;
 `;
+
+export const LikeButton = styled.button`
+    radius: none;
+`

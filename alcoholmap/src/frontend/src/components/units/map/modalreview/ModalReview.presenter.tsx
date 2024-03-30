@@ -1,8 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import * as S from './ModalReview.styles'
 import { IModalReviewUIProps } from './ModalReview.types';
 
 const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
+    const [islike, setisLike] = useState(true);
     return(
         <S.ReviewDataWrapper id = "ReviewDataWrapper">
             <S.ReviewListUl>
@@ -17,6 +19,11 @@ const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
                                     </S.StarRate>
                                 ))}
                             </S.StarRateWrapper>
+                            {islike ?
+                                <button>♥</button>:
+                                <button>♡</button>
+                            }
+                            {item.like}
                         </>
                     </S.ReviewInfo>
                 ))}

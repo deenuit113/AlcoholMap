@@ -6,7 +6,7 @@ import axios from 'axios';
 const apiUrl = '/place/review';
 
 const ModalReview = (props: IModalReviewProps): JSX.Element => {
-    const [data, setData] = useState<{ userId: string; review: string; starRate: number;}[]>([]);
+    const [data, setData] = useState<{ userId: string; review: string; starRate: number; like: number;}[]>([]);
     const [isloading, setisLoading] = useState(false);
     const [curPage, setCurPage] = useState(1);
 
@@ -33,18 +33,19 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
     }, [isloading]);
 
     // -------test--------
-    /*const generateData = (start: number, end: number): Array<{ userId: string; review: string; starRate: number;}> => {
+    const generateData = (start: number, end: number): Array<{ userId: string; review: string; starRate: number; like: number;}> => {
         const data = [];
         for (let i = start; i <= end; i++) {
             data.push({
                 userId: `user${i}`,
                 review: `Review ${i}`,
                 starRate: i%2===0? 3:4,
+                like: 100,
             });
         }
         return data;
-    };*/
-    /*const fetchData = async () => {
+    };
+    const fetchData = async () => {
         setisLoading(true);
         setTimeout(() => {
             //const newData = [...data, ...new Array(10).fill('New Data')];
@@ -55,10 +56,10 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             console.log(curPage);
             setisLoading(false);
         }, 500);
-    };*/
+    };
     // --------------- test -----------------
     // 맨 끝까지 스크롤 시 데이터요청
-    const fetchData = async () => {
+    /*const fetchData = async () => {
         setisLoading(true);
         const token = localStorage.getItem('jwtToken');
         const apiUrlPlaceId = `${apiUrl}/${props.selectedPlace.id}`;
@@ -80,7 +81,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             setCurPage(prevCount => prevCount + 1)
             setisLoading(false);
         }
-    };
+    };*/
     
     return(
         <ModalReviewUI
