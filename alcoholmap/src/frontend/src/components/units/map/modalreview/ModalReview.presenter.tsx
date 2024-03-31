@@ -11,11 +11,12 @@ const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
             {props.data.map((item, index) => (
                     <S.ReviewInfo key={index}>
                         <>
-                            {item.userId}: {item.review}{' '}
+                            <S.UserId>{item.userId}</S.UserId>
+                            <S.UserReview>{item.review}</S.UserReview>
                             <S.StarRateWrapper>
                                 {Array.from({ length: item.starRate }, (_, i) => (
                                     <S.StarRate key={i}>
-                                        <img src="/soju1.png" alt="star" />
+                                        <S.StarImg src="/soju1.png" alt="star" />
                                     </S.StarRate>
                                 ))}
                             </S.StarRateWrapper>
@@ -23,7 +24,7 @@ const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
                                 <button>♥</button>:
                                 <button>♡</button>
                             }
-                            {item.like}
+                            <S.ReviewLike>{item.like}</S.ReviewLike>
                         </>
                     </S.ReviewInfo>
                 ))}
