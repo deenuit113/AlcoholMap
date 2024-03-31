@@ -1,5 +1,6 @@
 package com.sh16.alcoholmap.module.review;
 
+import com.sh16.alcoholmap.module.member.User;
 import com.sh16.alcoholmap.module.place.Place;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,8 +14,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    // Place 엔티티로 리뷰를 검색하는 메서드는 ReviewRepository에서 제거하거나 수정합니다.
-    // Review 엔티티의 직접적인 조회와 관련이 없으므로, 필요하다면 PlaceRepository에 정의하는 것이 적합합니다.
+
 
     // 특정 장소에 대한 리뷰 개수 조회
     @Query("SELECT COUNT(r) FROM Review r WHERE r.place.id = :placeId")
@@ -32,4 +32,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     @Query("SELECT r.place.id as placeId, AVG(r.starRate) as averageStarRate, COUNT(r) as reviewCount " +
             "FROM Review r WHERE r.place.id IN :placeIds GROUP BY r.place.id")
     List<Object[]> findAverageStarRateAndReviewCountByPlaceIds(@Param("placeIds") List<Long> placeIds);
+
+    Optional<Review> findById(Long id);
 }

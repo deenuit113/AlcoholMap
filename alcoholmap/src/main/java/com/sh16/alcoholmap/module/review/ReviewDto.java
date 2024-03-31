@@ -13,19 +13,10 @@ public class ReviewDto {
     @AllArgsConstructor
     @ToString
     public static class ReviewRequest {
-        /**
-         * 리뷰 별점 (술점)
-         */
         private float starRate;
 
-        /**
-         * 리뷰 내용
-         */
         private String content;
 
-        /**
-         * 맛집 아이디
-         */
         private Place placeId;
     }
 
@@ -34,26 +25,21 @@ public class ReviewDto {
     @AllArgsConstructor
     @ToString
     public static class ReviewEditRequest {
-        /**
-         * 리뷰 아이디
-         */
-        private int id;
 
-        /**
-         * 리뷰 술점 (별점)
-         */
+        private Long id;
+
         private float starRate;
 
-        /**
-         * 리뷰 내용
-         */
         private String content;
 
-        /**
-         * 맛집 아이디
-         */
-        private int placeId;
+        private Long placeId;
 
-
+    }
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    public static class ReviewDeleteRequest {
+        private Long id;
     }
 }
