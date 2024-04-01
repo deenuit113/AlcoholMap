@@ -51,16 +51,66 @@ export const ReviewInfo = styled.li`
     margin-bottom: 2px;
     font-size: 20px;
     border-bottom: 1px solid gray;
-    display: flex; /* Flex 컨테이너로 설정 */
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: space-between; /* 자식 요소 사이의 간격을 최대화하여 왼쪽과 오른쪽 끝에 정렬 */
+    display: flex;
+    align-items: center;
 `;
 
+export const UserId = styled.span`
+    float: left;
+    width: 10%;
+    border: 3px solid red;
+    margin-right: 15px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 15px;
+    }
+`
+
+export const UserReview = styled.span`
+    float: left;
+    width: 70%;
+    border: 3px solid blue;
+    margin-right: 15px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 11px;
+        width: 55%;
+        margin-right: 5px;
+    }
+`
+
 export const StarRateWrapper = styled.div`
-    display: flex;
+    float: right;
+    width: 15%;
     justify-content: flex-end;
+    border: 1px solid red;
+    margin-right: 10px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        margin-right: 5px;
+        width: 25%;
+    }
 `
 
 export const StarRate = styled.div`
     float: right;
 `;
+
+export const StarImg = styled.img`
+    width: 15px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 10px;
+    }
+`
+
+export const ReviewLike = styled.span`
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 12px;
+    }
+`
+
+export const LikeButton = styled.button`
+    radius: right;
+`

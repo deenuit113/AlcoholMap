@@ -22,7 +22,7 @@ export const ModalContainer = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #f2f2f2;
-    padding: 20px 20px 10px 30px;
+    padding: 20px 10px 20px 10px;
     border: 5px solid #47C83E;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -31,15 +31,15 @@ export const ModalContainer = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 95%;
-        height: 70%;
-        padding-left: 25px;
+        height: 80%;
+        padding-left: 10px;
         border: 5px solid #47C83E;
     }
 `
 
 export const ModalContent = styled.div`
     position: relative;
-    width: 95%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
