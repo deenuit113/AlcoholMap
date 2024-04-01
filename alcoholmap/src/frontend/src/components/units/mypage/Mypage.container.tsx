@@ -12,8 +12,9 @@ const UserInfoApiUrl = '/users/profile';
 
 export default function MyPagePage(){
     const router = useRouter()
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState(true);
     const [isEdit, setIsEdit] = useState(false);
+    const [profilePic, setProfilePic] = useState("/bluesoju.png");
     const [userInfo, setUserInfo] = useState<userData>({
         userEmail: "",
         password: "",
@@ -117,6 +118,7 @@ export default function MyPagePage(){
         <MypageUI
             userInfo = {userInfo}
             isEdit = {isEdit}
+            profilePic = {profilePic}
             formMethods={{ register, handleSubmit, formState }}
             onSubmit={onSubmitEditform}
             onClickEdit={onClickEdit}

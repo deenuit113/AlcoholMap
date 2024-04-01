@@ -97,6 +97,27 @@ export const Logo = styled.img`
     }
 `
 
+export const ProfilePicWrapper = styled.div`
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #47C83E;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 태블릿
+        height: 60%;
+        width: 50%;
+    }
+`
+
+export const ProfilePic = styled.img`
+    width: 30%;
+`
+
 export const UserInfoForm = styled.form`
     width: 100%;
     display: flex;
@@ -105,7 +126,7 @@ export const UserInfoForm = styled.form`
     justify-content: space-between;
     height: 100%;
     @media all and (min-width: 359px) and (max-width: 799px) {
-        // 태블릿
+        // 모바일 세로
         margin-left: 15px;
     }
 `

@@ -13,6 +13,7 @@ type PickFormMethods = Pick<UseFormReturn<userData>, 'register' | 'handleSubmit'
 // Mypage presenter interface
 export interface MypageUIProps {
     userInfo: userData;
+    profilePic: string;
     isEdit: boolean;
     formMethods: PickFormMethods;
     onSubmit: SubmitHandler<userData>;
