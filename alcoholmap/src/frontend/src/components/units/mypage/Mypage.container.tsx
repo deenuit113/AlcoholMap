@@ -12,8 +12,9 @@ const UserInfoApiUrl = '/users/profile';
 
 export default function MyPagePage(){
     const router = useRouter()
-    const [isLoggedIn, setLoggedIn] = useState(true);
+    const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const [isPicEdit, setIsPicEdit] = useState(false);
     const [profilePic, setProfilePic] = useState("/bluesoju.png");
     const [userInfo, setUserInfo] = useState<userData>({
         userEmail: "",
@@ -42,7 +43,7 @@ export default function MyPagePage(){
         checkIsLoggedIn();
         if(!isLoggedIn){
             alert("로그인 후 이용해주세요");
-            router.push('../login');
+            //router.push('../login');
         } else{
             getUserInfo();
         }
@@ -66,6 +67,7 @@ export default function MyPagePage(){
             });
             // 가져온 데이터를 상태에 저장
             setUserInfo(response.data);
+            //setProfilePic(response.data.pic);
             console.log('User data:', response.data);
         } catch (error) {
             console.log('Error fetching user data:', error);
@@ -109,6 +111,9 @@ export default function MyPagePage(){
     const onClickEdit = (): void => {
         setIsEdit(true);
     }
+    const onClickPicEdit = (): void => {
+        setIsPicEdit(true);
+    }
     // 메인페이지로 이동
     const onClickMoveToMainpage = (): void => {
         router.push("../map")
@@ -118,10 +123,12 @@ export default function MyPagePage(){
         <MypageUI
             userInfo = {userInfo}
             isEdit = {isEdit}
+            isPicEdit={isPicEdit}
             profilePic = {profilePic}
             formMethods={{ register, handleSubmit, formState }}
             onSubmit={onSubmitEditform}
             onClickEdit={onClickEdit}
+            onClickPicEdit={onClickPicEdit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
         />
         

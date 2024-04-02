@@ -15,8 +15,10 @@ export interface MypageUIProps {
     userInfo: userData;
     profilePic: string;
     isEdit: boolean;
+    isPicEdit: boolean;
     formMethods: PickFormMethods;
     onSubmit: SubmitHandler<userData>;
     onClickEdit: () => void;
+    onClickPicEdit: () => void;
     onClickMoveToMainpage: () => void;
 }

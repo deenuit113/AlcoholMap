@@ -18,11 +18,11 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                 <S.Title>마이페이지</S.Title>
                 <S.ProfilePicWrapper>
                     <S.ProfilePic src={props.profilePic} alt="프로필 사진" />
-                    {/* 프로필 사진 수정 버튼 */}
-                    {props.isEdit && (
+                </S.ProfilePicWrapper>
+                {props.isPicEdit && (
                         <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
                     )}
-                </S.ProfilePicWrapper>
+                <button onClick={props.onClickPicEdit}>프로필 사진 수정</button>
                 <S.UserInfoForm onSubmit= {handleSubmit(onSubmit)}>
                     <S.InfoWrapper>
                         <S.InfoLabel>이메일: </S.InfoLabel>

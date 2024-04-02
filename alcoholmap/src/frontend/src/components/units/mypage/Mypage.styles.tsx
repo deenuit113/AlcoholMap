@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
-        height: 100%;
+        height: auto;
         padding-top: 60px;
         padding-left: 0px;
         padding-right: 0px;
@@ -109,8 +109,8 @@ export const ProfilePicWrapper = styled.div`
     justify-content: center;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
-        height: 60%;
-        width: 50%;
+        height: 100px;
+        width: 100px;
     }
 `
 
