@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
         // 모바일 세로
         width: 100%;
         height: auto;
-        padding-top: 60px;
+        padding-top: 120px;
         padding-left: 0px;
         padding-right: 0px;
         padding-bottom: 50px;
@@ -118,16 +118,29 @@ export const ProfilePic = styled.img`
     width: 30%;
 `
 
+export const ProfilePicEditButton = styled.button`
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+`
+
 export const UserInfoForm = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 100%;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
-        margin-left: 15px;
+        width: 80%;
     }
 `
 
@@ -142,19 +155,38 @@ export const InfoWrapper = styled.div`
 
 export const WishListWrapper = styled.div`
     width: 100%;
-    display: inline-block;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding-top: 15px;
     padding-bottom: 0px;
-    padding-left: 5px;
     margin-left: 13px;
     margin: 5px;
     border: 4px solid #47C83E;
     border-radius: 8px;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
-        width: 90%
+        width: 90%;
+        padding: 0px 10px 0px 10px;
+    }
+`
+export const SliderWrapper = styled.div`
+    height: 120px;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0px 5px 0px;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 태블릿
+        width: 100%;
+        height: 100px;
     }
 `
 
@@ -172,7 +204,7 @@ export const RatedListWrapper = styled.div`
     border-radius: 8px;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
-        width:90%
+        width: 90%;
     }
 `
 
@@ -184,7 +216,6 @@ export const ButtonWrapper = styled.div`
     align-items: center;
     padding-top: 15px;
     padding-bottom: 15px;
-    padding-left: 5px;
     margin: 5px;
     float: right;
 `

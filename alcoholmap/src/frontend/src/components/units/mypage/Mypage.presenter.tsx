@@ -1,5 +1,6 @@
 import * as S from "./Mypage.styles"
 import { userData, MypageUIProps } from "./Mypage.types";
+import WishListSlider from "./WishListSlider";
 
 
 
@@ -22,7 +23,7 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                 {props.isPicEdit && (
                         <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
                     )}
-                <button onClick={props.onClickPicEdit}>프로필 사진 수정</button>
+                <S.ProfilePicEditButton onClick={props.onClickPicEdit}>사진 수정</S.ProfilePicEditButton>
                 <S.UserInfoForm onSubmit= {handleSubmit(onSubmit)}>
                     <S.InfoWrapper>
                         <S.InfoLabel>이메일: </S.InfoLabel>
@@ -87,6 +88,9 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIPr
                 <S.WishListWrapper>
                     <S.InfoTitle>찜목록</S.InfoTitle>
                     <S.Label>찜한 가게들의 리스트입니다.</S.Label>
+                    <S.SliderWrapper>
+                        <WishListSlider />
+                    </S.SliderWrapper>
                 </S.WishListWrapper>
                 <S.RatedListWrapper>
                     <S.InfoTitle>평가한 가게</S.InfoTitle>

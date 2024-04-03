@@ -15,7 +15,7 @@ export default function MyPagePage(){
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [isPicEdit, setIsPicEdit] = useState(false);
-    const [profilePic, setProfilePic] = useState("/bluesoju.png");
+    const [profilePic, setProfilePic] = useState("/greensoju.png");
     const [userInfo, setUserInfo] = useState<userData>({
         userEmail: "",
         password: "",
@@ -111,6 +111,7 @@ export default function MyPagePage(){
     const onClickEdit = (): void => {
         setIsEdit(true);
     }
+    // 프로필 사진 수정 버튼
     const onClickPicEdit = (): void => {
         setIsPicEdit(true);
     }
