@@ -55,7 +55,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             setCurPage(prevCount => prevCount + 1)
             console.log(curPage);
             setisLoading(false);
-        }, 500);
+        }, 1500);
     };
     // --------------- test -----------------
     // 맨 끝까지 스크롤 시 데이터요청
