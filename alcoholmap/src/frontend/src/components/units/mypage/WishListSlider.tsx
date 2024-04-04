@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import * as S from "./WishListSlider.styles";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const apiUrl = '/api/places';
 
@@ -29,26 +31,20 @@ const WishListSlider: React.FC = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const SliderWrapper = document.getElementById('SliderWrapper');
-            console.log(SliderWrapper)
-            const scrollWidth = SliderWrapper?.scrollWidth;
-            const scrollLeft = SliderWrapper?.scrollLeft;
-            const clientWidth = SliderWrapper?.clientWidth;
-            console.log("scrollWidth:", scrollWidth);
-            console.log("scrollLeft:", scrollLeft);
-            console.log("clientWidth:", clientWidth);
+            const Slider = document.getElementById('Slider');
+            const scrollWidth = Slider?.scrollWidth;
+            const scrollLeft = Slider?.scrollLeft;
+            const clientWidth = Slider?.clientWidth;
             // @ts-ignore
             if ((scrollLeft + clientWidth) / scrollWidth >= 0.99 && !loading) {
                 fetchData();
                 console.log("fetching data...");
             }
         };
-        const SliderWrapper = document.getElementById('SliderWrapper');
-        SliderWrapper?.addEventListener('scroll', handleScroll);
+        const Slider = document.getElementById('Slider');
+        Slider?.addEventListener('scroll', handleScroll);
         return () => {
-            if (SliderWrapper) {
-                SliderWrapper.removeEventListener('scroll', handleScroll);
-            }
+            Slider?.removeEventListener('scroll', handleScroll);
         };
     }, [loading]);
 
@@ -60,20 +56,25 @@ const WishListSlider: React.FC = () => {
             const newPlaces = [...places, ...generateDummyPlaces(places.length + 1, places.length + 10)];
             setPlaces(newPlaces);
             setLoading(false);
-        }, 500);
+        }, 1500);
     };
 
     return (
-        <S.SliderWrapper>
-            <S.Slider>
+        <S.SliderWrapper id = "SliderWrapper">
+            <S.Slider id = "Slider">
                 {places.map((place) => (
                     <S.PlaceWrapper key={place.id}>
-                        <S.ImgWrapper>
+                        <S.ImgWrapper id="imgwrapper">
                             <S.Image src={place.thumbnailUrl} alt={`Thumbnail ${place.id}`} />
                         </S.ImgWrapper>
-                        <S.PlaceName>{place.name}</S.PlaceName>
+                        <S.PlaceName id="placename">{place.name}</S.PlaceName>
                     </S.PlaceWrapper>
                 ))}
+                {loading && 
+                    <S.LoadingSkeletonWrapper>
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                    </S.LoadingSkeletonWrapper>
+                }
             </S.Slider>
         </S.SliderWrapper>
     );
