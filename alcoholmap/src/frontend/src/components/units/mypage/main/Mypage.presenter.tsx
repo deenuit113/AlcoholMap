@@ -1,6 +1,6 @@
 import * as S from "./Mypage.styles"
 import { userData, MypageUIProps } from "./Mypage.types";
-import WishListSlider from "./WishListSlider";
+import WishListSlider from "../wishlist/WishListSlider";
 
 
 

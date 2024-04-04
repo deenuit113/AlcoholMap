@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import { userData } from './Mypage.types'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { mypageEditSchema } from "../../../commons/util/yupSchemas";
+import { mypageEditSchema } from "../../../../commons/util/yupSchemas";
 
 const UserInfoApiUrl = '/users/profile';
 
