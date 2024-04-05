@@ -1,6 +1,6 @@
 import * as S from "./Map.styles";
 import { IMapUIProps } from "./Map.types";
-import { useState, useRef} from "react";
+import { useState, useRef, useEffect} from "react";
 import MapHBMenu from "../maphbmenu/MapHBMenu";
 import MapHelp from "../maphelp/MapHelp.container";
 
@@ -8,9 +8,24 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
     const [isPlaceListOpen, setIsPlaceListOpen] = useState(true);
     const [isHBMenuOpen, setIsHBMenuOpen] = useState(false);
     const menuWrapRef = useRef<HTMLDivElement>(null); // Ref 생성
-    const [isMenuVisible, setIsMenuVisible] = useState(true);
-    const menuWrapWidthThreshold = 100; 
-    
+    const menuWrapWidthThreshold = 100;
+
+    useEffect(() => {
+        function handleResize() {
+            if (window.innerWidth <= 799) {
+                // 모바일 환경에서는 설정한 스타일을 적용하지 않도록 함
+                menuWrapRef.current?.setAttribute("style", "width: initial !important");
+            }
+        }
+
+        window.addEventListener("resize", handleResize);
+        handleResize(); // 처음 렌더링 시에도 확인
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     const onClickPlaceListOpen = () => {
         setIsPlaceListOpen(true);
     };
@@ -34,11 +49,13 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
     let isDragging = false;
 
     const onMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-        startX = event.clientX;
-        startWidth = menuWrapRef.current ? menuWrapRef.current.offsetWidth : 0;
-        isDragging = true;
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        if(window.innerWidth > 799) {
+            startX = event.clientX;
+            startWidth = menuWrapRef.current ? menuWrapRef.current.offsetWidth : 0;
+            isDragging = true;
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
     };
 
     const onMouseMove = (event: MouseEvent) => {
