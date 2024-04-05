@@ -31,7 +31,6 @@ export default function RatedPlaceSlider(): JSX.Element{
     useEffect(() => {
         const handleScroll = () => {
             const Slider = document.getElementById('RatedPlaceSlider');
-            console.log(Slider);
             const scrollWidth = Slider?.scrollWidth;
             const scrollLeft = Slider?.scrollLeft;
             const clientWidth = Slider?.clientWidth;
