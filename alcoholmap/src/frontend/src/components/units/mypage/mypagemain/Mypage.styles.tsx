@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     border: 1px solid gray;
     border-radius: 30px;
     box-shadow: 0px 0px 10px gray;
-    background-color: #f0fdef;
+    background-color: #f1ffff;
     overflow-x: hidden;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
         transform: none;
         width: 100%;
         height: auto;
-        padding-top: 60px;
+        padding-top: 30px;
         padding-left: 0px;
         padding-right: 0px;
         padding-bottom: 50px;
@@ -158,15 +158,17 @@ export const WishListWrapper = styled.div`
     justify-content: flex-start;
     padding-top: 15px;
     padding-bottom: 0px;
-    margin-left: 13px;
-    margin: 5px;
+    margin-bottom: 20px;
     border: 4px solid #47C83E;
     border-radius: 8px;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
-        width: 90%;
-        padding: 0px 10px 0px 10px;
-        border: 2px solid #47C83E;
+        width: 100%;
+        padding: 10px 10px 5px 10px;
+        border: none;
+        border-top: 1px solid #47C83E;
+        border-bottom: 1px solid #47C83E;
+        border-radius: 0px;
     }
 `
 
@@ -178,15 +180,16 @@ export const RatedListWrapper = styled.div`
     justify-content: flex-start;
     padding-top: 15px;
     padding-bottom: 0px;
-    margin-left: 13px;
-    margin: 5px;
+    margin-bottom: 20px;
     border: 4px solid #47C83E;
     border-radius: 8px;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
-        width: 90%;
-        padding: 0px 10px 0px 10px;
-        border: 2px solid #47C83E;
+        width: 100%;
+        padding: 10px 10px 5px 10px;
+        border: none;
+        border-bottom: 1px solid #47C83E;
+        border-radius: 0px;
     }
 `
 
