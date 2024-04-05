@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import * as S from "./WishListSlider.styles";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
+import WishListSliderUI from './WishListSlider.presenter';
+import { Place } from './WishListSlider.types';
 const apiUrl = '/api/places';
 
-const WishListSlider: React.FC = () => {
-    const [places, setPlaces] = useState<{id: number; name: string; thumbnailUrl: string;}[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+
+
+export default function WishListSlider(): JSX.Element{
+    const [places, setPlaces] = useState<Place[]>([]);
+    const [isLoading, setisLoading] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isEndOfList, setIsEndOfList] = useState<boolean>(false);
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -36,7 +36,7 @@ const WishListSlider: React.FC = () => {
             const scrollLeft = Slider?.scrollLeft;
             const clientWidth = Slider?.clientWidth;
             // @ts-ignore
-            if ((scrollLeft + clientWidth) / scrollWidth >= 0.99 && !loading) {
+            if ((scrollLeft + clientWidth) / scrollWidth >= 0.99 && !isLoading) {
                 fetchData();
                 console.log("fetching data...");
             }
@@ -46,38 +46,23 @@ const WishListSlider: React.FC = () => {
         return () => {
             Slider?.removeEventListener('scroll', handleScroll);
         };
-    }, [loading]);
+    }, [isLoading]);
 
     const fetchData = async () => {
-        setLoading(true);
+        setisLoading(true);
         setTimeout(() => {
             //const newData = [...data, ...new Array(10).fill('New Data')];
             
             const newPlaces = [...places, ...generateDummyPlaces(places.length + 1, places.length + 10)];
             setPlaces(newPlaces);
-            setLoading(false);
+            setisLoading(false);
         }, 1500);
     };
 
     return (
-        <S.SliderWrapper id = "SliderWrapper">
-            <S.Slider id = "Slider">
-                {places.map((place) => (
-                    <S.PlaceWrapper key={place.id}>
-                        <S.ImgWrapper id="imgwrapper">
-                            <S.Image src={place.thumbnailUrl} alt={`Thumbnail ${place.id}`} />
-                        </S.ImgWrapper>
-                        <S.PlaceName id="placename">{place.name}</S.PlaceName>
-                    </S.PlaceWrapper>
-                ))}
-                {loading && 
-                    <S.LoadingSkeletonWrapper>
-                        <FontAwesomeIcon icon={faSpinner} spin />
-                    </S.LoadingSkeletonWrapper>
-                }
-            </S.Slider>
-        </S.SliderWrapper>
+        <WishListSliderUI
+            places = {places}
+            isLoading = {isLoading}
+        />
     );
 };
-
-export default WishListSlider;

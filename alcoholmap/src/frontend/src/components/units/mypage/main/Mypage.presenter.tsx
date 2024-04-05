@@ -1,10 +1,10 @@
 import * as S from "./Mypage.styles"
-import { userData, MypageUIProps } from "./Mypage.types";
-import WishListSlider from "../wishlist/WishListSlider";
+import { userData, IMypageUIProps } from "./Mypage.types";
+import WishListSlider from "../wishlist/WishListSlider.container";
 
 
 
-export default function MypageUI({ formMethods, onSubmit, ...props }: MypageUIProps): JSX.Element {
+export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIProps): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = formMethods;
     const handleProfilePictureChange = (event: any) => {
         // 선택한 파일 처리
