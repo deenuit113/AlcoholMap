@@ -19,7 +19,7 @@ export default function RatedPlaceSliderUI (props: RatedPlaceSliderUIProps): JSX
                 ))}
                 {props.isLoading && 
                     <S.LoadingSkeletonWrapper>
-                        <FontAwesomeIcon icon={faSpinner} spin />
+                        <FontAwesomeIcon id="LoadingIcon" icon={faSpinner} spin />
                     </S.LoadingSkeletonWrapper>
                 }
             </S.Slider>

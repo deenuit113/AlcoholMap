@@ -1,11 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
     margin: 10 10 10 10px;
     padding-top: 80px;
     padding-bottom: 100px;
@@ -174,7 +170,7 @@ export const WishListWrapper = styled.div`
     }
 `
 export const SliderWrapper = styled.div`
-    height: 120px;
+    height: 320px;
     width: 100%;
     overflow-y: hidden;
     overflow-x: auto;

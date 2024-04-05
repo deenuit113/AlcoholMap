@@ -69,8 +69,8 @@ export const Image = styled.img`
 
 export const PlaceWrapper = styled.div`
     position: relative;
-    width:100px;
-    height:100px;
+    width: 300px;
+    height: 300px;
     box-shadow: 0px 0px 10px gray;
     border: 1px solid gray;
     border-radius: 20%;
@@ -91,13 +91,19 @@ export const PlaceWrapper = styled.div`
         }
 
     }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 100px;
+        height: 100px;
+    }
 `
 
 export const LoadingSkeletonWrapper = styled.div`
     position: relative;
-    width: 100px;
-    min-width: 100px;
-    height: 100px;
+    width: 300px;
+    min-width: 300px;
+    height: 300px;
     box-shadow: 0px 0px 10px gray;
     border: 1px solid gray;
     border-radius: 20%;
@@ -107,17 +113,37 @@ export const LoadingSkeletonWrapper = styled.div`
     justify-content: center;
     margin-right: 10px;
     text-align: center;
+
+    #LoadingIcon{
+        font-size: 50px;
+    }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 100px;
+        min-width: 100px;
+        height: 100px;
+
+        #LoadingIcon{
+            font-size: 30px;
+        }
+    }
 `
 
 export const ImgWrapper = styled.div`
-    width: 100px;
-    height: 100px;
+    width: 300px;
+    height: 300px;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
     filter: brightness(100%);
     transition: filter 0.5s ease-in-out;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        width: 100px;
+        height: 100px;
+    }
 `
 
 export const PlaceName = styled.div`
