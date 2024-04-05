@@ -192,12 +192,12 @@ export const SliderWrapper = styled.div`
 
 export const RatedListWrapper = styled.div`
     width: 100%;
-    display: inline-block;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding-top: 15px;
     padding-bottom: 0px;
-    padding-left: 5px;
     margin-left: 13px;
     margin: 5px;
     border: 4px solid #47C83E;
@@ -205,6 +205,7 @@ export const RatedListWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
         width: 90%;
+        padding: 0px 10px 0px 10px;
     }
 `
 

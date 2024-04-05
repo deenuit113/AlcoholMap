@@ -1,6 +1,7 @@
 import * as S from "./Mypage.styles"
 import { userData, IMypageUIProps } from "./Mypage.types";
 import WishListSlider from "../wishlist/WishListSlider.container";
+import RatedPlaceSlider from "../ratedplace/RatedPlaceSlider.container";
 
 
 
@@ -95,7 +96,10 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
                 <S.RatedListWrapper>
                     <S.InfoTitle>평가한 가게</S.InfoTitle>
                     <S.Label>평가한 가게들의 리스트입니다.</S.Label>
-                </S.RatedListWrapper>   
+                    <S.SliderWrapper>
+                        <RatedPlaceSlider />
+                    </S.SliderWrapper>
+                </S.RatedListWrapper>
             </S.Wrapper>
         </>
     )
