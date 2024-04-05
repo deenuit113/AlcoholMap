@@ -10,7 +10,6 @@ export default function RatedPlaceSlider(): JSX.Element{
     const [isLoading, setisLoading] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isEndOfList, setIsEndOfList] = useState<boolean>(false);
-    const sliderRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         fetchData();
