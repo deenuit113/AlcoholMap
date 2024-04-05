@@ -22,9 +22,11 @@ export const Wrapper = styled.div`
 
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
+        position: static;
+        transform: none;
         width: 100%;
         height: auto;
-        padding-top: 120px;
+        padding-top: 60px;
         padding-left: 0px;
         padding-right: 0px;
         padding-bottom: 50px;
