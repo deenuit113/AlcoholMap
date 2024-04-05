@@ -43,7 +43,7 @@ export const Label = styled.div`
 
 export const InfoLabel = styled.span`
     padding-bottom: 8px;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     float: left;
 `;
@@ -66,8 +66,7 @@ export const UserInfo = styled.div`
     padding: 10px;
     box-sizing: border-box;
     font-size: 16px;
-    border: 4px solid #47C83E;
-    border-radius: 8px;
+    border-bottom: 1px solid #47C83E;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
         width: 95%;
@@ -99,7 +98,7 @@ export const ProfilePicWrapper = styled.div`
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 4px solid #47C83E;
+    border: 2px solid #47C83E;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -116,7 +115,7 @@ export const ProfilePic = styled.img`
     width: 30%;
 `
 
-export const ProfilePicEditButton = styled.button`
+export const ProfilePicEditButton = styled.label`
     background-color: #008CBA;
     color: white;
     border: none;
@@ -167,24 +166,7 @@ export const WishListWrapper = styled.div`
         // 태블릿
         width: 90%;
         padding: 0px 10px 0px 10px;
-    }
-`
-export const SliderWrapper = styled.div`
-    height: 320px;
-    width: 100%;
-    overflow-y: hidden;
-    overflow-x: auto;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 0px 5px 0px;
-
-    @media all and (min-width: 359px) and (max-width: 799px) {
-        // 태블릿
-        width: 100%;
-        height: 100px;
+        border: 2px solid #47C83E;
     }
 `
 
@@ -204,6 +186,26 @@ export const RatedListWrapper = styled.div`
         // 태블릿
         width: 90%;
         padding: 0px 10px 0px 10px;
+        border: 2px solid #47C83E;
+    }
+`
+
+export const SliderWrapper = styled.div`
+    height: 320px;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0px 5px 0px;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 태블릿
+        width: 100%;
+        height: 100px;
     }
 `
 

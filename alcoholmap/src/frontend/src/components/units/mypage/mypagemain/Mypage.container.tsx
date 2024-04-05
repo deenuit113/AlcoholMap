@@ -46,8 +46,9 @@ export default function MyPagePage(){
             //router.push('../login');
         } else{
             getUserInfo();
+            setIsPicEdit(false);
         }
-    }, [isEdit]);
+    }, [isEdit, isPicEdit]);
     // 사용자 정보 받아오기
     const getUserInfo = async () => { 
         try {
@@ -111,10 +112,6 @@ export default function MyPagePage(){
     const onClickEdit = (): void => {
         setIsEdit(true);
     }
-    // 프로필 사진 수정 버튼
-    const onClickPicEdit = (): void => {
-        setIsPicEdit(true);
-    }
     // 메인페이지로 이동
     const onClickMoveToMainpage = (): void => {
         router.push("../map")
@@ -129,8 +126,8 @@ export default function MyPagePage(){
             formMethods={{ register, handleSubmit, formState }}
             onSubmit={onSubmitEditform}
             onClickEdit={onClickEdit}
-            onClickPicEdit={onClickPicEdit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
+            setIsPicEdit={setIsPicEdit}
         />
         
     )

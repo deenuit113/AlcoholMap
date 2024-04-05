@@ -19,6 +19,5 @@ export interface IMypageUIProps {
     formMethods: PickFormMethods;
     onSubmit: SubmitHandler<userData>;
     onClickEdit: () => void;
-    onClickPicEdit: () => void;
     onClickMoveToMainpage: () => void;
 }
