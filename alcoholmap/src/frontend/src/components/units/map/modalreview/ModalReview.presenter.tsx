@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import * as S from './ModalReview.styles'
 import { IModalReviewUIProps } from './ModalReview.types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
     const [islike, setisLike] = useState(true);
@@ -29,7 +31,10 @@ const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
                     </S.ReviewInfo>
                 ))}
             </S.ReviewListUl>
-            {props.isloading && <div>Loading...</div>}
+            {props.isloading && 
+                <S.LoadingSkeletonUl>
+                    <FontAwesomeIcon icon={faSpinner} spin />
+                </S.LoadingSkeletonUl>}
         </S.ReviewDataWrapper>
     );
 };
