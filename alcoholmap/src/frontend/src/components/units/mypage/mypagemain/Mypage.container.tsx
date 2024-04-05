@@ -21,8 +21,8 @@ export default function MyPagePage(){
         password: "",
         nickname: "",
         capaSoju: 0,
-        // 찜한가게 (가게 이름, 위도 경도 값)
-        // 평가한 가게 (가게 이름, 위도 경도 값, 평점, 리뷰)
+        // 찜한가게 (가게 이름, 주소 값)
+        // 평가한 가게 (가게 이름, 주소 값, 평점, 리뷰)
     });
     // react-hook-form과 yup 이용한 회원정보 폼 관리
     const { register, handleSubmit, formState } = useForm<userData>({
