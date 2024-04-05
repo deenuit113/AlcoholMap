@@ -491,6 +491,7 @@ export const MenuWrap = styled.div`
         // 모바일 세로
         position: relative;
         width: 95%;
+        min-width: 95%;
         height: 70%;
         margin: 10px 10px 10px 10px;
         max-height: 80vh; /* 최대 높이 설정 */
