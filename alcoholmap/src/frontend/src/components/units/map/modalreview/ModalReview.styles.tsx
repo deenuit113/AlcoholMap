@@ -46,6 +46,15 @@ export const ReviewListUl = styled.ul`
     min-height: 100%;
 `
 
+export const LoadingSkeletonUl = styled.ul`
+    height: 30px;
+    min-height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`
+
 export const ReviewInfo = styled.li`
     margin-top: 2px;
     margin-bottom: 2px;
