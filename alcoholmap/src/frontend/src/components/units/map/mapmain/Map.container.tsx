@@ -14,8 +14,9 @@ Modal.setAppElement('#__next');
 
 export default function MapPage(): JSX.Element{
     const router = useRouter()
+    const { keyword: initialKeyword } = router.query;
 
-    const [keyword, setKeyword] = useState("술집");
+    const [keyword, setKeyword] = useState<string>(initialKeyword ? String(initialKeyword) : "술집");
     const [kwError, setKwError] = useState("");
     const [options, setOptions] = useState<Options | null>({
         center: null,
@@ -134,7 +135,6 @@ export default function MapPage(): JSX.Element{
             const longitude = center?.getLng(); 
             await ps?.keywordSearch(keyword, displaySearchResult, {
                 location: new window.kakao.maps.LatLng(latitude, longitude),
-                radius: (radius===0? 500: radius), // 반경 설정
                 category_group_code: "FD6", // 주점만 검색
                 level: 5,
             });

@@ -98,6 +98,7 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                             <S.Form onSubmit={props.searchPlaces}>
                                 <S.InputKeyword type="text" placeholder="키워드 입력" value={props.keyword} id="keyword" onChange={props.onChangeKeyword}/>
                                 <S.SelectRadius value={props.radius} onChange={props.onChangeRadius}>
+                                    <option value="0">반경 선택</option>
                                     <option value="500">500</option>
                                     <option value="1000">1000</option>
                                     <option value="2000">2000</option>
