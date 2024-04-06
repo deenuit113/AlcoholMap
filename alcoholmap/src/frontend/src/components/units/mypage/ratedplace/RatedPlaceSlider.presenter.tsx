@@ -11,7 +11,8 @@ export default function RatedPlaceSliderUI (props: RatedPlaceSliderUIProps): JSX
         router.push({
             pathname: `/mypage/wishlist/${placeId}`,
             query: {
-                keyword: "서울 동대문구 이문동 288-23",
+                placename: "영화장",
+                address: "서울 동대문구 이문동 288-23",
             },
         });
     };
