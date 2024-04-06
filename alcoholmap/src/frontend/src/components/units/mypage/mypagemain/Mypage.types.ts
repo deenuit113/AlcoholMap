@@ -20,4 +20,5 @@ export interface IMypageUIProps {
     onSubmit: SubmitHandler<userData>;
     onClickEdit: () => void;
     onClickMoveToMainpage: () => void;
+    setIsPicEdit: (value: boolean) => void;
 }

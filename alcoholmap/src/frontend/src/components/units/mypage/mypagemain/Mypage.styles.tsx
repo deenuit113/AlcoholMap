@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
     margin: 10 10 10 10px;
     padding-top: 80px;
     padding-bottom: 100px;
-    padding-left: 102px;
-    padding-right: 102px;
+    padding-left: 50px;
+    padding-right: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;

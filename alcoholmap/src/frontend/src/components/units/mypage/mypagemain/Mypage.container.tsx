@@ -47,6 +47,7 @@ export default function MyPagePage(){
         } else{
             getUserInfo();
             setIsPicEdit(false);
+            console.log("rerendering");
         }
     }, [isEdit, isPicEdit]);
     // 사용자 정보 받아오기
