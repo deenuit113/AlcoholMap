@@ -48,10 +48,17 @@ export const MapWrapper = styled.div`
     height: 50%;
     border: 2px solid #47C83E;
     border-radius: 5px;
+    margin-bottom: 10px;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 100%;
         height: auto;
     }
+`
 
+export const MoveToMainPage = styled.label`
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid black;
 `

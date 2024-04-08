@@ -56,10 +56,21 @@ export default function PlaceDetail(): JSX.Element {
         }); 
     };
 
+    const onClickMoveToMainpage = () => {
+        router.push({
+            pathname: "/map",
+            query: { keyword: address },
+        })
+    }
+
 
     return (
         <>
-            <PlaceDetailUI/>
+            <PlaceDetailUI
+                placeName = {placeName}
+                address = {address}
+                onClickMoveToMainpage = {onClickMoveToMainpage}
+            />
         </>
     );
 };
