@@ -1,7 +1,18 @@
 import { IHBMenuProps } from "./MapHBMenu.types"
 import * as S from "./MapHBMenu.styles";
+import { useRouter } from "next/router";
 
 export default function MapHBMenu (props: IHBMenuProps): JSX.Element {
+    const router = useRouter();
+
+    const onClickMoveToKorea = () => {
+        router.push('/map/korea')
+    };
+
+    const onClickMoveToSeoul = () => {
+        router.push('/map/seoul')
+    };
+
     return(
         <>
             {props.isHBMenuOpen && (
@@ -19,8 +30,10 @@ export default function MapHBMenu (props: IHBMenuProps): JSX.Element {
                                 </>
                             )}
                         </S.MyInfoWrapper>
+                        <S.Line/>
                         <S.HBMenuList>
-                            <S.HBMenuListEl></S.HBMenuListEl>
+                            <S.HBMenuListEl onClick={onClickMoveToKorea}>지역별 술집 추천 (팔도)</S.HBMenuListEl>
+                            <S.HBMenuListEl onClick={onClickMoveToSeoul}>지역별 술집 추천 (서울)</S.HBMenuListEl>
                         </S.HBMenuList>
                     </S.HBMenuWrapper>
             )}
