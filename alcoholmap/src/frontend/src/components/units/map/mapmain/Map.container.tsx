@@ -177,6 +177,7 @@ export default function MapPage(): JSX.Element{
                     level: 5,
                     //level = level,
                 });
+                console.log(result);
             } else{
                 //console.error('Error handling map drag end: ps is null')
             }
