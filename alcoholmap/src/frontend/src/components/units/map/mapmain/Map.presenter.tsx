@@ -3,8 +3,11 @@ import { IMapUIProps } from "./Map.types";
 import { useState, useRef, useEffect} from "react";
 import MapHBMenu from "../maphbmenu/MapHBMenu";
 import MapHelp from "../maphelp/MapHelp.container";
+import { useRouter } from "next/router";
 
 export default function MapUI(props: IMapUIProps): JSX.Element{
+    const router = useRouter();
+
     const [isPlaceListOpen, setIsPlaceListOpen] = useState(true);
     const [isHBMenuOpen, setIsHBMenuOpen] = useState(false);
     const menuWrapRef = useRef<HTMLDivElement>(null); // Ref 생성
@@ -42,6 +45,14 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
     const onclickHBMenuClose = () => {
         console.log("onclickHBMenuClose");
         setIsHBMenuOpen(false);
+    };
+
+    const onClickMoveToKorea = () => {
+        router.push('/map/korea')
+    };
+
+    const onClickMoveToSeoul = () => {
+        router.push('/map/seoul')
     };
 
     let startX = 0;
@@ -84,15 +95,17 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                 <S.MapNav>
                     {props.isLoggedIn ? (
                         <>
-                            <S.MypageButton onClick={props.onClickMoveToMypage}>마이페이지</S.MypageButton>
-                            <S.LogoutButton onClick={props.onClickLogout}> 로그아웃</S.LogoutButton>
+                            <S.NavButton onClick={props.onClickMoveToMypage}>마이페이지</S.NavButton>
+                            <S.NavButton onClick={props.onClickLogout}> 로그아웃</S.NavButton>
                         </>
                     ) : (
                         <>
-                            <S.LoginButton onClick={props.onClickMoveToLogin}>로그인</S.LoginButton>
-                            <S.SignupButton onClick={props.onClickMoveToSignup}>회원가입</S.SignupButton>
+                            <S.NavButton onClick={props.onClickMoveToLogin}>로그인</S.NavButton>
+                            <S.NavButton onClick={props.onClickMoveToSignup}>회원가입</S.NavButton>
                         </>
                     )}
+                    <S.NavButton onClick={onClickMoveToKorea}>지역별(팔도)</S.NavButton>
+                    <S.NavButton onClick={onClickMoveToSeoul}>지역별(서울)</S.NavButton>
                 </S.MapNav>
                 <S.MapWrapper>
                     <S.MapMain id="map"></S.MapMain>
@@ -152,6 +165,8 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                     onClickMoveToLogin={props.onClickMoveToLogin}
                     onClickMoveToSignup={props.onClickMoveToSignup}
                     onClickMoveToMypage={props.onClickMoveToMypage}
+                    onClickMoveToKorea={onClickMoveToKorea}
+                    onClickMoveToSeoul={onClickMoveToSeoul}
                 />
                 <MapHelp/>
 

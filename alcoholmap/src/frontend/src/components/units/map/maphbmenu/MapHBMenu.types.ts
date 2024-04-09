@@ -5,4 +5,6 @@ export interface IHBMenuProps {
     onClickMoveToLogin: () => void;
     onClickMoveToSignup: () => void;
     onClickLogout: () => void;
+    onClickMoveToKorea: () => void;
+    onClickMoveToSeoul: () => void;
 }
