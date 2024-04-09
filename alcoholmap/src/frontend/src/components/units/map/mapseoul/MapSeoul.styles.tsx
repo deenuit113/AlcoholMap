@@ -54,4 +54,36 @@ export const GBHeader = styled.header`
 
 export const Logo = styled.img`
     cursor: pointer
-` 
+`
+
+export const TopBarList = styled.ul`
+    width: 90%;
+    list-style-type: none;
+    border: 1px solid black;
+`
+
+export const TopBar = styled.li`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 4px solid blue;
+    align-items: center;
+    justify-content: center;
+`
+
+export const BarInfoWrapper = styled.div`
+    border: 2px solid red;
+`
+
+export const MoveToThisBarButton = styled.button`
+    
+`
+
+export const RankWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bolder;
+`

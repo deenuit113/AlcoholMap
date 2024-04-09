@@ -35,9 +35,9 @@ export const Wrapper = styled.div`
 `;
 
 export const KoreaMap = styled.svg`
-    width: 400px;
-    height: 500px;
-    margin-right: 30px;
+    width: 380px;
+    height: 380px;
+    margin-right: 0px;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
     }
@@ -55,4 +55,27 @@ export const GBHeader = styled.header`
 
 export const Logo = styled.img`
     cursor: pointer
-` 
+`
+
+export const TopBarList = styled.ul`
+    width: 90%;
+    list-style-type: none;
+    border: 1px solid black;
+`
+
+export const TopBar = styled.li`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 4px solid blue;
+    align-items: center;
+    justify-content: center;
+`
+
+export const BarInfoWrapper = styled.div`
+    border: 2px solid red;
+`
+
+export const MoveToThisBarButton = styled.button`
+    
+`
