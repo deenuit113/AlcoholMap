@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RatedPlaceSliderUI from './RatedPlaceSlider.presenter';
-import { Place } from './RatedPlaceSlider.types';
+import { Place, RatedPlaceSliderProps } from './RatedPlaceSlider.types';
 
 const apiUrl = '/api/places';
 
-export default function RatedPlaceSlider(): JSX.Element{
+export default function RatedPlaceSlider(props: RatedPlaceSliderProps): JSX.Element{
     const [places, setPlaces] = useState<Place[]>([]);
     const [isLoading, setisLoading] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -61,6 +61,8 @@ export default function RatedPlaceSlider(): JSX.Element{
         <RatedPlaceSliderUI
             places = {places}
             isLoading = {isLoading}
+            isMine = {props.isMine}
+            userId = {props.userId}
         />
     );
 };

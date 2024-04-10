@@ -4,8 +4,16 @@ export interface Place {
     name: string;
     thumbnailUrl: string;
 }
+
+export interface WishListSliderProps {
+    isMine: boolean;
+    userId: string;
+}
+
 // WishListSlider presenter interface
 export interface WishListSliderUIProps {
     places: Place[];
     isLoading: boolean;
+    isMine: boolean;
+    userId: string;
 }

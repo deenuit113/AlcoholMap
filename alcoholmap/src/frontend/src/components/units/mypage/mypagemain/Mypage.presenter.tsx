@@ -98,14 +98,20 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
                     <S.InfoTitle>찜목록</S.InfoTitle>
                     <S.Label>찜한 가게들의 리스트입니다.</S.Label>
                     <S.SliderWrapper>
-                        <WishListSlider />
+                        <WishListSlider
+                            isMine={props.isMine}
+                            userId={""}
+                        />
                     </S.SliderWrapper>
                 </S.WishListWrapper>
                 <S.RatedListWrapper>
                     <S.InfoTitle>평가한 가게</S.InfoTitle>
                     <S.Label>평가한 가게들의 리스트입니다.</S.Label>
                     <S.SliderWrapper>
-                        <RatedPlaceSlider />
+                        <RatedPlaceSlider
+                            isMine={props.isMine}
+                            userId={""}
+                        />
                     </S.SliderWrapper>
                 </S.RatedListWrapper>
             </S.Wrapper>

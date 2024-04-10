@@ -12,6 +12,7 @@ const UserInfoApiUrl = '/users/profile';
 
 export default function MyPagePage(){
     const router = useRouter()
+    const isMine = true;
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [isPicEdit, setIsPicEdit] = useState(false);
@@ -129,6 +130,7 @@ export default function MyPagePage(){
             onClickEdit={onClickEdit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
             setIsPicEdit={setIsPicEdit}
+            isMine={isMine}
         />
         
     )

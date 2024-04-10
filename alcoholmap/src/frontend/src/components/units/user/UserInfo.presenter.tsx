@@ -26,14 +26,20 @@ export default function UserInfoPageUI (props: UserInfoPageUIProps): JSX.Element
                     <S.InfoTitle>찜목록</S.InfoTitle>
                     <S.Label>찜한 가게들의 리스트입니다.</S.Label>
                     <S.SliderWrapper>
-                        <WishListSlider />
+                        <WishListSlider 
+                            isMine={false}
+                            userId={props.userId}
+                        />
                     </S.SliderWrapper>
                 </S.WishListWrapper>
                 <S.RatedListWrapper>
                     <S.InfoTitle>평가한 가게</S.InfoTitle>
                     <S.Label>평가한 가게들의 리스트입니다.</S.Label>
                     <S.SliderWrapper>
-                        <RatedPlaceSlider />
+                        <RatedPlaceSlider
+                            isMine={false}
+                            userId={props.userId}
+                        />
                     </S.SliderWrapper>
                 </S.RatedListWrapper>
             </S.Wrapper>
