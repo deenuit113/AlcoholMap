@@ -130,6 +130,6 @@ export const RankWrapper = styled.div`
     justify-content: center;
     font-size: 30px;
     font-weight: bolder;
-    margin-right: 10px;
+    margin-right: 20px;
     margin-left: 10px;
 `

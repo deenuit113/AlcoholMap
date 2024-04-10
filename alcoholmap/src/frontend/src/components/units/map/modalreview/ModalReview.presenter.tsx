@@ -52,8 +52,8 @@ const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
                                     ))}
                                 </S.StarRateWrapper>
                                 {islike ?
-                                    <button>♥</button>:
-                                    <button>♡</button>
+                                    <S.LikeButton>♥</S.LikeButton>:
+                                    <S.LikeButton>♡</S.LikeButton>
                                 }
                                 <S.ReviewLike>{item.like}</S.ReviewLike>
                             </S.RateandLikeWrapper>

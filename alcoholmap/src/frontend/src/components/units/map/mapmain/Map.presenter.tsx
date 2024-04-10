@@ -104,8 +104,8 @@ export default function MapUI(props: IMapUIProps): JSX.Element{
                             <S.NavButton onClick={props.onClickMoveToSignup}>회원가입</S.NavButton>
                         </>
                     )}
-                    <S.NavButton onClick={onClickMoveToKorea}>지역별(팔도)</S.NavButton>
-                    <S.NavButton onClick={onClickMoveToSeoul}>지역별(서울)</S.NavButton>
+                    <S.NavButton onClick={onClickMoveToKorea}>전국 Top 10</S.NavButton>
+                    <S.NavButton onClick={onClickMoveToSeoul}>서울 Top 10</S.NavButton>
                 </S.MapNav>
                 <S.MapWrapper>
                     <S.MapMain id="map"></S.MapMain>

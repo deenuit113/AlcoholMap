@@ -83,8 +83,8 @@ export const UserWrapper = styled.div`
 `
 
 export const ProfileWrapper = styled.div`
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border: 1px solid gray;
     border-radius: 50%;
 `
@@ -100,7 +100,7 @@ export const UserId = styled.span`
     width: 100%;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
-        font-size: 18px;
+        font-size: 15px;
     }
 `
 
@@ -170,4 +170,7 @@ export const ReviewLike = styled.span`
 `
 
 export const LikeButton = styled.button`
+    font-size: 25px;
+    border: none;
+    background-color: transparent;
 `

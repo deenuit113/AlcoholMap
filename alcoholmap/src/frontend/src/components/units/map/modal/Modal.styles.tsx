@@ -124,10 +124,12 @@ export const wishListButton = styled.button`
 `
 
 export const ErrorMsgWrapper = styled.div`
-    width: 300px;
-    display: inline-block;
+    width: 100%;
+    display: display;
     flex-direction: column;
+    text-align: center;
     align-items: center;
+    margin: auto;
     padding-bottom: 2px;
     color: red;
 `

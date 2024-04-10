@@ -39,7 +39,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             data.push({
                 userId: `user${i}`,
                 review: `ReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReview ${i}`,
-                starRate: i%2===0? 3:4,
+                starRate: i%2===0? 4:5,
                 like: 100,
             });
         }

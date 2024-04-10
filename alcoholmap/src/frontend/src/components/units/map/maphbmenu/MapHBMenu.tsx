@@ -24,8 +24,8 @@ export default function MapHBMenu (props: IHBMenuProps): JSX.Element {
                         </S.MyInfoWrapper>
                         <S.Line/>
                         <S.HBMenuList>
-                            <S.HBMenuListEl onClick={props.onClickMoveToKorea}>지역별 술집 추천 (팔도)</S.HBMenuListEl>
-                            <S.HBMenuListEl onClick={props.onClickMoveToSeoul}>지역별 술집 추천 (서울)</S.HBMenuListEl>
+                            <S.HBMenuListEl onClick={props.onClickMoveToKorea}>지역별 Top 10 (전국)</S.HBMenuListEl>
+                            <S.HBMenuListEl onClick={props.onClickMoveToSeoul}>지역별 Top 10 (서울)</S.HBMenuListEl>
                         </S.HBMenuList>
                     </S.HBMenuWrapper>
             )}
