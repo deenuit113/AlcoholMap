@@ -1,7 +1,7 @@
 import * as S from "./UserInfo.styles"
 import { UserInfoPageUIProps } from "./UserInfo.types";
-import WishListSlider from "../mypage/wishlist/WishListSlider.container";
-import RatedPlaceSlider from "../mypage/ratedplace/RatedPlaceSlider.container";
+import WishListSlider from "../../commons/wishlist/WishListSlider.container";
+import RatedPlaceSlider from "../../commons/ratedplace/RatedPlaceSlider.container";
 export default function UserInfoPageUI (props: UserInfoPageUIProps): JSX.Element {
     return (
         <>

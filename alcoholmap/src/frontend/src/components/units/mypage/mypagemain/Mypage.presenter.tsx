@@ -1,7 +1,7 @@
 import * as S from "./Mypage.styles"
 import { userData, IMypageUIProps } from "./Mypage.types";
-import WishListSlider from "../wishlist/WishListSlider.container";
-import RatedPlaceSlider from "../ratedplace/RatedPlaceSlider.container";
+import WishListSlider from "../../../commons/wishlist/WishListSlider.container";
+import RatedPlaceSlider from "../../../commons/ratedplace/RatedPlaceSlider.container";
 import axios from "axios";
 
 export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIProps): JSX.Element {
