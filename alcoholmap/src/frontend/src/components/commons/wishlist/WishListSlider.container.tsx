@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import WishListSliderUI from './WishListSlider.presenter';
-import { Place } from './WishListSlider.types';
+import { Place, WishListSliderProps } from './WishListSlider.types';
 
 const apiUrl = '/api/places';
 
-export default function WishListSlider(): JSX.Element{
+export default function WishListSlider(props: WishListSliderProps): JSX.Element{
     const [places, setPlaces] = useState<Place[]>([]);
     const [isLoading, setisLoading] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -61,6 +61,8 @@ export default function WishListSlider(): JSX.Element{
         <WishListSliderUI
             places = {places}
             isLoading = {isLoading}
+            isMine = {props.isMine}
+            userId = {props.userId}
         />
     );
 };

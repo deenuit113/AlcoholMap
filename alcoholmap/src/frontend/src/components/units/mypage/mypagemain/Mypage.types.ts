@@ -21,4 +21,5 @@ export interface IMypageUIProps {
     onClickEdit: () => void;
     onClickMoveToMainpage: () => void;
     setIsPicEdit: (value: boolean) => void;
+    isMine: boolean;
 }

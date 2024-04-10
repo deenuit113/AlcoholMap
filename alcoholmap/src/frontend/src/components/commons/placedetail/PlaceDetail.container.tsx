@@ -59,7 +59,10 @@ export default function PlaceDetail(): JSX.Element {
     const onClickMoveToMainpage = () => {
         router.push({
             pathname: "/map",
-            query: { keyword: address },
+            query: {
+                address: address,
+                placeName: placeName,
+            },
         })
     }
 

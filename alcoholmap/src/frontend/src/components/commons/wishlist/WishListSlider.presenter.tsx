@@ -9,8 +9,9 @@ export default function WishListSliderUI (props: WishListSliderUIProps): JSX.Ele
     const router = useRouter();
 
     const onClickMovetoPlace = (placeId: number) => {
+        const pathname = props.isMine ? `/mypage/wishlist/${placeId}` : `/user/${props.userId}/wishlist/${placeId}`;
         router.push({
-            pathname: `/mypage/wishlist/${placeId}`,
+            pathname: pathname,
             query: {
                 placename: "영화장",
                 address: "서울 동대문구 이문동 288-23",
