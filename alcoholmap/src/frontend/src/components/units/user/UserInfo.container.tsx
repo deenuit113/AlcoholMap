@@ -51,7 +51,8 @@ export default function UserInfoPage(): JSX.Element {
             capaSoju: Math.floor(Math.random() * 10) + 1,
             profilePicture: '/greensoju.png', // 유저 프로필 사진 경로
             reviews: reviews,
-            bookmarks: wishlists
+            bookmarks: wishlists,
+            isFollow: true
         };
 
         return dummyUserData;
@@ -61,11 +62,24 @@ export default function UserInfoPage(): JSX.Element {
         router.push("../map")
     }
 
+    const onClickFollow = (): void => {
+        setUserData((prevUserData: UserData | null) => {
+            if (prevUserData) {
+                return {
+                    ...prevUserData,
+                    isFollow: !prevUserData.isFollow
+                };
+            }
+            return prevUserData;
+        });
+    };
+
     return (
         <UserInfoPageUI
             userId={userId}
             userData={userData}
             onClickMoveToMainPage = {onClickMoveToMainPage}
+            onClickFollow = {onClickFollow}
         />
     );
 }

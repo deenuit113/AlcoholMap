@@ -2,6 +2,7 @@ export interface UserData {
     nickname: string;
     capaSoju: number;
     profilePicture: string;
+    isFollow: boolean;
     reviews: {
         review: string;
         rating: number;
@@ -18,4 +19,5 @@ export interface UserInfoPageUIProps {
     userId: string;
     userData: UserData | null;
     onClickMoveToMainPage: () => void;
+    onClickFollow: () => void;
 }
