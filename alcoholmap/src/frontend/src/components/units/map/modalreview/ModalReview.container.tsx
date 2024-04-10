@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ModalReviewUI from './ModalReview.presenter';
 import { IModalReviewProps } from './ModalReview.types';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const apiUrl = '/place/review';
 
 const ModalReview = (props: IModalReviewProps): JSX.Element => {
+    const router = useRouter();
     const [data, setData] = useState<{ userId: string; review: string; starRate: number; like: number;}[]>([]);
     const [isloading, setisLoading] = useState(false);
     const [curPage, setCurPage] = useState(1);
@@ -37,7 +39,7 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
         const data = [];
         for (let i = start; i <= end; i++) {
             data.push({
-                userId: `user${i}`,
+                userId: `${i}`,
                 review: `ReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReviewReview ${i}`,
                 starRate: i%2===0? 4:5,
                 like: 100,
@@ -82,11 +84,21 @@ const ModalReview = (props: IModalReviewProps): JSX.Element => {
             setisLoading(false);
         }
     };*/
+
+    const onClickMoveToUserInfo = (userId: string) => {
+        router.push({
+            pathname: `/user/${userId}`,
+            query: {
+                userId: userId,
+            },
+        })
+    }
     
     return(
         <ModalReviewUI
             isloading = {isloading}
             data = {data}
+            onClickMoveToUserInfo = {onClickMoveToUserInfo}
         />
     );
 };

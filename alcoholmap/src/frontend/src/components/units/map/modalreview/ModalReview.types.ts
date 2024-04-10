@@ -12,4 +12,5 @@ export interface IModalReviewUIProps {
         starRate: number;
         like: number;
     }[];
+    onClickMoveToUserInfo: (userId: string) => void;
 }

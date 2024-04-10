@@ -30,7 +30,7 @@ const ModalReviewUI = (props: IModalReviewUIProps): JSX.Element => {
                     <S.ReviewInfo key={index}>
                         <>
                             <S.UserWrapper>
-                                <S.ProfileWrapper>
+                                <S.ProfileWrapper onClick={() => props.onClickMoveToUserInfo(item.userId)}>
                                     <S.ProfileImg src="/redsoju.png" alt="Profile" />
                                 </S.ProfileWrapper>
                                 <S.UserId>{item.userId}</S.UserId>
