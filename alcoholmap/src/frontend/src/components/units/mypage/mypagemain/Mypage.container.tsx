@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import { userData } from './Mypage.types'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { mypageEditSchema } from "../../../commons/util/yupSchemas";
+import { mypageEditSchema } from "../../../../commons/util/yupSchemas";
 
 const UserInfoApiUrl = '/users/profile';
 
@@ -14,13 +14,15 @@ export default function MyPagePage(){
     const router = useRouter()
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
+    const [isPicEdit, setIsPicEdit] = useState(false);
+    const [profilePic, setProfilePic] = useState("/greensoju.png");
     const [userInfo, setUserInfo] = useState<userData>({
         userEmail: "",
         password: "",
         nickname: "",
         capaSoju: 0,
-        // 찜한가게 (가게 이름, 위도 경도 값)
-        // 평가한 가게 (가게 이름, 위도 경도 값, 평점, 리뷰)
+        // 찜한가게 (가게 이름, 주소 값)
+        // 평가한 가게 (가게 이름, 주소 값, 평점, 리뷰)
     });
     // react-hook-form과 yup 이용한 회원정보 폼 관리
     const { register, handleSubmit, formState } = useForm<userData>({
@@ -40,12 +42,14 @@ export default function MyPagePage(){
     useEffect(() => {
         checkIsLoggedIn();
         if(!isLoggedIn){
-            alert("로그인 후 이용해주세요");
-            router.push('../login');
+            //alert("로그인 후 이용해주세요");
+            //router.push('../login');
         } else{
             getUserInfo();
+            setIsPicEdit(false);
+            console.log("rerendering");
         }
-    }, [isEdit]);
+    }, [isEdit, isPicEdit]);
     // 사용자 정보 받아오기
     const getUserInfo = async () => { 
         try {
@@ -65,6 +69,7 @@ export default function MyPagePage(){
             });
             // 가져온 데이터를 상태에 저장
             setUserInfo(response.data);
+            //setProfilePic(response.data.pic);
             console.log('User data:', response.data);
         } catch (error) {
             console.log('Error fetching user data:', error);
@@ -75,7 +80,7 @@ export default function MyPagePage(){
         const token = localStorage.getItem('jwtToken');
         if (!token) {
             console.error("Token not found in local storage");
-            alert("마이페이지 조회 실패.")
+            //alert("마이페이지 조회 실패.")
         }
         setLoggedIn(true);
     };
@@ -117,10 +122,13 @@ export default function MyPagePage(){
         <MypageUI
             userInfo = {userInfo}
             isEdit = {isEdit}
+            isPicEdit={isPicEdit}
+            profilePic = {profilePic}
             formMethods={{ register, handleSubmit, formState }}
             onSubmit={onSubmitEditform}
             onClickEdit={onClickEdit}
             onClickMoveToMainpage = {onClickMoveToMainpage}
+            setIsPicEdit={setIsPicEdit}
         />
         
     )
