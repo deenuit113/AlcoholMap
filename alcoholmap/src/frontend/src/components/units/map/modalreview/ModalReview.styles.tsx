@@ -58,47 +58,96 @@ export const LoadingSkeletonUl = styled.ul`
 export const ReviewInfo = styled.li`
     margin-top: 2px;
     margin-bottom: 2px;
+    height: auto;
+    min-height: 110px;
     font-size: 20px;
     border-bottom: 1px solid gray;
     display: flex;
     align-items: center;
 `;
 
-export const UserId = styled.span`
-    float: left;
-    width: 10%;
-    border: 3px solid red;
-    margin-right: 15px;
+export const UserWrapper = styled.div`
+    display: flex;
+    width: 15%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-right: 20px;
+
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
-        font-size: 15px;
+        margin-right: 10px;
+    }
+    
+`
+
+export const ProfileWrapper = styled.div`
+    width: 30px;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius: 50%;
+`
+
+export const ProfileImg = styled.img`
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: contain;
+`
+
+export const UserId = styled.span`
+    width: 100%;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 18px;
     }
 `
 
+export const MoreButton = styled.button`
+    background-color: transparent;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px; // "더보기" 버튼과 리뷰 내용 사이 여백 조절
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
 export const UserReview = styled.span`
     float: left;
-    width: 70%;
-    border: 3px solid blue;
+    width: 80%;
     margin-right: 15px;
+    word-break: break-all;
+    word-wrap: break-word;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
-        font-size: 11px;
-        width: 55%;
+        font-size: 15px;
+        width: 60%;
         margin-right: 5px;
+    }
+`
+
+export const RateandLikeWrapper = styled.div`
+    width: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        margin-right: 5px;
+        width: 20%;
     }
 `
 
 export const StarRateWrapper = styled.div`
     float: right;
-    width: 15%;
+    display: flex;
+    flex-direction: row;
     justify-content: flex-end;
-    border: 1px solid red;
-    margin-right: 10px;
-    @media all and (min-width: 359px) and (max-width: 799px) {
-        // 모바일 세로
-        margin-right: 5px;
-        width: 25%;
-    }
 `
 
 export const StarRate = styled.div`
@@ -121,5 +170,4 @@ export const ReviewLike = styled.span`
 `
 
 export const LikeButton = styled.button`
-    radius: right;
 `
