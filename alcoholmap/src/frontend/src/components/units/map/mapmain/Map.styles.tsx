@@ -118,73 +118,14 @@ export const footer = styled.footer`
 
 `
 
-export const LoginButton = styled.button`
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    width: 100px;
-    float: right;
-    margin-left: 10px;
-    background-color: #B7F0B1;
-    border: 5px solid #47C83E;
-    border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 799px) {
-        font-size: 13px;
-        float: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-`
-
-export const LogoutButton = styled.button`
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    width: 120px;
-    float: right;
-    margin-left: 10px;
-    background-color: #B7F0B1;
-    border: 5px solid #47C83E;
-    border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 799px) {
-        font-size: 13px;
-        float: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-`
-
-export const SignupButton = styled.button`
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    width: 110px;
-    float: right;
-    margin-left: 10px;
-    background-color: #B7F0B1;
-    border: 5px solid #47C83E;
-    border-radius: 8px;
-    @media all and (min-width: 359px) and (max-width: 799px) {
-        font-size: 13px;
-        float: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-`
-
-export const MypageButton = styled.button`
+export const NavButton = styled.button`
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     font-weight: bold;
     width: 130px;
     float: right;
     margin-left: 10px;
+    margin-bottom: 10px;
     background-color: #B7F0B1;
     border: 5px solid #47C83E;
     border-radius: 8px;
