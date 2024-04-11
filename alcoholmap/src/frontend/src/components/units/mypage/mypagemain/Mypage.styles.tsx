@@ -1,4 +1,29 @@
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
+
+const ANIMATION_DURATION = 0.3;
+
+const slideDown = keyframes`
+    from {
+        max-height: 0px;
+        opacity: 0;
+    }
+    to {
+        max-height: 500px;
+        opacity: 1;
+    }
+`;
+
+const slideUp = keyframes`
+    from {
+        max-height: 500px;
+        opacity: 1;
+    }
+    to {
+        max-height: 0px;
+        opacity: 0;
+    }
+`;
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -119,7 +144,7 @@ export const ProfilePicEditButton = styled.label`
     background-color: #008CBA;
     color: white;
     border: none;
-    padding: 5px 5px;
+    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -129,12 +154,33 @@ export const ProfilePicEditButton = styled.label`
     margin-top: 10px;
 `
 
-export const UserInfoForm = styled.form`
+export const ToggleFormButton = styled.button`
+    width: 200px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+`;
+
+export const UserInfoForm = styled.form<{ isOpen: boolean }>`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    animation-duration: ${ANIMATION_DURATION}s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    animation-name: ${({ isOpen }) => (isOpen ? slideDown : slideUp)};
+    overflow: hidden;
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         width: 80%;
@@ -164,7 +210,7 @@ export const WishListWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
         width: 100%;
-        padding: 10px 10px 5px 10px;
+        padding: 15px 10px 10px 10px;
         border: none;
         border-top: 1px solid #47C83E;
         border-bottom: 1px solid #47C83E;
@@ -186,7 +232,7 @@ export const RatedListWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
         width: 100%;
-        padding: 10px 10px 5px 10px;
+        padding: 15px 10px 10px 10px;
         border: none;
         border-bottom: 1px solid #47C83E;
         border-radius: 0px;
