@@ -22,4 +22,6 @@ export interface IMypageUIProps {
     onClickMoveToMainpage: () => void;
     setIsPicEdit: (value: boolean) => void;
     isMine: boolean;
+    follower: number;
+    following: number;
 }

@@ -104,7 +104,16 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
                         )}
                     </S.ButtonWrapper>
                 </S.UserInfoForm>
-                
+                <S.FollowWrapper>
+                    <S.FollowerWrapper>
+                        <S.InfoTitle>팔로워</S.InfoTitle>
+                        <S.Label>{props.follower}</S.Label>
+                    </S.FollowerWrapper>
+                    <S.FollowingWrapper>
+                        <S.InfoTitle>팔로잉</S.InfoTitle>
+                        <S.Label>{props.following}</S.Label>
+                    </S.FollowingWrapper>
+                </S.FollowWrapper>
                 <S.WishListWrapper>
                     <S.InfoTitle>찜목록</S.InfoTitle>
                     <S.Label>찜한 가게들의 리스트입니다.</S.Label>

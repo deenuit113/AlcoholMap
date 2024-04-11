@@ -196,6 +196,62 @@ export const InfoWrapper = styled.div`
     flex-direction: column;
 `;
 
+export const FollowWrapper = styled.div`
+    width: 100%;
+    height: 130px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 4px solid #47C83E;
+    border-radius: 8px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 태블릿
+        height: 100px;
+        border: none;
+        border-top: 1px solid #47C83E;
+        border-bottom: 1px solid #47C83E;
+        border-radius: 0px;
+    }
+`
+
+export const FollowerWrapper = styled.div`
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    &:hover {
+        background-color: gray;
+    }
+`;
+
+export const FollowingWrapper = styled.div`
+    min-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    &:hover {
+        background-color: gray;
+    }
+`;
+
 export const WishListWrapper = styled.div`
     width: 100%;
     display: flex;
