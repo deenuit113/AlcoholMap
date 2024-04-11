@@ -60,8 +60,7 @@ export default function PlaceDetail(): JSX.Element {
         router.push({
             pathname: "/map",
             query: {
-                address: address,
-                placeName: placeName,
+                keyword: `${address} ${placeName}`
             },
         })
     }

@@ -15,7 +15,8 @@ Modal.setAppElement('#__next');
 export default function MapPage(): JSX.Element{
     const router = useRouter()
     const { address: initialAddress, placeName: initialPlaceName } = router.query;
-    const initialKeyword = initialAddress && initialPlaceName ? `${initialAddress} ${initialPlaceName}` : '술집';
+    const { keyword: querykeyword } = router.query;
+    const initialKeyword = querykeyword ? `${querykeyword}` : '술집';
     const [keyword, setKeyword] = useState<string>(initialKeyword);
     const [kwError, setKwError] = useState("");
     const [options, setOptions] = useState<Options | null>({
