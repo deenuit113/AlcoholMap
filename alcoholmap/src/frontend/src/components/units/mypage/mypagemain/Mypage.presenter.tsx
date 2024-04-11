@@ -3,9 +3,12 @@ import { userData, IMypageUIProps } from "./Mypage.types";
 import WishListSlider from "../../../commons/wishlist/WishListSlider.container";
 import RatedPlaceSlider from "../../../commons/ratedplace/RatedPlaceSlider.container";
 import axios from "axios";
+import { useState } from "react";
 
 export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIProps): JSX.Element {
     const { register, handleSubmit, formState: { errors } } = formMethods;
+    const [isFormOpen, setIsFormOpen] = useState(false);
+
     const handleProfilePictureChange = (event: any) => {
         const selectedFile = event.target.files[0];
         const formData = new FormData();
@@ -23,6 +26,11 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
             console.error('Error uploading profile picture:', error);
         });
     };
+
+    const onClickToggleForm = () => {
+        setIsFormOpen(prevState => !prevState);
+    };
+
     return(
         <>
             <S.Wrapper>
@@ -33,7 +41,9 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
                 </S.ProfilePicWrapper>
                 <S.ProfilePicEditButton htmlFor="fileInput">사진 선택</S.ProfilePicEditButton>
                 <input type="file" id="fileInput" accept="image/*" style={{ display: 'none' }} onChange={handleProfilePictureChange} />
-                <S.UserInfoForm onSubmit= {handleSubmit(onSubmit)}>
+                <S.ToggleFormButton onClick={onClickToggleForm}>{isFormOpen ? '▲ 접기 ▲' : '▼ 내 정보 ▼'}</S.ToggleFormButton>
+                
+                <S.UserInfoForm isOpen={isFormOpen} onSubmit= {handleSubmit(onSubmit)}>
                     <S.InfoWrapper>
                         <S.InfoLabel>이메일</S.InfoLabel>
                         {props.isEdit ? (
@@ -94,6 +104,16 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
                         )}
                     </S.ButtonWrapper>
                 </S.UserInfoForm>
+                <S.FollowWrapper>
+                    <S.FollowerWrapper>
+                        <S.InfoTitle>팔로워</S.InfoTitle>
+                        <S.Label>{props.follower}</S.Label>
+                    </S.FollowerWrapper>
+                    <S.FollowingWrapper>
+                        <S.InfoTitle>팔로잉</S.InfoTitle>
+                        <S.Label>{props.following}</S.Label>
+                    </S.FollowingWrapper>
+                </S.FollowWrapper>
                 <S.WishListWrapper>
                     <S.InfoTitle>찜목록</S.InfoTitle>
                     <S.Label>찜한 가게들의 리스트입니다.</S.Label>

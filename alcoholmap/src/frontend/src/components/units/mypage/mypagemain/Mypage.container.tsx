@@ -17,6 +17,8 @@ export default function MyPagePage(){
     const [isEdit, setIsEdit] = useState(false);
     const [isPicEdit, setIsPicEdit] = useState(false);
     const [profilePic, setProfilePic] = useState("/greensoju.png");
+    const [follower, setFollower] = useState(150);
+    const [following, setFollowing] = useState(123);
     const [userInfo, setUserInfo] = useState<userData>({
         userEmail: "",
         password: "",
@@ -71,6 +73,9 @@ export default function MyPagePage(){
             // 가져온 데이터를 상태에 저장
             setUserInfo(response.data);
             //setProfilePic(response.data.pic);
+            //setFollowers(response.data.follower);
+            //setFollowing(response.data.following);
+
             console.log('User data:', response.data);
         } catch (error) {
             console.log('Error fetching user data:', error);
@@ -125,6 +130,8 @@ export default function MyPagePage(){
             isEdit = {isEdit}
             isPicEdit={isPicEdit}
             profilePic = {profilePic}
+            follower = {follower}
+            following = {following}
             formMethods={{ register, handleSubmit, formState }}
             onSubmit={onSubmitEditform}
             onClickEdit={onClickEdit}

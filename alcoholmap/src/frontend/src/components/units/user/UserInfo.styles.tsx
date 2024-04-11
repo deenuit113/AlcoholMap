@@ -154,7 +154,7 @@ export const WishListWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
         width: 100%;
-        padding: 10px 10px 5px 10px;
+        padding: 15px 10px 10px 10px;
         border: none;
         border-top: 1px solid #47C83E;
         border-bottom: 1px solid #47C83E;
@@ -176,7 +176,7 @@ export const RatedListWrapper = styled.div`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 태블릿
         width: 100%;
-        padding: 10px 10px 5px 10px;
+        padding: 15px 10px 10px 10px;
         border: none;
         border-bottom: 1px solid #47C83E;
         border-radius: 0px;
