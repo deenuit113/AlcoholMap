@@ -4,8 +4,10 @@ import WishListSlider from "../../../commons/wishlist/WishListSlider.container";
 import RatedPlaceSlider from "../../../commons/ratedplace/RatedPlaceSlider.container";
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIProps): JSX.Element {
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = formMethods;
     const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -29,6 +31,24 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
 
     const onClickToggleForm = () => {
         setIsFormOpen(prevState => !prevState);
+    };
+
+    const onClickMoveToFollower = () => {
+        router.push({
+            pathname: './mypage/follower',
+            query: {
+                who: `follower`
+            }
+        })
+    };
+
+    const onClickMoveToFollowing = () => {
+        router.push({
+            pathname: './mypage/following',
+            query: {
+                who: `following`
+            }
+        })
     };
 
     return(
@@ -105,11 +125,11 @@ export default function MypageUI({ formMethods, onSubmit, ...props }: IMypageUIP
                     </S.ButtonWrapper>
                 </S.UserInfoForm>
                 <S.FollowWrapper>
-                    <S.FollowerWrapper>
+                    <S.FollowerWrapper onClick={onClickMoveToFollower}>
                         <S.InfoTitle>팔로워</S.InfoTitle>
                         <S.Label>{props.follower}</S.Label>
                     </S.FollowerWrapper>
-                    <S.FollowingWrapper>
+                    <S.FollowingWrapper onClick={onClickMoveToFollowing}>
                         <S.InfoTitle>팔로잉</S.InfoTitle>
                         <S.Label>{props.following}</S.Label>
                     </S.FollowingWrapper>
