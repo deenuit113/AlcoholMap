@@ -16,10 +16,13 @@ export default function FollowListPageUI(props: FollowListPageUIProps): JSX.Elem
                 <S.FollowListUl>
                     {props.data.map((item, index) => (
                         <S.FollowInfo key = {index}>
-                            <S.ProfileWrapper onClick={() => props.onClickMoveToUserInfo(item.userId)}>
-                                <S.ProfileImg src="/redsoju.png" alt="Profile" />
-                            </S.ProfileWrapper>
-                            <S.UserName>{item.userName}</S.UserName>
+                            <S.UserInfoWrapper>
+                                <S.ProfileWrapper onClick={() => props.onClickMoveToUserInfo(item.userId)}>
+                                    <S.ProfileImg src="/redsoju.png" alt="Profile" />
+                                </S.ProfileWrapper>
+                                <S.UserName>{item.userName}</S.UserName>
+                            </S.UserInfoWrapper>
+                            <S.GoToUserInfoButton onClick={() => props.onClickMoveToUserInfo(item.userId)}>정보 보기</S.GoToUserInfoButton>
                         </S.FollowInfo>
                     ))}
                 </S.FollowListUl>

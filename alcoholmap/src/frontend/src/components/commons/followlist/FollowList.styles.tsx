@@ -106,7 +106,7 @@ export const FollowInfo = styled.li`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 10px 0px 10px 0px;
     border-bottom: 1px solid gray;
     height: 100px;
@@ -114,6 +114,13 @@ export const FollowInfo = styled.li`
         // 모바일 세로
         height: 80px;
     }
+`
+
+export const UserInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 `
 
 export const ProfileWrapper = styled.div`
@@ -137,6 +144,18 @@ export const UserName = styled.span`
     @media all and (min-width: 359px) and (max-width: 799px) {
         // 모바일 세로
         font-size: 15px;
+    }
+`
+
+export const GoToUserInfoButton = styled.button`
+    background-color: #47C83E;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 10px 5px 10px;
+    font-weight: bold;
+
+    :hover {
+        cursor: pointer;
     }
 `
 
