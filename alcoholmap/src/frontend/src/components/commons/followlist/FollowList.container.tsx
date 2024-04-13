@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import FollowListPageUI from "./FollowList.presenter";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 interface UserInfo {
     userId: string;
@@ -12,8 +12,7 @@ export default function FollowListPage(): JSX.Element {
     const router = useRouter();
     const [data, setData] = useState<{ userId: string; userName: string; profilePicture: string}[]>([]);
     const [isloading, setisLoading] = useState(false);
-    const { who : who } = router.query;
-    const listName = who;
+    const listName = router.query.who as string;
 
     useEffect(() => {
         fetchData();
@@ -42,7 +41,7 @@ export default function FollowListPage(): JSX.Element {
         for (let i = start; i <= end; i++) {
           data.push({
             userId: `user_${i}`,
-            userName: `User ${i}`,
+            userName: `NickName${i}`,
             profilePicture: `/greensoju.png`,
           });
         }
@@ -54,10 +53,27 @@ export default function FollowListPage(): JSX.Element {
         setTimeout(() => {
             //const newData = [...data, ...new Array(10).fill('New Data')];
             
-            const newData = [...data, ...generateDummyUsers(data.length + 1, data.length + 15)];
+            const newData = [...data, ...generateDummyUsers(data.length + 1, data.length + 10)];
             setData(newData);
             setisLoading(false);
         }, 1000);
+    };
+
+    const onClickMoveToMainPage = () => {
+        router.push('/map');
+    };
+
+    const onClickMoveToUserInfo = (userId: string) => {
+        router.push({
+            pathname: `/user/${userId}`,
+            query: {
+                userId: userId,
+            },
+        })
+    };
+
+    const onChangeSearchUserByName = (event: ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.value);
     };
 
 
@@ -66,6 +82,10 @@ export default function FollowListPage(): JSX.Element {
             <FollowListPageUI
                 isloading = {isloading}
                 data = {data}
+                listName = {listName}
+                onClickMoveToMainPage = {onClickMoveToMainPage}
+                onClickMoveToUserInfo = {onClickMoveToUserInfo}
+                onChangeSearchUserByName = {onChangeSearchUserByName}
             />
         </>
     );

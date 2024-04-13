@@ -31,9 +31,29 @@ export const Wrapper = styled.div`
     }
 `;
 
+export const GBHeader = styled.header`
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        width: 60%;
+        height: 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+`
+
+export const Logo = styled.img`
+    cursor: pointer
+`
+
+export const Title = styled.h1`
+    font-size: 20px;
+    margin-bottom: 10px;
+`
+
 export const SearchIdInput = styled.input`
     width: 80%;
     margin-bottom: 30px;
+    border: 1px solid gray;
     border-radius: 20px;
     font-size: 25px;
     padding: 5px 10px 5px 10px;
@@ -44,7 +64,7 @@ export const ListWrapper = styled.div`
     width: 90%;
     height: 95%;
     border: 3px solid #b7f0b1;
-    padding: 20px 30px 20px 30px;;
+    padding: 20px 15px 20px 15px;;
     border-radius: 30px;
     overflow-y: scroll;
 
@@ -72,15 +92,52 @@ export const ListWrapper = styled.div`
             width: 12px;
         }
     }
+
+    #LoadingIcon{
+        margin-top: 20px;
+        font-size: 30px;
+    }
 `
 
 export const FollowListUl = styled.ul`
-
 `
 
 export const FollowInfo = styled.li`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     padding: 10px 0px 10px 0px;
     border-bottom: 1px solid gray;
+    height: 100px;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        height: 80px;
+    }
+`
+
+export const ProfileWrapper = styled.div`
+    width: 60px;
+    height: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid gray;
+    border-radius: 50%;
+`
+
+export const ProfileImg = styled.img`
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: contain;
+`
+
+export const UserName = styled.span`
+    float: right;
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        // 모바일 세로
+        font-size: 15px;
+    }
 `
 
 export const LoadingSkeletonUl = styled.ul`
