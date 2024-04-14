@@ -48,7 +48,7 @@
 - **메인 화면**
   
 <img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/a50b6257-cc65-4a87-9fb5-c40aa8d79490/>
-<img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/7271206e-2aec-4239-89e9-2f60c42b97dd/>
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/3ed47f86-ef3b-4558-b70e-ea610a65eeea/>
 <img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/8743cc26-82ea-45f1-8570-93a3e4726487/>
 
 ```
@@ -60,12 +60,22 @@
 
 - **마이페이지 화면**
 
-<img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/5357cf68-512b-4b9b-87c2-b24988696dc8/>
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/64860c23-e287-4c82-b686-c3566ba40155/>
 
 ```
 마이페이지 화면 - 회원정보 표시
-  1. SNS 기능 - 좋아요/팔로우 기능 [추후 추가]
+  1. SNS 기능 - 팔로우 기능
+  2. 찜한 가게, 평가한 가게 목록 - 슬라이더로 구현
   2. 뱃지 기능 - 업적 달성하여 다른 사용자에게 표시되는 뱃지 [추후 추가]
+```
+- **지역별 추천 술집 Top 10 화면**
+
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/566f2146-efe6-4294-9217-daba78ee8419/>
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/60f59794-7f4b-4edf-90c7-b203dc312a44/>
+
+```
+지역별 추천 술집 Top 10 화면 - 전국과 서울 지역별로 상위 10개의 가게 추천
+  1. 지역 선택 - TopoJson 데이터를 사용하여 d3로 구현
 ```
 ---
 ## 사용 예시 Web Ver.
@@ -96,7 +106,7 @@
 - **메인 화면**
   
 <img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/98263b78-6db7-4773-b36b-a77cea30c6f0/>
-<img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/51f2443d-49b2-413b-ad5c-8aa95bea57ae/>
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/8d8dd56a-1cec-4cac-a1df-e5bef4dc62c7/>
 <img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/b8d7b91a-2715-4388-abff-5fb02f316e45/>
 
 ```
@@ -108,12 +118,22 @@
 
 - **마이페이지 화면**
 
-<img src=https://github.com/deenuit113/GreenBottleFE/assets/70631016/60dfb536-858a-4028-85a5-c68014a10a5c/>
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/1bbd3701-ae73-4e2b-ae6d-89aa203a2897/>
 
 ```
 마이페이지 화면 - 회원정보 표시
-  1. SNS 기능 - 좋아요/팔로우 기능 [추후 추가]
+  1. SNS 기능 - 팔로우 기능
+  2. 찜한 가게, 평가한 가게 목록 - 슬라이더로 구현
   2. 뱃지 기능 - 업적 달성하여 다른 사용자에게 표시되는 뱃지 [추후 추가]
+```
+- **지역별 추천 술집 Top 10 화면**
+
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/514e1ff0-537f-4ea8-bb30-28612ebef93a/>
+<img src=https://github.com/deenuit113/GreenBottle/assets/70631016/f90b43b4-0e6f-4154-ab63-84964939efa9/>
+
+```
+지역별 추천 술집 Top 10 화면 - 전국과 서울 지역별로 상위 10개의 가게 추천
+  1. 지역 선택 - TopoJson 데이터를 사용하여 d3로 구현
 ```
 ---
 ## 기술 스택
