@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 export const useCarouselImg = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -27,6 +27,19 @@ export const useCarouselImg = () => {
       '/webreview.png',
       '/webstart.png',
     ];
+
+    useEffect(() => {
+      if (currentImageIndex === mobImages.length - 1) {
+          setIsFlashing(true);
+          const flashingInterval = setInterval(() => {
+              setIsFlashing((prevFlashing) => !prevFlashing);
+          }, 1000); // 1초마다 버튼이 점멸하도록 설정
+
+          return () => clearInterval(flashingInterval); // 컴포넌트가 언마운트될 때 인터벌 클리어
+      } else {
+          setIsFlashing(false); // 마지막 이미지가 아니면 점멸 중지
+      }
+    }, [currentImageIndex]);
   
     const nextSlide = (): void => {
       setIsTransitioning(true); // 트랜지션 시작
