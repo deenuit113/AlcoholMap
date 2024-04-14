@@ -1,4 +1,4 @@
-# [GreenBottle](https://greenbottle.site) <span style="font-size:18px; color: green;">v 1.0.0-beta</span> 
+# [GreenBottle](https://greenbottle.site) <span style="font-size:18px; color: green;">v 1.0.5-beta</span> 
 > 애주가들을 위한 주점 가이드 웹 서비스
 ---
 ## 기획의도
